@@ -12,10 +12,17 @@
   },
   "tauri": {
     "allowlist": {
-      "all": false,
+      "all": true,
       "shell": {
         "all": false,
         "open": true
+      },
+      "fs": {
+        "all": true,
+        "scope": ["*", "$DOWNLOAD/*"]
+      },
+      "window": {
+        "all": true
       }
     },
     "bundle": {
@@ -24,23 +31,24 @@
       "identifier": "com.tauri.dev",
       "icon": [
         "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
+        "icons/126x126.png",
+        "icons/252x252.png",
         "icons/icon.ico"
       ]
     },
     "security": {
       "csp": null
     },
-    "windows": [
-      {
-        "fullscreen": false,
-        "resizable": true,
-        "title": "honghu-tauri-app",
-        "width": 800,
-        "height": 600
-      }
-    ]
+    "windows": [{
+      "fullscreen": false,
+      "resizable": true,
+      "title": "honghu-tauri-app",
+      "width": 1080,
+      "height": 600,
+      "fileDropEnabled": false,
+      "label": "customization",
+      "center": true,
+      "decorations": false
+    }]
   }
 }
