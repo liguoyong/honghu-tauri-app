@@ -1,0 +1,62 @@
+$--colors: (
+  "primary": ("base": #3F007E,
+  ),
+  "success": ("base": #22ce76,
+  ),
+  "warning": ("base": #f8b02d,
+  ),
+  "danger": ("base": #e5616e,
+  ),
+  "error": ("base": #e5616e,
+  ),
+  "info": ("base": #42b8dd,
+  ),
+);
+$--pagination: (
+  "border-radius": 50%
+);
+$--dialog: (
+  "border-radius": 8px,
+  "padding-primary": 40px
+);
+$--input: (
+  "border-color": #E0E1E9
+);
+$--menu: (
+  "hover-bg-color": #eaf3ff,
+  "item-height": 46px,
+);
+// You should use them in scss, because we calculate it by sass.
+// comment next lines to use default color
+@forward "element-plus/theme-chalk/src/common/var.scss" with ( // do not use same name, it will override.
+  $colors: $--colors,
+  $menu: $--menu,
+  $pagination: $--pagination,
+  $table: ("header-bg-color": #f6f7fb), // $menu: $--menu,
+  $dialog: $--dialog,
+  $input: $--input // $button-padding-horizontal: ("default": 50px)
+);
+
+// custom dark variables
+@use "./dark/dark.scss";
+
+// if you want to import all
+@use "element-plus/theme-chalk/src/index.scss" as *;
+
+// You can comment it to hide debug info.
+// @debug $--colors;
+
+
+
+// :root {
+//   --el-menu-hover-bg-color: #eaf3ff;
+
+//   --el-fill-color-lighter: #f6f7fb; // 表格斑马线背景色
+
+//   --el-text-color-regular: #565859;
+
+//   --table-header-border-color: #edf0f1;
+
+//   --el-menu-hover-bg-color: #eaf3ff;
+
+// }
