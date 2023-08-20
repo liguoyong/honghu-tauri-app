@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-
+import { getToken } from '@/utils/auth'
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
@@ -45,11 +45,13 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
     // 判断是否已经登陆，是的话，就直接到主页，否则还是登陆页
     // console.log('to, from ,next', to, from, next)
-    const gitToken = localStorage.getItem('gitToken')
-        ? localStorage.getItem('gitToken')
-        : ''
+    const userToken = getToken().accessToken
+    // localStorage.getItem('userToken')
+    //     ? localStorage.getItem('userToken')
+    //     : ''
+    console.log(userToken, 'userTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserToken')
     if (to.path === '/') {
-        if (gitToken) {
+        if (userToken) {
             // 存在token,就跳转到主页：记住上次的菜单和路由
             // localStorage.removeItem("menuIndex")
             localStorage.getItem("menuRoute") ? next(localStorage.getItem("menuRoute")!) : next('/index/files')
@@ -59,7 +61,7 @@ router.beforeEach(async (to, from, next) => {
         }
     } else {
         // 不存在token，就跳转到登陆页
-        if (gitToken) {
+        if (userToken) {
             // 存在token,就跳转到主页
             next()
         } else {

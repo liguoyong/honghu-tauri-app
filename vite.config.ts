@@ -32,6 +32,12 @@ export default defineConfig(async () => ({
   server: {
     port: 1420,
     strictPort: true,
+    proxy: {
+      '/api': {
+        target: 'http://127.0.0.1:7001',
+        changeOrigin: true,
+      },
+    },
   },
   // to make use of `TAURI_DEBUG` and other env variables
   // https://tauri.studio/v1/api/config#buildconfig.beforedevcommand

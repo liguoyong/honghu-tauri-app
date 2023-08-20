@@ -7,21 +7,6 @@
           <img v-else :src="logoDark" class="logo-img" data-tauri-drag-region />
         </template>
       </el-popover>
-      <div class="api-pro">
-        <el-progress :text-inside="true" :stroke-width="20" :percentage="userStore.apiRate" :color="colors"
-          status="exception">
-          <el-tooltip class="box-item"
-            :content="`每小时可发送5000个请求, 已使用：${userStore.apiLimit.used}, 剩余：${userStore.apiLimit.remaining} 恢复时间：${timestampToTime(userStore.apiLimit.reset)}`"
-            placement="right">
-            <span>API剩余:{{ userStore.apiRate.toFixed(2) }}%</span>
-          </el-tooltip>
-        </el-progress>
-      </div>
-      <div class="api-pro" v-if="fileStore.downRate !== 100">
-        <el-progress :text-inside="true" :stroke-width="20" :percentage="fileStore.downRate" status="success">
-          <span>下载中:{{ fileStore.downDone }}/{{ fileStore.downNum }}</span>
-        </el-progress>
-      </div>
     </div>
     <div class="header-tool">
       <div class="theme">
@@ -51,7 +36,7 @@
           </template>
         </el-dropdown>
       </div>
-      <div class="user-info">
+      <!-- <div class="user-info">
         <el-dropdown trigger="click">
           <img :src="userStore.gitInfo.avatar_url" alt="" class="user-img" />
           <template #dropdown>
@@ -70,7 +55,7 @@
             </el-dropdown-menu>
           </template>
         </el-dropdown>
-      </div>
+      </div> -->
       <div class="titlebar">
         <TitleBar></TitleBar>
       </div>
@@ -83,11 +68,9 @@ import logoLight from '@/assets/image/fileHub.png'
 import logoDark from '@/assets/image/fileHubDark.png'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
-import { useFileStore } from '@/stores/files'
 import useTheme from '@/hooks/theme'
 import { useI18n } from 'vue-i18n'
 import { timestampToTime } from "@/utils/index"
-import { getApiLimit } from '@/utils/request';
 import TitleBar from '@/components/titleBar.vue'
 import { getVersion } from '@tauri-apps/api/app';
 import { onMounted, ref } from 'vue'
@@ -99,11 +82,9 @@ onMounted(async () => {
   appVersion.value = "当前版本: V" + version
 })
 
-getApiLimit()
 const { locale } = useI18n()
 const userStore = useUserStore()
 
-const fileStore = useFileStore()
 // 进度条颜色
 const colors = [
   { color: '#f53434', percentage: 20 },

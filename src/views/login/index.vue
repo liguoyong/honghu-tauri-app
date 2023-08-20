@@ -41,12 +41,8 @@
         <input class="form__input" type="passWord" @keydown.enter="registUser" v-model="loginForm.passWord"
           @input="cantSpace" :placeholder="$t('login.passWord')" />
         <div class="login-info">
-          <a class="form__link" @click="forgetPassword">{{
-            $t('forgetPassword')
-          }}</a>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <a class="form__link" @click="switchModel('Login')">{{ $t('loginwithanaccount') }}
-          </a>
+          <a href="javascript:void(0);" @click="forgetPassword">{{ $t('forgetPassword') }}</a>
+          <a href="javascript:void(0);" @click="switchModel('Login')">{{ $t('loginwithanaccount') }}</a>
         </div>
         <el-button :loading="loadingBtn" type="primary" round size="large" @click.prevent="registUser" class="login-btn">
           <span v-if="locale === 'zh'">注&nbsp;&nbsp;&nbsp;&nbsp;册</span>
@@ -54,31 +50,22 @@
         </el-button>
       </form>
     </div>
-    <div v-else-if="loginModel === 'Login' || loginModel === 'token'" class="container b-container" id="b-container"
-      data-tauri-drag-region>
+    <div v-else-if="loginModel === 'Login'" class="container b-container" id="b-container" data-tauri-drag-region>
       <form class="login-form" id="b-form" method="" action="" data-tauri-drag-region>
         <img class="login-logo" src="@/assets/image/logo.png" alt="" srcset="" />
         <h2 class="form_title login-title">
           {{ $t('loginTitle') }}
         </h2>
-        <input v-if="loginModel === 'Login'" class="form__input" @input="cantSpace" type="text"
-          @keydown.enter="loginAction" v-model="loginForm.userName" :placeholder="$t('login.userName')" />
-        <input v-if="loginModel === 'Login'" class="form__input" type="passWord" v-model="loginForm.passWord"
-          :placeholder="$t('login.passWord')" @keydown.enter="loginAction" @input="cantSpace" />
+        <input class="form__input" @input="cantSpace" type="text" @keydown.enter="handleLogin"
+          v-model="loginForm.userName" :placeholder="$t('login.userName')" />
+        <input class="form__input" type="passWord" v-model="loginForm.passWord" :placeholder="$t('login.passWord')"
+          @keydown.enter="handleLogin" @input="cantSpace" />
         <div class="login-info">
-          <a class="form__link" @click.prevent="forgetPassword">{{ $t('forgetPassword') }}</a>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <template v-if="loginModel === 'token'">
-            <a class="form__link" @click.prevent="switchModel('Login')">{{ $t('loginwithanaccount') }}
-            </a>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-          </template>
-          <a class="form__link" @click.prevent="switchModel('注册')">{{
-            $t('Registeranewaccount')
-          }}</a>
+          <a href="javascript:void(0);" @click.prevent="forgetPassword">{{ $t('forgetPassword') }}</a>
+          <a href="javascript:void(0);" @click="switchModel('注册')">{{ $t('Registeranewaccount') }}</a>
         </div>
-        <el-button :loading="loadingBtn" type="primary" round size="large" @click.prevent="loginAction" class="login-btn">
-          <span v-if="locale === 'zh'">登&nbsp;&nbsp;&nbsp;&nbsp;陆</span>
+        <el-button :loading="loadingBtn" type="primary" round size="large" @click.prevent="handleLogin" class="login-btn">
+          <span v-if="locale === 'zh'">登&nbsp;&nbsp;&nbsp;&nbsp;录</span>
           <span v-else>Login</span>
         </el-button>
       </form>
@@ -93,10 +80,11 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import useTheme from '@/hooks/theme'
 import { useUserStore } from '@/stores/user'
-import loginApi from '@/apis/user'
+import { getLogin } from '@/apis/user'
 import commonApi from '@/apis/common'
 import { rsaDecode, rsaEncode } from "@/utils/encode"
 import TitleBar from '@/components/titleBar.vue'
+import { setToken } from '@/utils/auth'
 
 
 const userStore = useUserStore()
@@ -146,129 +134,29 @@ interface loginType {
 const loginForm: loginType = reactive({
   userName: userStore.userName || '',
   passWord: userStore.passWord || '',
-  email: "",
-  weixin: "",
-  qq: "",
-  douyin: "",
   serverKey: ""
 })
 
-// 使用token登陆
-const userNameLogin = async (token: string) => {
-  loadingBtn.value = true
-  const res = await loginApi.getUserInfo(`${token}`)
-  if (res.status === 200) {
-    userStore.setGitInfo(`Bearer ${token}`, res.data)
-    // 直接用token登陆，需要校验是否已经有Filehub仓库存在了：用的话直接登陆，没有的话，需要先创建Filehub
-    loginApi.checkReady(`/repos/${(res.data as any).login}/FileHub/contents/README.md`)
-      .then(checkRes => {
-        // console.log("checkReady----", checkRes);
-        if (checkRes.status === 200) {
-          loadingBtn.value = false
-          router.push('/index/files')
-          // console.log("user----", res);
-          ElMessage({
-            message: `欢迎回来：${(res.data as any).login}`,
-            type: 'success',
-          })
-        } else {
-          firstRegistInit(token)
-          ElMessage({
-            message: '第一次，可能需要耐心等待一会...',
-            type: 'success',
-          })
-          // 定时检查仓库初始化状态，检测到了再跳转到主页
-          const timer = setInterval(() => {
-            loginApi.checkReady(`/repos/${(res.data as any).login}/FileHub/contents/README.md`).then(checkRes => {
-              // console.log("checkReady----", checkRes);
-              if (checkRes.status === 200) {
-                clearInterval(timer)
-                loadingBtn.value = false
-                router.push('/index/files')
-                loadingBtn.value = false
-                ElMessage({
-                  message: '欢迎使用FileHub',
-                  type: 'success',
-                })
-                const gitPageBody = { "source": { "branch": "main", "path": "/" } }
-                commonApi.creatGitPage((res.data as any).login, 'FileHub', '', gitPageBody)
-                  .then((gitPageRes) => {
-                    // console.log("creatGitpage 成功");
-                    if (gitPageRes.status === 201) {
-                      ElMessage({
-                        message: 'FileHub文件存储库初始化成功',
-                        type: 'success',
-                      })
-                    } else {
-                      // console.log("gitPage 创建失败", gitPageRes);
-                    }
-                  }).catch(err => {
-                    ElMessage.error('FileHub文件存储库初始化失败，请联系管理员')
-                    // console.log("creatGitPage 失败：", err);
-                  })
-              } else {
-                // console.log("FileHub初始化还没做好...");
-              }
-            }).catch(err => {
-              // console.log("err FileHub初始化还没做好...", err);
-            })
-          }, 1000)
-        }
-      })
-      .catch(err => {
-        // console.log("没有检测到Filehub", err);
-        firstRegistInit(token)
-      })
-  } else {
-    // console.log("登录错误");
-    ElMessage.error('登陆失败：' + (res.data as any).message)
-    loadingBtn.value = false
-  }
-}
-
-// 验证token或用户名后：先校验是否有FileHub仓库，有的话拉取内容，没有的话，frok仓库FileHub，然后拉取内容
-const firstRegistInit = async (token: string) => {
-  // frok仓库FileHub，然后登陆
-  const payload = {
-    "name": "FileHub",
-    "include_all_branches": false
-  }
-  // 使用Filehub作为模板创建一个新仓库
-  const frokRes = await loginApi.creatFileHub(token, payload)
-  if (frokRes.status === 201) {
-    // console.log("Creat FileHub 成功");
-    // frok成功后，创建gitpage
-  } else {
-    // console.log("Creat Filehub 出错", frokRes);
-  }
-}
-
-
 // 登陆行为
-const loginAction = async () => {
+const handleLogin = async () => {
   loadingBtn.value = true
-  if (loginForm.userName && loginForm.passWord && loginModel.value === "登陆") {
-    const loginRes = await loginApi.loginUserName(loginForm.userName)
-    // // console.log('loginRes------', loginRes, loginForm)
-    if (loginRes.status === 200) {
-      const rsaContent = JSON.parse(rsaDecode(atob((loginRes.data as any).content)))
-      // // console.log("rsaDecode----", rsaContent, loginForm);
-      if (rsaContent.userName === loginForm.userName && rsaContent.passWord === loginForm.passWord) {
-        // // console.log("用户名密码正确", rsaContent);
-        // userNameLogin(rsaContent.gitToken)
-        userStore.setUserInfo(rsaContent)
-      } else {
-        // console.log("密码不正确");
-        ElMessage.error('登陆失败，账号密码不正确')
-        loadingBtn.value = false
-      }
+  if (loginForm.userName && loginForm.passWord && loginModel.value === "Login") {
+    const loginRes = await getLogin({ username: loginForm.userName, password: loginForm.passWord }).catch((err: any) => {
+      console.log(err, 'err')
+      loadingBtn.value = false
+    })
+    console.log(loginRes, 'loginRes');
+    if (loginRes.code == 200) {
+      setToken(loginRes.data)
+      userStore.GET_USER_INFO({})
+      ElMessage.success('登陆成功')
+      router.push('/index/files')
     } else {
       ElMessage.error('登陆失败，此用户不存在！')
-      loadingBtn.value = false
     }
+    loadingBtn.value = false
   } else {
-    // console.log('登陆失败，账号密码不对')
-    ElMessage.error('登陆失败，账号密码不对')
+    ElMessage.error('登陆失败，账号/密码不对')
     loadingBtn.value = false
   }
 }
@@ -392,9 +280,11 @@ const registUser = async () => {
       }
 
       .login-title {
-        font-size: 28px;
+        font-size: 26px;
         font-weight: 700;
         margin-bottom: 24px;
+        margin-top: 8px;
+        color: var(--el-color-primary);
       }
     }
   }
@@ -414,16 +304,25 @@ html.dark .login-container {
 
 .login-info {
   margin-top: 10px;
+  width: 250px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 4px;
+
+  a {
+    font-size: 12px;
+    color: #b0b0b0;
+  }
 }
 
 .login-btn {
   width: 250px;
   height: 28px;
   border-radius: 25px;
-  margin-top: 30px;
+  margin-top: 10px;
   font-weight: 700;
   font-size: 16px;
-  // box-shadow: var(--box-shadow);
   border: none;
   outline: none;
 }

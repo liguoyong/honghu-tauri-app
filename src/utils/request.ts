@@ -1,10 +1,7 @@
-import { HttpVerb, fetch } from '@tauri-apps/api/http'
-import { useUserStore } from '@/stores/user'
-import { Body } from '@tauri-apps/api/http'
+import { fetch } from '@tauri-apps/api/http';
+import qs from 'qs';
 
-const server = 'https://api.github.com'
-const baseURL = `${server}`
-const userStore = useUserStore()
+const baseURL = ``;
 
 const BODY_TYPE = {
     Form: 'Form',
@@ -34,53 +31,53 @@ const buildFullPath = (baseURL: string, requestedURL: string) => {
     return requestedURL
 }
 
-// 重新获取API接口速率
-export const getApiLimit = () => {
-    let payload = {
-        method: 'GET' as HttpVerb,
-        headers: {
-            Authorization: userStore.gitToken!,
-        },
+const buildURL = (url: string, params: any): string => {
+    if (!params) {
+        return url
     }
-    fetch('https://api.github.com/rate_limit', payload)
-        .then(({ status, data }) => {
-            if (status >= 200 && status < 500) {
-                console.log('apilimit---', data)
-                userStore.setApiRate((data as any).rate)
-            }
-        })
-        .catch((err) => {
-            console.log('apilimiterr-------', err)
-        })
+    const serializedParams = qs.stringify(params)
+    if (serializedParams) {
+        url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams
+    }
+    return url
 }
 
-const http = async (url: string, options: any = {}) => {
-    if (!options.headers)
-        options.headers = {
-            Authorization: userStore.gitToken,
-        }
-    if (options?.body) {
-        options.body = Body.json(options.body)
-        if (options.body.type === BODY_TYPE.Form) {
-            options.headers['Content-Type'] = 'multipart/form-data'
-        }
-    }
+const http = (url: string, options: any = {}) => {
+    const params = { ...options.params }
+    if (!options.headers) options.headers = {}
+    // todo 可以往 headers 中添加 token 或 cookie 等信息
+
+    // if (options?.body) {
+    //     const { type = '' } = options.body
+    //     if (type === BODY_TYPE.Form) {
+    //         options.headers['Content-Type'] = 'multipart/form-data'
+    //     }
+    // }
+    options.headers['Content-Type'] = 'multipart/form-data'
     options = { ...commonOptions, ...options }
-    console.log('request-------', buildFullPath(baseURL, url), options)
-    return fetch(buildFullPath(baseURL, url), options)
+    fetch(url, options)
         .then(({ status, data }) => {
-            if (status >= 200 && status < 500) {
-                return { status, data }
+            if (status >= 200 && status < 400) {
+                return { data }
             }
             return Promise.reject({ status, data })
         })
         .catch((err) => {
-            console.log(err)
+            console.error(err)
             return Promise.reject(err)
         })
-        .finally(() => {
-            // 发送接口速率
-            getApiLimit()
+    console.log(buildURL(buildFullPath(baseURL, url), params),options, 'sadasdasd')
+    
+    return fetch(buildURL(buildFullPath(baseURL, url), params), options)
+        .then(({ status, data }) => {
+            if (status >= 200 && status < 400) {
+                return { data }
+            }
+            return Promise.reject({ status, data })
+        })
+        .catch((err) => {
+            console.error(err)
+            return Promise.reject(err)
         })
 }
 
