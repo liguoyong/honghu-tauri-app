@@ -12,7 +12,7 @@ export const useUserStore = defineStore('userInfo', {
             serverKey: localStorage.getItem('serverKey') || '',
             theme: localStorage.getItem('theme') || 'light',
             roles: '',
-            avatar: '',
+            avatar: 'https://himg.bdimg.com/sys/portraitn/item/public.1.d1947348.f94WsAZCkjFKi-RrT6HZbQ',
             userId: ''
         }
     },
@@ -39,7 +39,7 @@ export const useUserStore = defineStore('userInfo', {
         async SET_USER_INFO(data: any) {
             this.userName = data.username
             this.roles = data.roles
-            this.avatar = data.avatar
+            this.avatar = data.avatar || 'https://himg.bdimg.com/sys/portraitn/item/public.1.d1947348.f94WsAZCkjFKi-RrT6HZbQ'
             this.userId = data.userId
         },
         async GET_USER_INFO() {

@@ -5,7 +5,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/',
         name: 'login',
         component: () => import('@/views/login/index.vue'),
-        meta: { requiresAuth: false, show: false, title: '登陆页面' },
+        meta: { requiresAuth: false, show: false, title: '登录页面' },
     },
     {
         path: '/index',
@@ -43,7 +43,7 @@ const router = createRouter({
 
 // 配置前置后置路由导航守卫
 router.beforeEach(async (to, from, next) => {
-    // 判断是否已经登陆，是的话，就直接到主页，否则还是登陆页
+    // 判断是否已经登录，是的话，就直接到主页，否则还是登录页
     // console.log('to, from ,next', to, from, next)
     const userToken = getToken().accessToken
     // localStorage.getItem('userToken')
@@ -60,7 +60,7 @@ router.beforeEach(async (to, from, next) => {
             next()
         }
     } else {
-        // 不存在token，就跳转到登陆页
+        // 不存在token，就跳转到登录页
         if (userToken) {
             // 存在token,就跳转到主页
             next()

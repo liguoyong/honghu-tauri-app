@@ -9,7 +9,7 @@ export interface DataInfo<T> {
   refreshToken: string;
   /** 用户名 */
   username?: string;
-  /** 当前登陆用户的角色 */
+  /** 当前登录用户的角色 */
   roles?: Array<string>;
 }
 

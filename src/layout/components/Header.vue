@@ -3,8 +3,11 @@
     <div class="logo" data-tauri-drag-region>
       <el-popover placement="right" trigger="hover" :content="appVersion">
         <template #reference>
-          <img v-if="userStore.theme === 'light'" :src="logoLight" class="logo-img" data-tauri-drag-region />
-          <img v-else :src="logoDark" class="logo-img" data-tauri-drag-region />
+          <div class="logo-container">
+            <img v-if="userStore.theme === 'light'" :src="logoLight" class="logo-img" data-tauri-drag-region />
+            <img v-else :src="logoDark" class="logo-img" data-tauri-drag-region />
+            <span data-tauri-drag-region>鸿鹄</span>
+          </div>
         </template>
       </el-popover>
     </div>
@@ -36,26 +39,23 @@
           </template>
         </el-dropdown>
       </div>
-      <!-- <div class="user-info">
+      <div class="user-info">
         <el-dropdown trigger="click">
-          <img :src="userStore.gitInfo.avatar_url" alt="" class="user-img" />
+          <img :src="userStore.avatar" alt="" class="user-img" />
           <template #dropdown>
             <el-dropdown-menu>
               <div class="user-item">
-                {{ userStore.gitInfo.name }}
+                {{ userStore.userName }}
               </div>
-              <el-dropdown-item>
-                <a :href="userStore.gitInfo.html_url" target="_blank" class="my-info">仓库主页</a>
-              </el-dropdown-item>
               <el-dropdown-item>
                 <a href="https://github.com/settings/profile" target="_blank" class="my-info">编辑资料</a>
               </el-dropdown-item>
               <el-dropdown-item @click="loginOut">切换账号</el-dropdown-item>
-              <el-dropdown-item @click="loginOut">退出登陆</el-dropdown-item>
+              <el-dropdown-item @click="loginOut">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
-      </div> -->
+      </div>
       <div class="titlebar">
         <TitleBar></TitleBar>
       </div>
@@ -64,13 +64,14 @@
 </template>
 
 <script setup lang="ts">
-import logoLight from '@/assets/image/fileHub.png'
-import logoDark from '@/assets/image/fileHubDark.png'
+import logoLight from '@/assets/image/logo.png'
+import logoDark from '@/assets/image/logo.png'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import useTheme from '@/hooks/theme'
 import { useI18n } from 'vue-i18n'
 import { timestampToTime } from "@/utils/index"
+import { removeToken } from '@/utils/auth'
 import TitleBar from '@/components/titleBar.vue'
 import { getVersion } from '@tauri-apps/api/app';
 import { onMounted, ref } from 'vue'
@@ -97,7 +98,8 @@ const colors = [
 const router = useRouter()
 // 退出登录
 const loginOut = () => {
-  localStorage.removeItem("gitToken")
+  removeToken()
+  // localStorage.removeItem("gitToken")
   router.push('/')
 }
 // 语言切换
@@ -122,6 +124,8 @@ const changeLang = (lang: string) => {
   line-height: 32px;
   font-size: 14px;
   cursor: pointer;
+  color: var(--el-text-color-regular);
+  border-bottom: 1px solid #565656;
 }
 
 :deep(.el-progress-bar__outer) {
@@ -138,8 +142,19 @@ const changeLang = (lang: string) => {
     display: flex;
     align-items: center;
 
+    .logo-container {
+      display: flex;
+      align-items: center;
+
+      span {
+        margin-left: 8px;
+        font-size: 14px;
+        color: var(--el-color-primary);
+      }
+    }
+
     .logo-img {
-      width: 150px;
+      width: 36px;
       height: 36px;
     }
 

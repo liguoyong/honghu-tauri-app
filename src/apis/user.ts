@@ -5,7 +5,7 @@ export type UserResult = {
   data: {
     /** 用户名 */
     username: string;
-    /** 当前登陆用户的角色 */
+    /** 当前登录用户的角色 */
     roles: Array<string>;
     /** `token` */
     accessToken: string;
@@ -40,5 +40,5 @@ export const refreshTokenApi = (data?: object) => {
 
 /** 获取user信息 */
 export const getUserInfo = async (data?: object) => {
-    return await http.request<UserResult>("post", "/api/user/info", { data });
-  };
+  return await http.request<UserResult>("post", "/api/user/info", { data });
+};

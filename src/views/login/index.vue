@@ -89,7 +89,7 @@ import { setToken } from '@/utils/auth'
 
 const userStore = useUserStore()
 
-// 登陆loading状态
+// 登录loading状态
 const loadingBtn = ref(false)
 
 const { locale } = useI18n()
@@ -120,13 +120,13 @@ const cantSpace = () => {
   localStorage.setItem("passWord", loginForm.passWord)
 }
 
-// 模式：登陆，token，注册
+// 模式：登录，token，注册
 let loginModel = ref('Login')
 const switchModel = (model: string) => {
   loginModel.value = model
 }
 
-// 点击登陆后校验登陆逻辑，然后登陆
+// 点击登录后校验登录逻辑，然后登录
 interface loginType {
   userName: string
   passWord: string
@@ -137,7 +137,7 @@ const loginForm: loginType = reactive({
   serverKey: ""
 })
 
-// 登陆行为
+// 登录行为
 const handleLogin = async () => {
   loadingBtn.value = true
   if (loginForm.userName && loginForm.passWord && loginModel.value === "Login") {
@@ -149,14 +149,14 @@ const handleLogin = async () => {
     if (loginRes.code == 200) {
       setToken(loginRes.data)
       userStore.GET_USER_INFO({})
-      ElMessage.success('登陆成功')
+      ElMessage.success('登录成功')
       router.push('/index/files')
     } else {
-      ElMessage.error('登陆失败，此用户不存在！')
+      ElMessage.error('登录失败，此用户不存在！')
     }
     loadingBtn.value = false
   } else {
-    ElMessage.error('登陆失败，账号/密码不对')
+    ElMessage.error('登录失败，账号/密码不对')
     loadingBtn.value = false
   }
 }
@@ -319,10 +319,9 @@ html.dark .login-container {
 .login-btn {
   width: 250px;
   height: 28px;
-  border-radius: 25px;
   margin-top: 10px;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 12px;
   border: none;
   outline: none;
 }
