@@ -5,32 +5,106 @@ const routes: Array<RouteRecordRaw> = [
         path: '/',
         name: 'login',
         component: () => import('@/views/login/index.vue'),
+        hidden: true,
         meta: { requiresAuth: false, show: false, title: '登录页面' },
     },
     {
-        path: '/index',
-        name: 'index',
-        redirect: '/index/files',
+        path: '/home',
+        name: 'home',
+        redirect: '/home/index',
         component: () => import('@/layout/index.vue'),
         meta: {
             requiresAuth: false,
             show: true,
-            title: '我的文件',
-            icon: 'Files',
+            title: '首页',
+            icon: 'home',
         },
-        // 所有的分类全都是layout的子路由
         children: [
-            // 上传文件嵌套进我的文件中，增加一个按钮
             {
-                path: 'files',
-                name: 'files',
+                path: 'index',
+                name: 'homeIndex',
                 meta: {
                     requiresAuth: false,
                     show: true,
-                    title: '我的资源',
-                    icon: 'FolderOpened',
+                    title: '首页',
+                    icon: 'home',
                 },
-                component: () => import('@/views/files/index.vue'),
+                component: () => import('@/views/home/index.vue'),
+            }
+        ],
+    },
+    {
+        path: '/note',
+        name: 'note',
+        redirect: '/note/index',
+        component: () => import('@/layout/index.vue'),
+        meta: {
+            requiresAuth: false,
+            show: true,
+            title: '笔记',
+            icon: 'note',
+        },
+        children: [
+            {
+                path: 'index',
+                name: 'noteIndex',
+                meta: {
+                    requiresAuth: false,
+                    show: true,
+                    title: '笔记',
+                    icon: 'note',
+                },
+                component: () => import('@/views/note/index.vue'),
+            }
+        ],
+    },
+    {
+        path: '/ai',
+        name: 'ai',
+        redirect: '/ai/index',
+        component: () => import('@/layout/index.vue'),
+        meta: {
+            requiresAuth: false,
+            show: true,
+            title: 'AI',
+            icon: 'ai',
+        },
+        children: [
+            {
+                path: 'index',
+                name: 'aiIndex',
+                meta: {
+                    requiresAuth: false,
+                    show: true,
+                    title: 'AI',
+                    icon: 'ai',
+                },
+                component: () => import('@/views/ai/index.vue'),
+            }
+        ],
+    },
+    {
+        path: '/tool',
+        name: 'tool',
+        redirect: '/tool/index',
+        component: () => import('@/layout/index.vue'),
+        meta: {
+            requiresAuth: false,
+            show: true,
+            title: '工具',
+            icon: 'tool',
+        },
+        children: [
+            {
+                path: 'index',
+                name: 'toolIndex',
+                meta: {
+                    requiresAuth: false,
+                    show: true,
+                    title: '工具',
+                    icon: 'tool',
+                },
+                component: () => import('@/views/tool/index.vue'),
             }
         ],
     },
@@ -54,7 +128,7 @@ router.beforeEach(async (to, from, next) => {
         if (userToken) {
             // 存在token,就跳转到主页：记住上次的菜单和路由
             // localStorage.removeItem("menuIndex")
-            localStorage.getItem("menuRoute") ? next(localStorage.getItem("menuRoute")!) : next('/index/files')
+            localStorage.getItem("menuRoute") ? next(localStorage.getItem("menuRoute")!) : next('/hone/index')
         } else {
             //否则就继续
             next()

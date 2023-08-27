@@ -9,18 +9,6 @@ a {
     text-decoration: none;
 }
 
-// html.light .login-container {
-//     background-image: url('@/assets/image/light_bg.png');
-//     background-repeat: no-repeat;
-//     background-size: 100% 100%;
-// }
-
-// html.dark .login-container {
-//     background-image: url('@/assets/image/dark_bg.png');
-//     background-repeat: no-repeat;
-//     background-size: 100% 100%;
-// }
-
 body {
     overflow: hidden;
 }
@@ -28,6 +16,7 @@ body {
 #app {
     height: 100vh;
     background-color: var(--bg-color);
+    border-radius: 8px;
     overflow: hidden;
 }
 

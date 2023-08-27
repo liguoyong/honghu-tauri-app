@@ -2,7 +2,7 @@
   <div class="common-layout">
     <Header></Header>
     <div class="bar-main">
-      <Sidebar class="bar"></Sidebar>
+      <Sidebar></Sidebar>
       <AppMain class="main-box"></AppMain>
     </div>
   </div>

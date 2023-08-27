@@ -89,10 +89,10 @@ commonApi.getHubInfo().then(async res => {
 })
 
 onMounted(() => {
-  document.getElementById('titlebar-minimize')!.addEventListener('click', () => appWindow.minimize())
-  document.getElementById('titlebar-maximize')!.addEventListener('click', () => appWindow.toggleMaximize())
-  document.getElementById('titlebar-close')!.addEventListener('click', () => appWindow.close())
-  console.log("onMounted------", document.getElementById('titlebar-close'));
+  // document.getElementById('titlebar-minimize')!.addEventListener('click', () => appWindow.minimize())
+  // document.getElementById('titlebar-maximize')!.addEventListener('click', () => appWindow.toggleMaximize())
+  // document.getElementById('titlebar-close')!.addEventListener('click', () => appWindow.close())
+  // console.log("onMounted------", document.getElementById('titlebar-close'));
 })
 
 </script>

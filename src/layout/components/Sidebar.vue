@@ -1,35 +1,39 @@
 <template>
-  <el-menu :default-active="defaultMenu" unique-opened class="el-menu-vertical">
-    <div v-for="(item, index) in routes[1].children" :key="index">
-      <el-sub-menu :index="index.toString()" v-if="item.children && item.meta!.show">
-        <template #title>
-          <el-icon>
-            <component :is="item.meta!.icon"></component>
-          </el-icon>
-          <span>{{ item.meta!.title }}</span>
-        </template>
-        <el-menu-item :index="`${index.toString()}-${cid.toString()}`" v-for="(chil, cid) in item.children" :key="cid"
-          @click="clickMenu(`${item.path}/${chil.path}`, `${index.toString()}-${cid.toString()}`)">
-          {{ chil.meta!.title }}
-        </el-menu-item>
-      </el-sub-menu>
-      <el-menu-item :index="index.toString()" v-else-if="item.meta!.show"
-        @click="clickMenu(`${item.path}`, index.toString())">
-        <el-icon>
-          <component :is="item.meta!.icon"></component>
-        </el-icon>
-        <span>{{ item.meta!.title }}</span>
-      </el-menu-item>
+  <div class="expand-icon-container">
+    <svg-icon name="expand" v-if="!appStore.isCollapse" @click="appStore.isCollapse = true" />
+    <svg-icon name="collapse" v-else @click="appStore.isCollapse = false" />
+  </div>
+  <div class="menu-container" v-if="!appStore.isCollapse">
+
+    <div class="menu-item" v-for="(item, index) in filterRouterMap" :key="index"
+      :class="{ 'menu-active': isChecked(item) }">
+      <el-tooltip effect="dark" :content="item.meta.title" placement="right">
+        <div class="svg-icon-container" @click="$router.push(item.redirect)">
+          <svg-icon :name="item.meta.icon" />
+        </div>
+      </el-tooltip>
     </div>
-  </el-menu>
+  </div>
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue'
 import { routes } from '@/route/index'
 import { useRouter } from 'vue-router'
-
+import { useAppStore } from '@/stores/app'
 const router = useRouter()
-
+const appStore = useAppStore()
+console.log(routes, 'routes', appStore.isCollapse)
+const filterRouter = routes.filter((item, index) => {
+  return !item.hidden
+})
+const filterRouterMap = filterRouter.map((item, index) => {
+  return item
+})
+const isChecked = (item: { redirect: any; }) => {
+  return item.redirect === router.currentRoute.value.path
+}
+console.log(filterRouter, 'filterRouter')
 console.log('routes----', routes)
 
 const defaultMenu = localStorage.getItem("menuIndex") ? localStorage.getItem("menuIndex") as string : "0"
@@ -44,50 +48,72 @@ const clickMenu = (menuPath: string, menuIndex: string) => {
 </script>
 
 <style scoped lang="scss">
-.el-menu-vertical {
-  // border-bottom: 1px solid rgb(188, 187, 187);
-  background-color: unset;
-  width: 160px;
-  overflow-y: auto;
-  user-select: none;
+.menu-container {
+  width: 44px;
+  position: absolute;
+  border: 1px solid #ccc;
+  left: 18px;
+  z-index: 100;
+  border-radius: 24px;
+  background: #474747;
+  top: 50%;
+  transform: translateY(-50%);
+
+  .menu-item {
+    text-align: center;
+
+    .svg-icon-container {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 10px auto;
+      cursor: pointer;
+
+      &:first-of-type {
+        margin-top: 5px;
+      }
+
+      &:last-of-type {
+        margin-bottom: 5px;
+      }
+
+      &:hover {
+        background: #ededee;
+      }
+    }
+
+    &.menu-active {
+      .svg-icon-container {
+        background: #ededee;
+      }
+
+    }
+
+    .svg-icon {
+      width: 16px;
+      height: 16px;
+    }
+  }
 }
 
+.expand-icon-container {
+  width: 16px;
+  height: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  position: absolute;
+  z-index: 100;
+  cursor: pointer;
 
-.el-menu-vertical::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-.el-menu-vertical::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-.el-menu-vertical::-webkit-scrollbar-thumb {
-  border-radius: 3px;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  background-color: #c3c3c3;
-}
-
-.el-menu-vertical::-webkit-scrollbar-track {
-  background-color: transparent;
-}
-
-:deep(.el-menu) {
-  background-color: unset;
-}
-
-:deep(.el-menu-item.is-active) {
-  // background-color: rgba(9, 30, 66, 0.08);
-  background-color: var(--menu-ative-bg);
-}
-
-// :deep(.el-menu-item) {
-//   margin-bottom: 1px;
-// }
-
-:deep(.el-menu-item:hover) {
-  background-color: var(--menu-ative-bg);
+  .svg-expand,
+  .svg-collapse {
+    width: 16px;
+    height: 16px;
+  }
 }
 </style>

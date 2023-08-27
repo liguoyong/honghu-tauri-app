@@ -6,7 +6,7 @@
           <div class="logo-container">
             <img v-if="userStore.theme === 'light'" :src="logoLight" class="logo-img" data-tauri-drag-region />
             <img v-else :src="logoDark" class="logo-img" data-tauri-drag-region />
-            <span data-tauri-drag-region>鸿鹄</span>
+            <span data-tauri-drag-region>{{ $t('logoTitle') }}</span>
           </div>
         </template>
       </el-popover>

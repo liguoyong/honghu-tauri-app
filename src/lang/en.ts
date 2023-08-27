@@ -9,6 +9,7 @@ export default {
         MyFiles: '我的文件',
         ArticleManagement: '文章管理',
     },
+    logoTitle: 'Honghu',
     loginTitle: 'HongHu',
     welcomeToHongHu: 'HongHu',
     welcomeLoginHongHu: 'HongHu',

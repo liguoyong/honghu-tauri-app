@@ -150,7 +150,7 @@ const handleLogin = async () => {
       setToken(loginRes.data)
       userStore.GET_USER_INFO({})
       ElMessage.success('登录成功')
-      router.push('/index/files')
+      router.push('/home/index')
     } else {
       ElMessage.error('登录失败，此用户不存在！')
     }

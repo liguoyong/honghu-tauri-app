@@ -1,15 +1,14 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { fileURLToPath, URL } from 'node:url';
-import viteSvgIcons, { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 import path from 'path';
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
   plugins: [vue(),
   //引入SVG图标素材文件
   createSvgIconsPlugin({
-    iconDirs: [path.resolve(process.cwd(), 'src/icons/svg')],
-    symbolId: '[name]',
+    iconDirs: [path.resolve(__dirname, 'src/icons/svg')]
   })
   ],
   resolve: {
