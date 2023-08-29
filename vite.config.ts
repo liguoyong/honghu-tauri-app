@@ -2,10 +2,12 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { fileURLToPath, URL } from 'node:url';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
+import UnoCSS from 'unocss/vite'
 import path from 'path';
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
   plugins: [vue(),
+  UnoCSS(),
   //引入SVG图标素材文件
   createSvgIconsPlugin({
     iconDirs: [path.resolve(__dirname, 'src/icons/svg')]

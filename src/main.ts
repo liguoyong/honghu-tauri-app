@@ -15,6 +15,7 @@ import '@/style/index.scss'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import i18n from './lang/index'
 import 'virtual:svg-icons-register'
+import 'virtual:uno.css';
 // import '@/icons' // icon
 import globalComponent from '@/components/index';
 
