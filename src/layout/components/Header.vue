@@ -125,7 +125,6 @@ const changeLang = (lang: string) => {
   font-size: 14px;
   cursor: pointer;
   color: var(--el-text-color-regular);
-  border-bottom: 1px solid #565656;
 }
 
 :deep(.el-progress-bar__outer) {

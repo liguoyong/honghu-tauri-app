@@ -4,10 +4,9 @@
     <svg-icon name="collapse" v-else @click="appStore.isCollapse = false" />
   </div>
   <div class="menu-container" v-if="!appStore.isCollapse">
-
     <div class="menu-item" v-for="(item, index) in filterRouterMap" :key="index"
       :class="{ 'menu-active': isChecked(item) }">
-      <el-tooltip effect="dark" :content="item.meta.title" placement="right">
+      <el-tooltip effect="dark" :content="$t(`menu.${item.name}`) || item.meta.title" placement="right">
         <div class="svg-icon-container" @click="$router.push(item.redirect)">
           <svg-icon :name="item.meta.icon" />
         </div>
@@ -21,8 +20,11 @@ import { ref } from 'vue'
 import { routes } from '@/route/index'
 import { useRouter } from 'vue-router'
 import { useAppStore } from '@/stores/app'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 const router = useRouter()
 const appStore = useAppStore()
+
 console.log(routes, 'routes', appStore.isCollapse)
 const filterRouter = routes.filter((item, index) => {
   return !item.hidden

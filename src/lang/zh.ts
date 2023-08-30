@@ -6,8 +6,17 @@ export default {
         passWord: '密码',
     },
     menu: {
-        MyFiles: '我的文件',
-        ArticleManagement: '文章管理',
+        home: '首页',
+        note: '笔记',
+        ai: 'Ai',
+        tool: 'Tool'
+    },
+    calendar: {
+        today: '今天',
+        preYear: '上一年',
+        nextYear: '下一年',
+        preMonth: '上个月',
+        nextMonth: '下个月',
     },
     logoTitle: '鸿鹄',
     loginTitle: '鸿 鹄',
@@ -21,6 +30,7 @@ export default {
     forgetPassword: '忘记密码？',
     loginTip: '当前登录结果随机。验证码随便填',
     editpassword: '修改密码',
+    loginSuccess: '登录成功！',
     logout: '退出登录',
     errMsg: {
         inputRequired: '请输入{cont}',

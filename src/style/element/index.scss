@@ -26,6 +26,9 @@ $--menu: (
   "hover-bg-color": #eaf3ff,
   "item-height": 46px,
 );
+$--calendar:(
+  "cell-width": 40px
+);
 // You should use them in scss, because we calculate it by sass.
 // comment next lines to use default color
 @forward "element-plus/theme-chalk/src/common/var.scss" with ( // do not use same name, it will override.
@@ -34,6 +37,7 @@ $--menu: (
   $pagination: $--pagination,
   $table: ("header-bg-color": #f6f7fb), // $menu: $--menu,
   $dialog: $--dialog,
+  $calendar: $--calendar,
   $input: $--input // $button-padding-horizontal: ("default": 50px)
 );
 

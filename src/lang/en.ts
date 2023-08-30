@@ -6,8 +6,17 @@ export default {
         passWord: 'passWord',
     },
     menu: {
-        MyFiles: '我的文件',
-        ArticleManagement: '文章管理',
+        home: 'Home',
+        note: 'Note',
+        ai: 'Ai',
+        tool: 'Tool'
+    },
+    calendar: {
+        today: 'Today',
+        preYear: 'Previous Year',
+        nextYear: 'Next Year',
+        preMonth: 'Previous Month',
+        nextMonth: 'Next Month',
     },
     logoTitle: 'Honghu',
     loginTitle: 'HongHu',
@@ -21,6 +30,7 @@ export default {
     forgetPassword: 'Forget Password?',
     loginTip: 'The login result is random. Just fill in the captcha',
     editpassword: 'Edit Password',
+    loginSuccess: 'Login success!',
     logout: 'Logout',
     errMsg: {
         inputRequired: 'Please Input {cont}',

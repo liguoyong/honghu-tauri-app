@@ -6,7 +6,8 @@ export const useAppStore = defineStore('app', {
         return {
             env: '',
             baseUrl: '',
-            isCollapse: false
+            isCollapse: false,
+            lang: 'zh'
         }
     },
     // 定义getters

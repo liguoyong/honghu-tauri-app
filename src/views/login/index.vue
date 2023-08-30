@@ -92,7 +92,7 @@ const userStore = useUserStore()
 // 登录loading状态
 const loadingBtn = ref(false)
 
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 // 语言切换
 const changeLang = (lang: string) => {
   locale.value = lang
@@ -149,7 +149,7 @@ const handleLogin = async () => {
     if (loginRes.code == 200) {
       setToken(loginRes.data)
       userStore.GET_USER_INFO({})
-      ElMessage.success('登录成功')
+      ElMessage.success(t('loginSuccess'))
       router.push('/home/index')
     } else {
       ElMessage.error('登录失败，此用户不存在！')
@@ -189,42 +189,6 @@ const registUser = async () => {
       const registRes = await loginApi.registUser(userInfo)
       // console.log("userContent----", userInfo, registRes);
       if (registRes.status === 201) {
-        // userStore.setGitInfo(`Bearer ${loginForm.gitToken}`, res.data)
-        // // 定时检查仓库初始化状态，检测到了再跳转到主页
-        // const timer = setInterval(() => {
-        //   loginApi.checkReady(`/repos/${(res.data as any).login}/FileHub/contents/README.md`).then(checkRes => {
-        //     // console.log("checkReady----", checkRes);
-        //     if (checkRes.status === 200) {
-        //       clearInterval(timer)
-        //       router.push('/index/files')
-        //       loadingBtn.value = false
-        //       ElMessage({
-        //         message: '欢迎使用FileHub',
-        //         type: 'success',
-        //       })
-        //       const gitPageBody = { "source": { "branch": "main", "path": "/" } }
-        //       commonApi.creatGitPage((res.data as any).login, 'FileHub', loginForm.gitToken, gitPageBody)
-        //         .then((gitPageRes) => {
-        //           // console.log("creatGitpage 成功");
-        //           if (gitPageRes.status === 201) {
-        //             ElMessage({
-        //               message: 'FileHub文件存储库初始化成功',
-        //               type: 'success',
-        //             })
-        //           } else {
-        //             // console.log("gitPage 创建失败", gitPageRes);
-        //           }
-        //         }).catch(err => {
-        //           ElMessage.error('FileHub文件存储库初始化失败，请联系管理员')
-        //           // console.log("creatGitPage 失败：", err);
-        //         })
-        //     } else {
-        //       // console.log("FileHub初始化还没做好...");
-        //     }
-        //   }).catch(err => {
-        //     // console.log("err FileHub初始化还没做好...", err);
-        //   })
-        // }, 1000)
       } else {
         ElMessage.error("注册出错:" + (registRes.data as any).message)
         loadingBtn.value = false
