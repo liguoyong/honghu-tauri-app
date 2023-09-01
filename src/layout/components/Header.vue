@@ -48,7 +48,8 @@
                 {{ userStore.userName }}
               </div>
               <el-dropdown-item>
-                <a href="https://github.com/settings/profile" target="_blank" class="my-info">编辑资料</a>
+                <a href="javascript:void(0);" @click="$router.push({ name: 'userInformation' })"
+                  class="my-info">编辑资料</a>
               </el-dropdown-item>
               <el-dropdown-item @click="loginOut">切换账号</el-dropdown-item>
               <el-dropdown-item @click="loginOut">退出登录</el-dropdown-item>

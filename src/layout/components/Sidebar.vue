@@ -116,6 +116,7 @@ const clickMenu = (menuPath: string, menuIndex: string) => {
   .svg-collapse {
     width: 16px;
     height: 16px;
+    color: var(--el-text-color-regular);
   }
 }
 </style>

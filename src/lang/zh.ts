@@ -50,4 +50,7 @@ export default {
         openStart: '开机自启动',
         autoUpdate: '软件自动更新',
     },
+    userName: '用户名',
+    passWord: '密码',
+
 }

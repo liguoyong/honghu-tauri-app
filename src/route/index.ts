@@ -108,6 +108,32 @@ const routes: Array<RouteRecordRaw> = [
             }
         ],
     },
+    {
+        path: '/user',
+        name: 'user',
+        redirect: '/user/index',
+        hidden: true,
+        component: () => import('@/layout/index.vue'),
+        meta: {
+            requiresAuth: false,
+            show: true,
+            title: '用户资料',
+            icon: 'user',
+        },
+        children: [
+            {
+                path: 'index',
+                name: 'userInformation',
+                meta: {
+                    requiresAuth: false,
+                    show: true,
+                    title: '用户资料',
+                    icon: 'user',
+                },
+                component: () => import('@/views/user/information/index.vue'),
+            }
+        ],
+    },
 ]
 
 const router = createRouter({
