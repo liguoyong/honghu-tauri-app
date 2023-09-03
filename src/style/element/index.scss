@@ -9,7 +9,7 @@ $--colors: (
   ),
   "error": ("base": #e5616e,
   ),
-  "info": ("base": #42b8dd,
+  "info": ("base": #909399,
   ),
 );
 $--pagination: (
@@ -26,7 +26,7 @@ $--menu: (
   "hover-bg-color": #eaf3ff,
   "item-height": 46px,
 );
-$--calendar:(
+$--calendar: (
   "cell-width": 40px
 );
 // You should use them in scss, because we calculate it by sass.
