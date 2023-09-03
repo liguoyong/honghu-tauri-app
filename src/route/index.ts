@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import { getToken } from '@/utils/auth'
+import { useUserStore } from '@/stores/user'
+// const userStore = useUserStore()
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
@@ -144,16 +146,15 @@ const router = createRouter({
 // 配置前置后置路由导航守卫
 router.beforeEach(async (to, from, next) => {
     // 判断是否已经登录，是的话，就直接到主页，否则还是登录页
-    // console.log('to, from ,next', to, from, next)
     const userToken = getToken().accessToken
-    // localStorage.getItem('userToken')
-    //     ? localStorage.getItem('userToken')
-    //     : ''
-    console.log(userToken, 'userTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserToken')
+    const userStore = useUserStore()
+    console.log(userStore.userId, 'userStore')
     if (to.path === '/') {
         if (userToken) {
             // 存在token,就跳转到主页：记住上次的菜单和路由
-            // localStorage.removeItem("menuIndex")
+            if (!userStore.userId) {
+                await userStore.GET_USER_INFO()
+            }
             localStorage.getItem("menuRoute") ? next(localStorage.getItem("menuRoute")!) : next('/hone/index')
         } else {
             //否则就继续
@@ -163,7 +164,11 @@ router.beforeEach(async (to, from, next) => {
         // 不存在token，就跳转到登录页
         if (userToken) {
             // 存在token,就跳转到主页
+            if (!userStore.userId) {
+                await userStore.GET_USER_INFO()
+            }
             next()
+
         } else {
             //否则就继续
             next('/')

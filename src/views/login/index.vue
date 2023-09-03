@@ -145,10 +145,9 @@ const handleLogin = async () => {
       console.log(err, 'err')
       loadingBtn.value = false
     })
-    console.log(loginRes, 'loginRes');
     if (loginRes.code == 200) {
       setToken(loginRes.data)
-      userStore.GET_USER_INFO({})
+      await userStore.GET_USER_INFO({})
       ElMessage.success(t('loginSuccess'))
       router.push('/home/index')
     } else {

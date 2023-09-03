@@ -16,6 +16,7 @@
     "element-plus": "^2.3.9",
     "js-cookie": "^3.0.5",
     "jsencrypt": "^3.3.2",
+    "koa-multer": "^1.0.2",
     "pinia": "^2.1.6",
     "qs": "^6.11.2",
     "vite-plugin-svg-icons": "^2.0.1",

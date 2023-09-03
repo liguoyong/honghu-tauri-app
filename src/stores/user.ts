@@ -8,6 +8,7 @@ export const useUserStore = defineStore('userInfo', {
             name: '',
             userName: localStorage.getItem('userName') || '',
             passWord: localStorage.getItem('passWord') || '',
+            phone: '',
             userToken: localStorage.getItem('userToken') || '',
             serverKey: localStorage.getItem('serverKey') || '',
             theme: localStorage.getItem('theme') || 'light',
@@ -41,6 +42,7 @@ export const useUserStore = defineStore('userInfo', {
             this.roles = data.roles
             this.avatar = data.avatar || 'https://himg.bdimg.com/sys/portraitn/item/public.1.d1947348.f94WsAZCkjFKi-RrT6HZbQ'
             this.userId = data.userId
+            this.phone = data.phone
         },
         async GET_USER_INFO() {
             const userInfo = await getUserInfo({})

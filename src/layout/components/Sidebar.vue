@@ -2,15 +2,15 @@
   <div class="expand-icon-container">
     <svg-icon name="expand" v-if="!appStore.isCollapse" @click="appStore.isCollapse = true" />
     <svg-icon name="collapse" v-else @click="appStore.isCollapse = false" />
-  </div>
-  <div class="menu-container" v-if="!appStore.isCollapse">
-    <div class="menu-item" v-for="(item, index) in filterRouterMap" :key="index"
-      :class="{ 'menu-active': isChecked(item) }">
-      <el-tooltip effect="dark" :content="$t(`menu.${item.name}`) || item.meta.title" placement="right">
-        <div class="svg-icon-container" @click="$router.push(item.redirect)">
-          <svg-icon :name="item.meta.icon" />
-        </div>
-      </el-tooltip>
+    <div class="menu-container" v-if="!appStore.isCollapse">
+      <div class="menu-item" v-for="(item, index) in filterRouterMap" :key="index"
+        :class="{ 'menu-active': isChecked(item) }">
+        <el-tooltip effect="dark" :content="$t(`menu.${item.name}`) || item.meta.title" placement="right">
+          <div class="svg-icon-container" @click="$router.push(item.redirect)">
+            <svg-icon :name="item.meta.icon" />
+          </div>
+        </el-tooltip>
+      </div>
     </div>
   </div>
 </template>
@@ -54,12 +54,13 @@ const clickMenu = (menuPath: string, menuIndex: string) => {
   width: 44px;
   position: absolute;
   border: 1px solid #ccc;
-  left: 18px;
+  left: 16px;
   z-index: 100;
   border-radius: 24px;
   background: #474747;
   top: 50%;
   transform: translateY(-50%);
+  display: none;
 
   .menu-item {
     text-align: center;
@@ -117,6 +118,10 @@ const clickMenu = (menuPath: string, menuIndex: string) => {
     width: 16px;
     height: 16px;
     color: var(--el-text-color-regular);
+  }
+
+  &:hover .menu-container {
+    display: block;
   }
 }
 </style>

@@ -2,6 +2,7 @@ import { http } from "@/utils/http";
 
 export type UserResult = {
   success: boolean;
+  code: number;
   data: {
     /** 用户名 */
     username: string;
@@ -41,4 +42,9 @@ export const refreshTokenApi = (data?: object) => {
 /** 获取user信息 */
 export const getUserInfo = async (data?: object) => {
   return await http.request<UserResult>("post", "/api/user/info", { data });
+};
+
+// 更新用户信息
+export const updateUserInfo = async (data?: object) => {
+  return await http.request<UserResult>("post", "/api/user/update", { data });
 };
