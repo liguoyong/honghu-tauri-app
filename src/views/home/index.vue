@@ -46,7 +46,7 @@ const selectDate = (val: CalendarDateType) => {
   if (!calendar.value) return
   calendar.value.selectDate(val)
 }
-const noteList = ref([])
+const noteList:any = ref([])
 const pageParams = reactive({
   page: 1,
   size: 10

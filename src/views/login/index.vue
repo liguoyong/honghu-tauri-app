@@ -111,8 +111,9 @@ const forgetPassword = () => {
 
 // 密码输入框不能输入空格
 const cantSpace = () => {
-  loginForm.userName = loginForm.userName.replaceAll(" ", '')
-  loginForm.passWord = loginForm.passWord.replaceAll(" ", '')
+  const { userName = '', passWord = '' } = loginForm
+  loginForm.userName = userName.replace(/\s/g, "")
+  loginForm.passWord = passWord.replace(/\s/g, "")
   // console.log("输入的值发生了变化--", loginForm);
   userStore.userName = loginForm.userName
   userStore.passWord = loginForm.passWord
@@ -141,19 +142,22 @@ const loginForm: loginType = reactive({
 const handleLogin = async () => {
   loadingBtn.value = true
   if (loginForm.userName && loginForm.passWord && loginModel.value === "Login") {
-    const loginRes = await getLogin({ username: loginForm.userName, password: loginForm.passWord }).catch((err: any) => {
+    await getLogin({ username: loginForm.userName, password: loginForm.passWord }).then(async res => {
+      if (res.code == 200) {
+        setToken(res.data)
+        await userStore.GET_USER_INFO()
+        ElMessage.success(t('loginSuccess'))
+        router.push('/home/index')
+      } else {
+        ElMessage.error('登录失败，此用户不存在！')
+      }
+      loadingBtn.value = false
+    }).catch((err: any) => {
       console.log(err, 'err')
       loadingBtn.value = false
     })
-    if (loginRes.code == 200) {
-      setToken(loginRes.data)
-      await userStore.GET_USER_INFO({})
-      ElMessage.success(t('loginSuccess'))
-      router.push('/home/index')
-    } else {
-      ElMessage.error('登录失败，此用户不存在！')
-    }
-    loadingBtn.value = false
+
+
   } else {
     ElMessage.error('登录失败，账号/密码不对')
     loadingBtn.value = false
@@ -168,39 +172,39 @@ const registUser = async () => {
     type: 'success',
   })
   // 先验证用户名是否重复
-  const loginRes = await loginApi.loginUserName(loginForm.userName)
-  // console.log('UserNameExistRes------', loginRes)
-  if (loginRes.status === 200) {
-    ElMessage.error("用户名已存在，请更换用户名")
-    loadingBtn.value = false
-    return
-  }
+  // const loginRes = await loginApi.loginUserName(loginForm.userName)
+  // // console.log('UserNameExistRes------', loginRes)
+  // if (loginRes.status === 200) {
+  //   ElMessage.error("用户名已存在，请更换用户名")
+  //   loadingBtn.value = false
+  //   return
+  // }
   // 先验证token是否有效，然后注册：pr到数据资产库
-  if (loginForm.userName && loginForm.passWord) {
-    const res = await loginApi.getUserInfo()
-    if (res.status === 200) {
-      // 文件名直接使用用户名，文件内容：用户名+密码+token加密
-      const encodeUser = rsaEncode(JSON.stringify(loginForm))
-      const userInfo = {
-        "body": encodeUser,
-        "title": `[regist]userName:${loginForm.userName}`
-      }
-      const registRes = await loginApi.registUser(userInfo)
-      // console.log("userContent----", userInfo, registRes);
-      if (registRes.status === 201) {
-      } else {
-        ElMessage.error("注册出错:" + (registRes.data as any).message)
-        loadingBtn.value = false
-      }
-    } else {
-      // console.log("Token无效,请填写正确Token");
-      ElMessage.error("Token无效,请填写正确Token")
-      loadingBtn.value = false
-    }
-  } else {
-    ElMessage.error("请填写用户名/密码/Token")
-    loadingBtn.value = false
-  }
+  // if (loginForm.userName && loginForm.passWord) {
+  //   const res = await loginApi.getUserInfo()
+  //   if (res.status === 200) {
+  //     // 文件名直接使用用户名，文件内容：用户名+密码+token加密
+  //     const encodeUser = rsaEncode(JSON.stringify(loginForm))
+  //     const userInfo = {
+  //       "body": encodeUser,
+  //       "title": `[regist]userName:${loginForm.userName}`
+  //     }
+  //     const registRes = await loginApi.registUser(userInfo)
+  //     // console.log("userContent----", userInfo, registRes);
+  //     if (registRes.status === 201) {
+  //     } else {
+  //       ElMessage.error("注册出错:" + (registRes.data as any).message)
+  //       loadingBtn.value = false
+  //     }
+  //   } else {
+  //     // console.log("Token无效,请填写正确Token");
+  //     ElMessage.error("Token无效,请填写正确Token")
+  //     loadingBtn.value = false
+  //   }
+  // } else {
+  //   ElMessage.error("请填写用户名/密码/Token")
+  //   loadingBtn.value = false
+  // }
 }
 </script>
 

@@ -47,14 +47,14 @@ class PureHttp {
     private static axiosInstance: AxiosInstance = Axios.create(defaultConfig);
 
     /** 重连原始请求 */
-    private static retryOriginalRequest(config: PureHttpRequestConfig) {
-        return new Promise(resolve => {
-            PureHttp.requests.push((token: string) => {
-                config.headers["Authorization"] = formatToken(token);
-                resolve(config);
-            });
-        });
-    }
+    // private static retryOriginalRequest(config: any) {
+    //     return new Promise(resolve => {
+    //         PureHttp.requests.push((token:string) => {
+    //             config.headers["Authorization"] = formatToken(token);
+    //             resolve(config);
+    //         });
+    //     });
+    // }
 
     /** 请求拦截 */
     private httpInterceptorsRequest(): void {
@@ -72,13 +72,14 @@ class PureHttp {
                 }
                 /** 请求白名单，放置一些不需要token的接口（通过设置请求白名单，防止token过期后再请求造成的死循环问题） */
                 const whiteList = ["/refreshToken", "/api/user/login"];
-                return whiteList.some(v => config?.url.indexOf(v) > -1)
+                return whiteList.some(v => config.url && config.url.includes(v))
                     ? config
                     : new Promise(resolve => {
                         const data = getToken();
                         if (data) {
+                            const {expires = 0} = data
                             const now = new Date().getTime();
-                            const expired = parseInt(data.expires) - now <= 0;
+                            const expired = parseInt(expires + '') - now <= 0;
                             if (expired) {
                                 // if (!PureHttp.isRefreshing) {
                                 //     PureHttp.isRefreshing = true;
@@ -95,11 +96,11 @@ class PureHttp {
                                 //             PureHttp.isRefreshing = false;
                                 //         });
                                 // }
-                                resolve(PureHttp.retryOriginalRequest(config));
+                                // resolve(PureHttp.retryOriginalRequest(config));
                             } else {
-                                config.headers["Authorization"] = formatToken(
+                                config.headers ? config.headers["Authorization"] = formatToken(
                                     data.accessToken
-                                );
+                                ):'';
                                 resolve(config);
                             }
                         } else {
@@ -159,7 +160,7 @@ class PureHttp {
         return new Promise((resolve, reject) => {
             PureHttp.axiosInstance
                 .request(config)
-                .then((response: undefined) => {
+                .then((response: any) => {
                     resolve(response);
                 })
                 .catch(error => {
