@@ -5,8 +5,8 @@
     <div class="menu-container" v-if="!appStore.isCollapse">
       <div class="menu-item" v-for="(item, index) in filterRouterMap" :key="index"
         :class="{ 'menu-active': isChecked(item) }">
-        <el-tooltip effect="dark" :content="$t(`menu.${item.name}`) || item.meta.title" placement="right">
-          <div class="svg-icon-container" @click="$router.push(item.redirect)">
+        <el-tooltip effect="dark" :content="$t(`menu.${item.name}`) || item.meta.title || ''" placement="right">
+          <div class="svg-icon-container" @click="$router.push(item.redirect || '/')">
             <svg-icon :name="item.meta.icon" />
           </div>
         </el-tooltip>
@@ -32,7 +32,7 @@ const filterRouter = routes.filter((item, index) => {
 const filterRouterMap = filterRouter.map((item, index) => {
   return item
 })
-const isChecked = (item: { redirect: any; }) => {
+const isChecked = (item: any) => {
   return item.redirect === router.currentRoute.value.path
 }
 console.log(filterRouter, 'filterRouter')

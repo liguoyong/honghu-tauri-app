@@ -1,5 +1,5 @@
 <template>
-    <el-form class="information-container" :label-position="labelPosition" size="small" label-width="100px"
+    <el-form class="information-container" label-position="right" size="small" label-width="100px"
         :model="formLabelAlign">
         <el-form-item label="用户头像">
             <el-upload class="avatar-uploader" action="/api/upload" :show-file-list="false"
@@ -33,7 +33,6 @@ import { updateUserInfo } from '@/apis/user'
 import { useUserStore } from '@/stores/user'
 const userStore = useUserStore()
 const { userName, phone, avatar, userId } = userStore
-const labelPosition = ref('right')
 
 const formLabelAlign = reactive({
     name: '',
@@ -59,6 +58,7 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = (
     response,
     uploadFile
 ) => {
+    console.log(response, 'response')
     userForm.avatar = URL.createObjectURL(uploadFile.raw!)
 }
 

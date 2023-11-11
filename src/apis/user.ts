@@ -1,5 +1,11 @@
 import { http } from "@/utils/http";
 
+export type CommonResult = {
+  success: boolean;
+  code: number;
+  data: any;
+};
+
 export type UserResult = {
   success: boolean;
   code: number;
@@ -30,8 +36,8 @@ export type RefreshTokenResult = {
 };
 
 /** 登录 */
-export const getLogin = (data?: object) => {
-  return http.request<UserResult>("post", "/api/user/login", { data });
+export const getLogin = async (data?: object) => {
+  return await http.request<CommonResult>("post", "/api/user/login", { data });
 };
 
 /** 刷新token */

@@ -1,4 +1,4 @@
-import { privateKey, publickKey } from '@/config'
+import { privateKey, publickKey } from '@/config/index.ts'
 import JSEncrypt from 'jsencrypt'
 
 export const rsaEncode = (content: string) => {
