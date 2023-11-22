@@ -14,7 +14,7 @@ export const useUserStore = defineStore('userInfo', {
             theme: localStorage.getItem('theme') || 'light',
             roles: '',
             avatar: 'https://himg.bdimg.com/sys/portraitn/item/public.1.d1947348.f94WsAZCkjFKi-RrT6HZbQ',
-            userId: ''
+            userId: localStorage.getItem('userId') || ''
         }
     },
     // 定义getters
@@ -31,10 +31,12 @@ export const useUserStore = defineStore('userInfo', {
             this.passWord = setInfo.passWord
             this.userToken = setInfo.token
             this.serverKey = setInfo.serverKey
+            this.userId = setInfo.userId
             localStorage.setItem('userName', this.userName)
             localStorage.setItem('passWord', this.passWord)
             localStorage.setItem('userToken', this.userToken)
             localStorage.setItem('serverKey', this.serverKey)
+            localStorage.setItem('userId', this.userId)
             console.log('setUserInfo------', setInfo)
         },
         async SET_USER_INFO(data: any) {

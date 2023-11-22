@@ -1,180 +1,170 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import { getToken } from '@/utils/auth'
-import { useUserStore } from '@/stores/user'
+import { createRouter, createWebHistory } from "vue-router";
+import { getToken } from "@/utils/auth";
+import { useUserStore } from "@/stores/user";
 // const userStore = useUserStore()
 const routes = [
-    {
-        path: '/',
-        name: 'login',
-        component: () => import('@/views/login/index.vue'),
-        hidden: true,
-        meta: { requiresAuth: false, show: false, title: '登录页面' },
+  {
+    path: "/",
+    name: "login",
+    component: () => import("@/views/login/index.vue"),
+    hidden: true,
+    meta: { requiresAuth: false, show: false, title: "登录页面" },
+  },
+  {
+    path: "/home",
+    name: "home",
+    redirect: "/home/index",
+    component: () => import("@/layout/index.vue"),
+    meta: {
+      requiresAuth: false,
+      show: true,
+      title: "首页",
+      icon: "home",
     },
-    {
-        path: '/home',
-        name: 'home',
-        redirect: '/home/index',
-        component: () => import('@/layout/index.vue'),
+    children: [
+      {
+        path: "index",
+        name: "homeIndex",
         meta: {
-            requiresAuth: false,
-            show: true,
-            title: '首页',
-            icon: 'home',
+          requiresAuth: false,
+          show: true,
+          title: "首页",
+          icon: "home",
         },
-        children: [
-            {
-                path: 'index',
-                name: 'homeIndex',
-                meta: {
-                    requiresAuth: false,
-                    show: true,
-                    title: '首页',
-                    icon: 'home',
-                },
-                component: () => import('@/views/home/index.vue'),
-            }
-        ],
+        component: () => import("@/views/home/index.vue"),
+      },
+    ],
+  },
+  {
+    path: "/note",
+    name: "note",
+    redirect: "/note/index",
+    component: () => import("@/layout/index.vue"),
+    meta: {
+      requiresAuth: false,
+      show: true,
+      title: "笔记",
+      icon: "note",
     },
-    {
-        path: '/note',
-        name: 'note',
-        redirect: '/note/index',
-        component: () => import('@/layout/index.vue'),
+    children: [
+      {
+        path: "index",
+        name: "noteIndex",
         meta: {
-            requiresAuth: false,
-            show: true,
-            title: '笔记',
-            icon: 'note',
+          requiresAuth: false,
+          show: true,
+          title: "笔记",
+          icon: "note",
         },
-        children: [
-            {
-                path: 'index',
-                name: 'noteIndex',
-                meta: {
-                    requiresAuth: false,
-                    show: true,
-                    title: '笔记',
-                    icon: 'note',
-                },
-                component: () => import('@/views/note/index.vue'),
-            }
-        ],
+        component: () => import("@/views/note/index.vue"),
+      },
+    ],
+  },
+  {
+    path: "/ai",
+    name: "ai",
+    redirect: "/ai/index",
+    component: () => import("@/layout/index.vue"),
+    meta: {
+      requiresAuth: false,
+      show: true,
+      title: "AI",
+      icon: "ai",
     },
-    {
-        path: '/ai',
-        name: 'ai',
-        redirect: '/ai/index',
-        component: () => import('@/layout/index.vue'),
+    children: [
+      {
+        path: "index",
+        name: "aiIndex",
         meta: {
-            requiresAuth: false,
-            show: true,
-            title: 'AI',
-            icon: 'ai',
+          requiresAuth: false,
+          show: true,
+          title: "AI",
+          icon: "ai",
         },
-        children: [
-            {
-                path: 'index',
-                name: 'aiIndex',
-                meta: {
-                    requiresAuth: false,
-                    show: true,
-                    title: 'AI',
-                    icon: 'ai',
-                },
-                component: () => import('@/views/ai/index.vue'),
-            }
-        ],
+        component: () => import("@/views/ai/index.vue"),
+      },
+    ],
+  },
+  {
+    path: "/tool",
+    name: "tool",
+    redirect: "/tool/index",
+    component: () => import("@/layout/index.vue"),
+    meta: {
+      requiresAuth: false,
+      show: true,
+      title: "工具",
+      icon: "tool",
     },
-    {
-        path: '/tool',
-        name: 'tool',
-        redirect: '/tool/index',
-        component: () => import('@/layout/index.vue'),
+    children: [
+      {
+        path: "index",
+        name: "toolIndex",
         meta: {
-            requiresAuth: false,
-            show: true,
-            title: '工具',
-            icon: 'tool',
+          requiresAuth: false,
+          show: true,
+          title: "工具",
+          icon: "tool",
         },
-        children: [
-            {
-                path: 'index',
-                name: 'toolIndex',
-                meta: {
-                    requiresAuth: false,
-                    show: true,
-                    title: '工具',
-                    icon: 'tool',
-                },
-                component: () => import('@/views/tool/index.vue'),
-            }
-        ],
+        component: () => import("@/views/tool/index.vue"),
+      },
+    ],
+  },
+  {
+    path: "/user",
+    name: "user",
+    redirect: "/user/index",
+    hidden: true,
+    component: () => import("@/layout/index.vue"),
+    meta: {
+      requiresAuth: false,
+      show: true,
+      title: "用户资料",
+      icon: "user",
     },
-    {
-        path: '/user',
-        name: 'user',
-        redirect: '/user/index',
-        hidden: true,
-        component: () => import('@/layout/index.vue'),
+    children: [
+      {
+        path: "index",
+        name: "userInformation",
         meta: {
-            requiresAuth: false,
-            show: true,
-            title: '用户资料',
-            icon: 'user',
+          requiresAuth: false,
+          show: true,
+          title: "用户资料",
+          icon: "user",
         },
-        children: [
-            {
-                path: 'index',
-                name: 'userInformation',
-                meta: {
-                    requiresAuth: false,
-                    show: true,
-                    title: '用户资料',
-                    icon: 'user',
-                },
-                component: () => import('@/views/user/information/index.vue'),
-            }
-        ],
-    },
-]
+        component: () => import("@/views/user/information/index.vue"),
+      },
+    ],
+  },
+];
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes,
-})
+  history: createWebHistory(),
+  routes,
+});
 
 // 配置前置后置路由导航守卫
 router.beforeEach(async (to, from, next) => {
-    // 判断是否已经登录，是的话，就直接到主页，否则还是登录页
-    const userToken = getToken().accessToken
-    const userStore = useUserStore()
-    console.log(userStore.userId, 'userStore')
-    if (to.path === '/') {
-        if (userToken) {
-            // 存在token,就跳转到主页：记住上次的菜单和路由
-            if (!userStore.userId) {
-                await userStore.GET_USER_INFO()
-            }
-            localStorage.getItem("menuRoute") ? next(localStorage.getItem("menuRoute")!) : next('/hone/index')
-        } else {
-            //否则就继续
-            next()
-        }
-    } else {
-        // 不存在token，就跳转到登录页
-        if (userToken) {
-            // 存在token,就跳转到主页
-            if (!userStore.userId) {
-                await userStore.GET_USER_INFO()
-            }
-            next()
-
-        } else {
-            //否则就继续
-            next('/')
-        }
+  // 判断是否已经登录，是的话，就直接到主页，否则还是登录页
+  const userToken = getToken().accessToken;
+  const userStore = useUserStore();
+  if (!userToken && to.path === "/") {
+    // 未登录
+    next();
+  } else if (userToken && to.path === "/") {
+    await userStore.GET_USER_INFO();
+    localStorage.getItem("menuRoute")
+      ? next(localStorage.getItem("menuRoute")!)
+      : next("/home");
+  } else if (!userToken) {
+    next({ path: "/" });
+  } else {
+    if (!userStore.userId) {
+      await userStore.GET_USER_INFO();
     }
-})
+    next();
+  }
+});
 
-export default router
-export { routes }
+export default router;
+export { routes };

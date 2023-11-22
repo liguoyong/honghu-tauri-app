@@ -68,14 +68,14 @@ import { useI18n } from 'vue-i18n'
 import { timestampToTime } from "@/utils/index"
 import { removeToken } from '@/utils/auth'
 import TitleBar from '@/components/titleBar.vue'
-import { getVersion } from '@tauri-apps/api/app';
+// import { getVersion } from '@tauri-apps/api/app';
 import { onMounted, ref } from 'vue'
 
 let appVersion = ref("版本:")
 onMounted(async () => {
-  const version = await getVersion()
-  console.log("appVersion", version);
-  appVersion.value = "当前版本: V" + version
+  // const version = await getVersion()
+  // console.log("appVersion", version);
+  // appVersion.value = "当前版本: V" + version
 })
 
 const { locale } = useI18n()
