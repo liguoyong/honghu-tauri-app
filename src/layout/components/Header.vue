@@ -1,15 +1,11 @@
 <template>
   <div class="header" data-tauri-drag-region>
     <div class="logo" data-tauri-drag-region>
-      <el-popover placement="right" trigger="hover" :content="appVersion">
-        <template #reference>
-          <div class="logo-container">
-            <img v-if="userStore.theme === 'light'" :src="logoLight" class="logo-img" data-tauri-drag-region />
-            <img v-else :src="logoDark" class="logo-img" data-tauri-drag-region />
-            <span data-tauri-drag-region>{{ $t('logoTitle') }}</span>
-          </div>
-        </template>
-      </el-popover>
+      <div class="logo-container">
+        <img v-if="userStore.theme === 'light'" :src="logoLight" class="logo-img" data-tauri-drag-region />
+        <img v-else :src="logoDark" class="logo-img" data-tauri-drag-region />
+        <span data-tauri-drag-region>{{ $t('logoTitle') }}</span>
+      </div>
     </div>
     <div class="header-tool">
       <div class="theme">
@@ -48,8 +44,7 @@
                 {{ userStore.userName }}
               </div>
               <el-dropdown-item>
-                <a href="javascript:void(0);" @click="$router.push({ name: 'userInformation' })"
-                  class="my-info">编辑资料</a>
+                <a href="javascript:void(0);" @click="$router.push({ name: 'userInformation' })" class="my-info">编辑资料</a>
               </el-dropdown-item>
               <el-dropdown-item @click="loginOut">退出登录</el-dropdown-item>
             </el-dropdown-menu>
@@ -73,14 +68,14 @@ import { useI18n } from 'vue-i18n'
 import { timestampToTime } from "@/utils/index"
 import { removeToken } from '@/utils/auth'
 import TitleBar from '@/components/titleBar.vue'
-import { getVersion } from '@tauri-apps/api/app';
+// import { getVersion } from '@tauri-apps/api/app';
 import { onMounted, ref } from 'vue'
 
 let appVersion = ref("版本:")
 onMounted(async () => {
-  const version = await getVersion()
-  console.log("appVersion", version);
-  appVersion.value = "当前版本: V" + version
+  // const version = await getVersion()
+  // console.log("appVersion", version);
+  // appVersion.value = "当前版本: V" + version
 })
 
 const { locale } = useI18n()

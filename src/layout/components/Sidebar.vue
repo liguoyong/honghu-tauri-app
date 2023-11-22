@@ -60,7 +60,7 @@ const clickMenu = (menuPath: string, menuIndex: string) => {
   background: #474747;
   top: 50%;
   transform: translateY(-50%);
-  display: none;
+  display: block;
 
   .menu-item {
     text-align: center;
@@ -120,8 +120,8 @@ const clickMenu = (menuPath: string, menuIndex: string) => {
     color: var(--el-text-color-regular);
   }
 
-  &:hover .menu-container {
-    display: block;
-  }
+  // &:hover .menu-container {
+  //  display: block;
+  // }
 }
 </style>
