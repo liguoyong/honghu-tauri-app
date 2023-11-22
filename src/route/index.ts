@@ -11,6 +11,13 @@ const routes = [
     meta: { requiresAuth: false, show: false, title: "登录页面" },
   },
   {
+    path: "/test",
+    name: "test",
+    hidden: true,
+    component: () => import("@/views/test/index.vue"),
+    meta: { requiresAuth: false, show: false, title: "test" },
+  },
+  {
     path: "/home",
     name: "home",
     redirect: "/home/index",

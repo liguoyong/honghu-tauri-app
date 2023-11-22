@@ -13,6 +13,7 @@
       </el-col>
       <el-col :span="8">
         <div class="center-container">
+          <el-button @click="handleOpenTestWindow">test窗口</el-button>
         </div>
       </el-col>
       <el-col :span="8">
@@ -39,14 +40,14 @@
 import { ref, reactive } from 'vue'
 import type { CalendarDateType, CalendarInstance } from 'element-plus'
 import { getNotesList } from '@/apis/note'
-
-
+import Windows from '@/hooks/windows/index.js'
+// import { WebviewWindow } from '@tauri-apps/api/window'
 const calendar = ref<CalendarInstance>()
 const selectDate = (val: CalendarDateType) => {
   if (!calendar.value) return
   calendar.value.selectDate(val)
 }
-const noteList:any = ref([])
+const noteList: any = ref([])
 const pageParams = reactive({
   page: 1,
   size: 10
@@ -60,6 +61,24 @@ const getNoteList = () => {
   })
 }
 getNoteList()
+
+const handleOpenTestWindow = () => {
+  console.log('openpppppppppp',);
+  // const webview = new WebviewWindow('main_win', {
+  //   url: '/test',
+  // })
+  const { createWin } = new Windows()
+  createWin({
+    label: 'Test',
+    title: 'test页面',
+    url: '/test',
+    width: 300,
+    height: 450,
+    minWidth: 300,
+    minHeight: 200,
+    resizable: false
+  })
+}
 </script>
 <style lang="scss" scoped>
 .home-container {
@@ -70,12 +89,15 @@ getNoteList()
   .plans-container {
     padding-left: 16px;
     margin-top: 8px;
+
     .plans-container-header {
       margin-bottom: 8px;
     }
+
     .plans-container-container {
       font-size: 12px;
       color: #545454;
+
       .plan-item {
         line-height: 18px;
       }
