@@ -1,15 +1,11 @@
 <template>
   <div class="header" data-tauri-drag-region>
     <div class="logo" data-tauri-drag-region>
-      <el-popover placement="right" trigger="hover" :content="appVersion">
-        <template #reference>
-          <div class="logo-container">
-            <img v-if="userStore.theme === 'light'" :src="logoLight" class="logo-img" data-tauri-drag-region />
-            <img v-else :src="logoDark" class="logo-img" data-tauri-drag-region />
-            <span data-tauri-drag-region>{{ $t('logoTitle') }}</span>
-          </div>
-        </template>
-      </el-popover>
+      <div class="logo-container">
+        <img v-if="userStore.theme === 'light'" :src="logoLight" class="logo-img" data-tauri-drag-region />
+        <img v-else :src="logoDark" class="logo-img" data-tauri-drag-region />
+        <span data-tauri-drag-region>{{ $t('logoTitle') }}</span>
+      </div>
     </div>
     <div class="header-tool">
       <div class="theme">
@@ -48,8 +44,7 @@
                 {{ userStore.userName }}
               </div>
               <el-dropdown-item>
-                <a href="javascript:void(0);" @click="$router.push({ name: 'userInformation' })"
-                  class="my-info">编辑资料</a>
+                <a href="javascript:void(0);" @click="$router.push({ name: 'userInformation' })" class="my-info">编辑资料</a>
               </el-dropdown-item>
               <el-dropdown-item @click="loginOut">退出登录</el-dropdown-item>
             </el-dropdown-menu>
