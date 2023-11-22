@@ -24,10 +24,10 @@
       "window": {
         "all": true
       },
-      "http":{
+      "http": {
         "all": true,
         "request": true,
-        "scope":[
+        "scope": [
           "http://**",
           "https://**"
         ]
@@ -36,7 +36,7 @@
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "com.tauri-honghu.dev",
+      "identifier": "com.honghu.dev",
       "icon": [
         "icons/icon.png",
         "icons/icon.ico"
@@ -55,7 +55,7 @@
       "label": "customization",
       "center": true,
       "decorations": false,
-      "transparent":true
+      "transparent": true
     }]
   }
 }
