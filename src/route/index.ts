@@ -11,11 +11,11 @@ const routes = [
     meta: { requiresAuth: false, show: false, title: "登录页面" },
   },
   {
-    path: "/test",
-    name: "test",
+    path: "/todo",
+    name: "todo",
     hidden: true,
-    component: () => import("@/views/test/index.vue"),
-    meta: { requiresAuth: false, show: false, title: "test" },
+    component: () => import("@/views/todo/index.vue"),
+    meta: { requiresAuth: false, show: false, title: "待办" },
   },
   {
     path: "/home",
@@ -150,12 +150,18 @@ const router = createRouter({
   routes,
 });
 
+const whriteList = ['/todo']
+
 // 配置前置后置路由导航守卫
 router.beforeEach(async (to, from, next) => {
   // 判断是否已经登录，是的话，就直接到主页，否则还是登录页
   const userToken = getToken().accessToken;
   const userStore = useUserStore();
-  if (!userToken && to.path === "/") {
+  console.log(whriteList.includes(to.path), to.path);
+  
+  if(whriteList.includes(to.path)) {
+    next();
+  } else if (!userToken && to.path === "/") {
     // 未登录
     next();
   } else if (userToken && to.path === "/") {

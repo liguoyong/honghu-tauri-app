@@ -18,7 +18,7 @@ import 'virtual:svg-icons-register'
 import 'virtual:uno.css';
 // import '@/icons' // icon
 import globalComponent from '@/components/index';
-
+import Windows from '@/hooks/windows/index.js'
 const app = createApp(App)
 app.use(createPinia()).use(router).use(ElementPlus, {
     locale: zhCn,
@@ -28,3 +28,14 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
 app.mount("#app");
+const { createWin } = new Windows()
+  createWin({
+    label: 'todo',
+    title: '待办',
+    url: '/todo',
+    width: 520,
+    height: 310,
+    minWidth: 300,
+    minHeight: 200,
+    resizable: false
+  })
