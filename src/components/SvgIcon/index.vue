@@ -1,6 +1,5 @@
 <template>
-  <svg aria-hidden="true" :class="['svg-icon', `svg-${name}`]"
-    :style="style">
+  <svg aria-hidden="true" :class="['svg-icon', `svg-${name}`]" :style="style">
     <use :xlink:href="symbolId" />
   </svg>
 </template>
@@ -26,6 +25,8 @@ export default defineComponent({
   },
   setup(props) {
     const symbolId = computed(() => `#${props.prefix}-${props.name}`)
+    console.log(props.style);
+
     return { symbolId }
   }
 })

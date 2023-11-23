@@ -12,11 +12,6 @@
         </div>
       </el-col>
       <el-col :span="8">
-        <div class="center-container">
-          <el-button @click="handleOpenTestWindow">test窗口</el-button>
-        </div>
-      </el-col>
-      <el-col :span="8">
         <el-calendar ref="calendar" size="mini">
           <template #header="{ date }">
             <span class="data">{{ date }}</span>
@@ -40,8 +35,6 @@
 import { ref, reactive } from 'vue'
 import type { CalendarDateType, CalendarInstance } from 'element-plus'
 import { getNotesList } from '@/apis/note'
-import Windows from '@/hooks/windows/index.js'
-// import { WebviewWindow } from '@tauri-apps/api/window'
 const calendar = ref<CalendarInstance>()
 const selectDate = (val: CalendarDateType) => {
   if (!calendar.value) return
@@ -61,24 +54,6 @@ const getNoteList = () => {
   })
 }
 getNoteList()
-
-const handleOpenTestWindow = () => {
-  console.log('openpppppppppp',);
-  // const webview = new WebviewWindow('main_win', {
-  //   url: '/test',
-  // })
-  const { createWin } = new Windows()
-  createWin({
-    label: 'Test',
-    title: 'test页面',
-    url: '/test',
-    width: 300,
-    height: 450,
-    minWidth: 300,
-    minHeight: 200,
-    resizable: false
-  })
-}
 </script>
 <style lang="scss" scoped>
 .home-container {
