@@ -1,7 +1,9 @@
 <template>
     <div class="main-box">
         <Transition name="slide-fade">
-            <router-view></router-view>
+            <el-scrollbar ref="scrollMenuRef" class="scrollMenuBox">
+                <router-view></router-view>
+            </el-scrollbar>
         </Transition>
     </div>
 </template>
@@ -15,6 +17,7 @@ import { ref, reactive } from 'vue'
     flex: 20;
     overflow-y: auto !important;
     position: relative;
+    height: calc(100% - 56px);
 }
 
 .main-box::-webkit-scrollbar {
@@ -43,4 +46,14 @@ import { ref, reactive } from 'vue'
   transform: translateX(20px);
   opacity: 0;
 }
+// .scrollMenuBox {
+//   height: calc(100vh - 80px);
+//   width: 100%;
+//   :deep(.el-scrollbar__wrap) {
+//     overflow-x: hidden;
+//   }
+//   :deep(.el-scrollbar__view) {
+//     height: 100%;
+//   }
+// }
 </style>

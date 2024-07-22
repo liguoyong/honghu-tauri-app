@@ -15,7 +15,7 @@ const routes = [
     name: "todo",
     hidden: true,
     component: () => import("@/views/todo/index.vue"),
-    meta: { requiresAuth: false, show: false, title: "待办" },
+    meta: { requiresAuth: false, show: false, title: "待办", icon: "Management" },
   },
   {
     path: "/home",
@@ -26,7 +26,7 @@ const routes = [
       requiresAuth: false,
       show: true,
       title: "首页",
-      icon: "home",
+      icon: "HomeFilled",
     },
     children: [
       {
@@ -43,77 +43,127 @@ const routes = [
     ],
   },
   {
-    path: "/note",
-    name: "note",
-    redirect: "/note/index",
+    path: "/life",
+    name: "noteCloud",
+    component: () => import("@/layout/index.vue"),
+    redirect: { name: "lifePlan" },
+    meta: {
+      title: "生活中心",
+      icon: "GoodsFilled",
+    },
+    children: [
+      {
+        path: "bill",
+        name: "lifeBill",
+        component: () =>
+          import(
+            /* webpackChunkName: "lifeBill" */ "@/views/life/bill/index.vue"
+          ),
+        meta: {
+          title: "账单管理",
+          activeMenu: '/life/bill'
+        },
+      }
+    ],
+  },
+  {
+    path: "/work",
+    name: "work",
+    redirect: "/work/index",
     component: () => import("@/layout/index.vue"),
     meta: {
       requiresAuth: false,
       show: true,
-      title: "笔记",
-      icon: "note",
+      title: "办公中心",
+      icon: "SuitcaseLine"
     },
     children: [
+      {
+        path: "todo",
+        name: "workTodo",
+        component: () =>
+          import(
+            /* webpackChunkName: "workTodo" */ "@/views/work/todo/index.vue"
+          ),
+        meta: {
+          title: "待办事项",
+          activeMenu: '/work/todo',
+          icon: "Flag"
+        },
+      },
       {
         path: "index",
         name: "noteIndex",
         meta: {
           requiresAuth: false,
           show: true,
-          title: "笔记",
-          icon: "note",
+          title: "笔记管理",
+          icon: "EditPen"
         },
         component: () => import("@/views/note/index.vue"),
-      },
+      }
     ],
   },
   {
-    path: "/ai",
-    name: "ai",
-    redirect: "/ai/index",
+    path: "/operational",
+    name: "operational",
     component: () => import("@/layout/index.vue"),
+    redirect: { name: "tool" },
     meta: {
-      requiresAuth: false,
-      show: true,
-      title: "AI",
-      icon: "ai",
+      title: "工具中心",
+      icon: "Tools",
     },
     children: [
       {
-        path: "index",
-        name: "aiIndex",
+        path: "tool",
+        name: "tool",
+        component: () =>
+          import(
+            /* webpackChunkName: "operational" */ "../views/Tool/index.vue"
+          ),
         meta: {
-          requiresAuth: false,
-          show: true,
-          title: "AI",
-          icon: "ai",
+          title: "工具专区",
+          icon: "Opportunity"
         },
-        component: () => import("@/views/ai/index.vue"),
       },
-    ],
-  },
-  {
-    path: "/tool",
-    name: "tool",
-    redirect: "/tool/index",
-    component: () => import("@/layout/index.vue"),
-    meta: {
-      requiresAuth: false,
-      show: true,
-      title: "工具",
-      icon: "tool",
-    },
-    children: [
       {
-        path: "index",
-        name: "toolIndex",
+        path: "tool/json",
+        name: "toolJSON",
+        hidden: true,
+        component: () =>
+          import(
+            /* webpackChunkName: "toolJSON" */ "../views/Tool/components/json.vue"
+          ),
         meta: {
-          requiresAuth: false,
-          show: true,
-          title: "工具",
-          icon: "tool",
+          title: "工具中心-json",
+          activeMenu: '/operational/tool'
         },
-        component: () => import("@/views/tool/index.vue"),
+      },
+      {
+        path: "tool/svg",
+        name: "toolSvgPreview",
+        hidden: true,
+        component: () =>
+          import(
+            /* webpackChunkName: "SvgPreviewJSON" */ "../views/Tool/components/SvgPreview.vue"
+          ),
+        meta: {
+          title: "svg预览",
+          activeMenu: '/operational/tool'
+        },
+      },
+      {
+        path: "tool/shell",
+        name: "toolShell",
+        hidden: true,
+        component: () =>
+          import(
+            /* webpackChunkName: "toolShell" */ "../views/Tool/components/shell.vue"
+          ),
+        meta: {
+          title: "shell",
+          activeMenu: '/operational/tool'
+        },
       },
     ],
   },
@@ -150,16 +200,14 @@ const router = createRouter({
   routes,
 });
 
-const whriteList = ['/todo']
+const whriteList = ["/todo"];
 
 // 配置前置后置路由导航守卫
 router.beforeEach(async (to, from, next) => {
   // 判断是否已经登录，是的话，就直接到主页，否则还是登录页
   const userToken = getToken().accessToken;
   const userStore = useUserStore();
-  console.log(whriteList.includes(to.path), to.path);
-  
-  if(whriteList.includes(to.path)) {
+  if (whriteList.includes(to.path)) {
     next();
   } else if (!userToken && to.path === "/") {
     // 未登录

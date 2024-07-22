@@ -1,5 +1,5 @@
 $--colors: (
-  "primary": ("base": #3F007E,
+  "primary": ("base": #1890ff,
   ),
   "success": ("base": #22ce76,
   ),
@@ -17,7 +17,7 @@ $--pagination: (
 );
 $--dialog: (
   "border-radius": 8px,
-  "padding-primary": 40px
+  "padding-primary": 20px
 );
 $--input: (
   "border-color": #E0E1E9
@@ -25,9 +25,13 @@ $--input: (
 $--menu: (
   "hover-bg-color": #eaf3ff,
   "item-height": 46px,
+  "base-level-padding": 10px
 );
 $--calendar: (
   "cell-width": 40px
+);
+$--drawer: (
+  "padding-primary": 12px
 );
 // You should use them in scss, because we calculate it by sass.
 // comment next lines to use default color
@@ -38,6 +42,7 @@ $--calendar: (
   $table: ("header-bg-color": #f6f7fb), // $menu: $--menu,
   $dialog: $--dialog,
   $calendar: $--calendar,
+  $drawer: $--drawer,
   $input: $--input // $button-padding-horizontal: ("default": 50px)
 );
 

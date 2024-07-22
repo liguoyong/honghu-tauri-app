@@ -11,7 +11,7 @@
 
 <script setup lang='ts'>
 import Header from './components/Header.vue'
-import Sidebar from './components/Sidebar.vue';
+import Sidebar from './components/Sidebar/index.vue';
 import AppMain from './components/AppMain.vue';
 
 </script>
@@ -29,6 +29,10 @@ import AppMain from './components/AppMain.vue';
       // flex: 4;
       height: 100%;
     }
+  }
+  .main-box {
+    background: #f5f7fa;
+    // padding: 10px;
   }
 }
 </style>

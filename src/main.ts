@@ -18,7 +18,7 @@ import "virtual:svg-icons-register";
 import "virtual:uno.css";
 // import '@/icons' // icon
 import globalComponent from "@/components/index";
-import Windows from "@/hooks/windows/index.js";
+// import Windows from "./hooks/windows/index.js";
 const app = createApp(App);
 app
   .use(createPinia())
@@ -34,18 +34,18 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 app.mount("#app");
 const screenWidth = window.screen.width;
 const x = screenWidth - 100 - 520;
-const { createWin } = new Windows();
+// const { createWin } = new Windows();
 
-createWin({
-  label: "todo",
-  title: "待办",
-  url: "/todo",
-  width: 520,
-  height: 310,
-  minWidth: 300,
-  minHeight: 200,
-  x: x,
-  y: 100,
-  center: false,
-  resizable: false,
-});
+// createWin({
+//   label: "todo",
+//   title: "待办",
+//   url: "/todo",
+//   width: 520,
+//   height: 310,
+//   minWidth: 300,
+//   minHeight: 200,
+//   x: x,
+//   y: 100,
+//   center: false,
+//   resizable: false,
+// });

@@ -22,16 +22,18 @@
 </template>
 <script lang="ts" setup>
 // import miniCalendar from './components/miniCalendar.vue'
-import { ref, reactive } from 'vue'
+import { ref, reactive, watch, onMounted } from 'vue'
 import type { CalendarDateType, CalendarInstance } from 'element-plus'
 import dayjs from 'dayjs';
 const calendar = ref<CalendarInstance>()
 const tabPosition = ref('left')
 const value = ref(new Date())
+
 const logTime = () => {
     const date = dayjs(new Date(value.value)).format('YYYY-MM-DD HH:mm:ss')
     console.log(date);
 }
+
 </script>
 
 <style lang="scss" scoped>
