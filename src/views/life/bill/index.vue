@@ -23,7 +23,7 @@
                         <div class="block">
                             <el-date-picker v-model="dateRange" size="small" type="datetimerange"
                                 range-separator="至" start-placeholder="开始时间" end-placeholder="结束时间" :shortcuts="shortcuts"
-                                :size="size" value-format="YYYY-MM-DD HH:mm:ss" />
+                                :size="size" value-format="YYYY-MM-DD HH:mm:ss" :default-time="defaultTime2" />
                         </div>
                     </el-form-item>
                 </el-col>
@@ -210,7 +210,7 @@ const consumeOptions = reactive([{
 
 const getSummaries = (param) => {
     const { columns, data } = param
-    const sums = []
+    let sums = []
     columns.forEach((column, index) => {
         if(index === 1) {
             sums[index] = '合计'
@@ -228,6 +228,11 @@ const getSummaries = (param) => {
     })
     return sums
 }
+
+const defaultTime2: [Date, Date] = [
+  new Date(2000, 1, 1, 0, 0, 0),
+  new Date(2000, 2, 1, 23, 59, 59),
+] // '12:00:00', '08:00:00'
 
 const handelClickViewDetail = async () => {
 
