@@ -10,3 +10,13 @@ export const getBillsList = async <R = ResponseType>(data?: object) => {
 export const importNote = async <R = ResponseType>(data?: object) => {
   return await http.request<R>("post", "/api/bills/import", { data });
 };
+
+/** 账单分析 */
+export const importAnalysis = async <R = ResponseType>(data?: object) => {
+  return await http.request<R>("post", "/api/bills/analysis", { data });
+};
+
+// 查询数据列表
+export const postAnalysisList = async <R = ResponseType>(data?: object) => {
+  return await http.request<R>("post", "/api/bills/analysis-list", { data });
+};

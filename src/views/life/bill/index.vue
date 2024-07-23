@@ -216,14 +216,15 @@ const getSummaries = (param) => {
             sums[index] = '合计'
         } else if (index === 2) {
             const values = data.map((item) => Number(item[column.property]))
-            sums[index] = `$ ${values.reduce((prev, curr) => {
+            let sum = values.reduce((prev, curr) => {
                 const value = Number(curr)
                 if (!Number.isNaN(value)) {
-                    return prev + curr
+                    return prev + value
                 } else {
                     return prev
                 }
-            }, 0)}`
+            }, 0)
+            sums[index] = `$ ${parseFloat(sum).toFixed(2)}`
         }
     })
     return sums

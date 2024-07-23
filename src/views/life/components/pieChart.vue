@@ -1,5 +1,5 @@
 <template>
-  <div id="billPieChart"></div>
+  <div id="billPieChart" class="h-full w-full"></div>
 </template>
 <script lang="ts" setup>
 import * as echarts from 'echarts';
@@ -21,8 +21,9 @@ function init() {
       trigger: 'item'
     },
     legend: {
-      top: '5%',
-      left: 'center'
+      orient: 'vertical',
+      left: 'right',
+      top: '20%'
     },
     series: [
       {
@@ -57,7 +58,4 @@ function init() {
 }
 </script>
 <style lang="scss" scoped>
-#billPieChart {
-  height: 300px;
-}
 </style>

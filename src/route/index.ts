@@ -63,7 +63,20 @@ const routes = [
           title: "账单管理",
           activeMenu: '/life/bill'
         },
-      }
+      },
+      {
+        path: "billAnalysis",
+        name: "lifeBillAnalysis",
+        component: () =>
+          import(
+            /* webpackChunkName: "billAnalysis" */ "@/views/life/billAnalysis/index.vue"
+          ),
+        meta: {
+          title: "账单分析",
+          activeMenu: '/life/billAnalysis'
+        },
+      },
+      
     ],
   },
   {
