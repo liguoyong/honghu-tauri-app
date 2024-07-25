@@ -61,7 +61,8 @@ const routes = [
           ),
         meta: {
           title: "账单管理",
-          activeMenu: '/life/bill'
+          activeMenu: '/life/bill',
+          icon: 'Money'
         },
       },
       {
@@ -73,7 +74,8 @@ const routes = [
           ),
         meta: {
           title: "账单分析",
-          activeMenu: '/life/billAnalysis'
+          activeMenu: '/life/billAnalysis',
+          icon: 'TrendCharts'
         },
       },
       

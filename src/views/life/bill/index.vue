@@ -58,10 +58,6 @@
                     </el-upload>
                 </template>
             </el-popover>
-
-            <el-button type="primary" style="margin-left: 8px;" size="small"
-                @click="handelClickBillAnalysis">账单数据分析</el-button>
-
         </div>
         <el-row>
             <el-col :span="24">
@@ -76,15 +72,15 @@
                             </el-link>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="amount" label="金额" />
-
-                    <el-table-column prop="payType" label="交易分类" />
-                    <el-table-column prop="payTime" label="交易时间" show-overflow-tooltip />
+                    <el-table-column prop="amount" label="金额" width="80" />
+                    <el-table-column prop="consume" label="收/支" width="80" />
+                    <el-table-column prop="payWay" label="收/付款方式"  show-overflow-tooltip />
+                    <el-table-column prop="payTime" label="交易时间" width="160" show-overflow-tooltip />
+                    <el-table-column prop="payType" label="交易分类" width="80" />
                     <!-- <el-table-column prop="payUser" label="交易对方" show-overflow-tooltip /> -->
                     <!-- <el-table-column prop="payAccount" label="对方账号" show-overflow-tooltip /> -->
                     <el-table-column prop="goods" label="商品说明" show-overflow-tooltip />
-                    <el-table-column prop="consume" label="收/支" />
-                    <el-table-column prop="payWay" label="收/付款方式" show-overflow-tooltip />
+                    
                     <!-- <el-table-column prop="status" label="当前状态" /> -->
                     <!-- <el-table-column fixed="right" label="操作" width="120">
                 <template #default="scope">
@@ -104,7 +100,6 @@
             </el-col>
         </el-row>
         <editPayDialog :dialog="PayDialog" @close="closeDialog" />
-        <editPayDrawer :drawer="drawer" />
         <editPayDetailDrawer :drawer="detailDrawer" />
     </div>
 </template>
@@ -127,7 +122,6 @@ import { ref, reactive } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import editPayDialog from '../components/editPayDialog.vue'
-import editPayDrawer from '../components/editPayDrawer.vue'
 import editPayDetailDrawer from '../components/editPayDetailDrawer.vue'
 import * as XLSX from 'xlsx'
 import { tooltipOptions } from '@/utils/common'

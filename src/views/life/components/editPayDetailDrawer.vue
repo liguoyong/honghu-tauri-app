@@ -16,32 +16,9 @@
                     <el-descriptions-item label="金额">{{ drawer.data.amount }}</el-descriptions-item>
                     <el-descriptions-item label="收/付款方式">{{ drawer.data.payWay }}</el-descriptions-item>
                     <el-descriptions-item label="当前状态">{{ drawer.data.status }}</el-descriptions-item>
-
-                    <!-- 订单编号
-                    交易时间
-                    交易分类
-                    交易对方
-                    对方账号
-                    商品说明
-                    收/支
-                    金额
-                    收/付款方式
-                    当前状态 -->
                 </el-descriptions>
-                <el-descriptions title="占比" style="margin-top:20px;" direction="vertical">
-                    <el-descriptions-item label="">
-                        <pie-chart />
-                    </el-descriptions-item>
-                </el-descriptions>
-                <div id="chartContainer" ref="chartContainer" style="height:300px;"></div>
             </div>
         </template>
-        <!-- <template #footer>
-          <div style="flex: auto">
-              <el-button @click="cancelClick">cancel</el-button>
-              <el-button type="primary" @click="confirmClick">confirm</el-button>
-          </div>
-      </template> -->
     </el-drawer>
 </template>
 <script lang="ts" setup>
