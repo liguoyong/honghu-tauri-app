@@ -1,8 +1,8 @@
 [package]
 name = "honghu-tauri-app"
 version = "0.0.0"
-description = "A Tauri App"
-authors = ["you"]
+description = "鸿鹄助理客户端"
+authors = ["liguoyong"]
 license = ""
 repository = ""
 edition = "2021"
@@ -13,7 +13,7 @@ edition = "2021"
 tauri-build = { version = "1.4", features = [] }
 
 [dependencies]
-tauri = { version = "1.4", features = [ "api-all"] }
+tauri = { version = "1.4", features = [ "api-all", "devtools"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 
