@@ -16,6 +16,7 @@ import zhCn from "element-plus/dist/locale/zh-cn.mjs";
 import i18n from "./lang/index";
 import "virtual:svg-icons-register";
 import "virtual:uno.css";
+import dayjs from 'dayjs';
 // import '@/icons' // icon
 import globalComponent from "@/components/index";
 // import Windows from "./hooks/windows/index.js";
@@ -31,6 +32,7 @@ app.use(globalComponent);
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
+app.config.globalProperties.$dayjs = dayjs;
 app.mount("#app");
 const screenWidth = window.screen.width;
 const x = screenWidth - 100 - 520;

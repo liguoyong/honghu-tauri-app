@@ -102,6 +102,11 @@ body {
         }
     }
 }
+.el-form.el-form--inline {
+ .el-select {
+    width: 166px;
+ }
+}
 // 文件列表中的文件高度
 $file-height: 80px;
 // 文件图标宽高
