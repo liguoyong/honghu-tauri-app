@@ -13,7 +13,7 @@
           </template>
           <div class="text item h-[204px]">
             <div ref="todoList" class="todoList">
-              <div v-for="item in items" :key="item.id">
+              <div class="list-item-div" v-for="item in items" :key="item.id">
                 <el-row>
                   <el-col :span="8">
                     {{ item.title }}
@@ -44,7 +44,7 @@
           </template>
           <div class="text item h-[204px]">
             <el-scrollbar>
-                <div v-for="(item, index) in  yesterdayAnalysisList ">
+                <div class="list-item-div" v-for="(item, index) in  yesterdayAnalysisList ">
                   <el-row>
                     <el-col :span="6">
                       {{ item.consume }}
@@ -111,29 +111,31 @@
             </div>
           </template>
           <div class="text item h-[204px]">
-            <div v-for="( item, index ) in  todayAnalysisList ">
-              <el-row>
-                <el-col :span="6">
-                  {{ item.consume }}
-                </el-col>
-                <el-col :span="11" class="truncate">
-                  <el-tooltip effect="dark" :content="item.goods" placement="top">
-                    <span>{{ item.goods }}</span>
-                  </el-tooltip>
-                </el-col>
-                <el-col :span="7" style="text-align: right;">
-                  <el-text v-if=" item.consume === '收入' " type="primary">{{ item.amount }}元<el-icon class="ml-[4px]">
-                      <Top />
-                    </el-icon></el-text>
-                  <el-text v-else-if=" item.consume === '支出' " type="danger">{{ item.amount }}元<el-icon class="ml-[4px]">
-                      <Bottom />
-                    </el-icon></el-text>
-                  <el-text v-else-if=" item.consume === '不计收支' " type="warning">{{ item.amount }}元<el-icon class="ml-[4px]">
-                      <Right />
-                    </el-icon></el-text>
-                </el-col>
-              </el-row>
-            </div>
+            <el-scrollbar>
+              <div class="list-item-div" v-for="( item, index ) in  todayAnalysisList ">
+                <el-row>
+                  <el-col :span="6">
+                    {{ item.consume }}
+                  </el-col>
+                  <el-col :span="11" class="truncate">
+                    <el-tooltip effect="dark" :content="item.goods" placement="top">
+                      <span>{{ item.goods }}</span>
+                    </el-tooltip>
+                  </el-col>
+                  <el-col :span="7" style="text-align: right;">
+                    <el-text v-if=" item.consume === '收入' " type="primary">{{ item.amount }}元<el-icon class="ml-[4px]">
+                        <Top />
+                      </el-icon></el-text>
+                    <el-text v-else-if=" item.consume === '支出' " type="danger">{{ item.amount }}元<el-icon class="ml-[4px]">
+                        <Bottom />
+                      </el-icon></el-text>
+                    <el-text v-else-if=" item.consume === '不计收支' " type="warning">{{ item.amount }}元<el-icon class="ml-[4px]">
+                        <Right />
+                      </el-icon></el-text>
+                  </el-col>
+                </el-row>
+              </div>
+            </el-scrollbar>
           </div>
           <template #footer>
             <el-row>
@@ -269,11 +271,18 @@ export default {
 .home-container {
   .box-card {
     min-height: 41vh;
+    padding: 12px 0;
   }
   :deep(.el-card) {
     font-size: 12px;
     .el-text {
       font-size: 12px;
+    }
+    .el-card__body {
+      padding: 12px 0;
+    }
+    .list-item-div {
+      padding: 0 12px;
     }
   }
 }

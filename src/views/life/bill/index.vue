@@ -63,31 +63,37 @@
             <el-col :span="24">
                 <el-table ref="multipleTableRef" size="small" :data="tableData" stripe style="width: 100%"
                     @row-dblclick="handelClickViewDetail" :tooltip-options="tooltipOptions"
-                    @selection-change="handleSelectionChange" :show-summary="true" :summary-method="getSummaries">
-                    <el-table-column type="selection" width="25" />
-                    <el-table-column prop="transactionNumber" label="订单编号" show-overflow-tooltip>
+                    :show-summary="true" :summary-method="getSummaries">
+                    <el-table-column type="index" label="序号" width="44" align="center" />
+                    <!-- <el-table-column prop="transactionNumber" label="订单编号" show-overflow-tooltip>
                         <template #default="scope">
                             <el-link type="primary" :underline="false" @click.stop="handelClickViewDetailDrawer(scope.row)">
                                 {{ scope.row.transactionNumber }}
                             </el-link>
                         </template>
+                    </el-table-column> -->
+                    <el-table-column prop="amount" label="金额" width="80">
+                        <template #default="scope">
+                            <el-link type="primary" :underline="false" @click.stop="handelClickViewDetailDrawer(scope.row)">
+                                {{ scope.row.amount }}
+                            </el-link>
+                        </template>
                     </el-table-column>
-                    <el-table-column prop="amount" label="金额" width="80" />
                     <el-table-column prop="consume" label="收/支" width="80" />
                     <el-table-column prop="payWay" label="收/付款方式"  show-overflow-tooltip />
                     <el-table-column prop="payTime" label="交易时间" width="160" show-overflow-tooltip />
                     <el-table-column prop="payType" label="交易分类" width="80" />
-                    <!-- <el-table-column prop="payUser" label="交易对方" show-overflow-tooltip /> -->
-                    <!-- <el-table-column prop="payAccount" label="对方账号" show-overflow-tooltip /> -->
+                    <el-table-column prop="payUser" label="交易对方" show-overflow-tooltip />
+                    <el-table-column prop="payAccount" label="对方账号" show-overflow-tooltip />
                     <el-table-column prop="goods" label="商品说明" show-overflow-tooltip />
                     
-                    <!-- <el-table-column prop="status" label="当前状态" /> -->
+                    <el-table-column prop="status" label="当前状态" width="80"/>
                     <!-- <el-table-column fixed="right" label="操作" width="120">
-                <template #default="scope">
-                    <el-button link type="primary" size="small" @click="handleClickEdit(scope.row.id)">编辑</el-button>
-                    <el-button link type="danger" size="small" @click="handleClickDelete(scope.row.id)">删除</el-button>
-                </template>
-            </el-table-column> -->
+                            <template #default="scope">
+                                <el-button link type="primary" size="small" @click="handleClickEdit(scope.row.id)">编辑</el-button>
+                                <el-button link type="danger" size="small" @click="handleClickDelete(scope.row.id)">删除</el-button>
+                            </template>
+                        </el-table-column> -->
                     <template #empty>
                         <data-empty></data-empty>
                     </template>
@@ -206,9 +212,9 @@ const getSummaries = (param) => {
     const { columns, data } = param
     let sums = []
     columns.forEach((column, index) => {
-        if(index === 1) {
+        if(index === 0) {
             sums[index] = '合计'
-        } else if (index === 2) {
+        } else if (index === 1) {
             const values = data.map((item) => Number(item[column.property]))
             let sum = values.reduce((prev, curr) => {
                 const value = Number(curr)

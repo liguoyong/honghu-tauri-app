@@ -22,21 +22,21 @@
                         <div class="grid-content ep-bg-purple h-[100px]"
                             style="background: #f7af5c;padding: 6px;border-radius: 4px;">
                             <span>支出总和</span>
-                            <div class="font-size-[18px] font-semibold">{{ analysisSumData.expenses_sum }}</div>元
+                            <div class="font-size-[18px] font-semibold">{{ analysisSumData.expenses_sum }}元</div>
                         </div>
                     </el-col>
                     <el-col :span="5">
                         <div class="grid-content ep-bg-purple h-[100px]"
                             style="background: #7a7dde;padding: 6px;border-radius: 4px;">
                             <span>收入总和</span>
-                            <div class="font-size-[18px] font-semibold">{{ analysisSumData.income_sum }}</div>元
+                            <div class="font-size-[18px] font-semibold">{{ analysisSumData.income_sum }}元</div>
                         </div>
                     </el-col>
                     <el-col :span="5">
                         <div class="grid-content ep-bg-purple h-[100px]"
                             style="background: #4a90e5;padding: 6px;border-radius: 4px;">
-                            <span>不计收/支总和</span>
-                            <div class="font-size-[18px] font-semibold">{{ analysisSumData.ignore_sum }}</div>元
+                            <span>不计收支总和</span>
+                            <div class="font-size-[18px] font-semibold">{{ analysisSumData.ignore_sum }}元</div>
                         </div>
                     </el-col>
                     <el-col :span="5">
@@ -116,27 +116,6 @@
                         <el-col :span="12">
                             <span class="font-semibold flex">
                                 余额统计
-                                <el-popover
-                                    placement="top-start"
-                                    title=""
-                                    :width="200"
-                                    trigger="hover"
-                                    content=""
-                                >
-                                    <div>
-                                        <div>
-                                            今日余额：{{ todayBalance }}元
-                                        </div>
-                                        <div>昨日余额：{{ yesterdayBalance }}元</div>
-                                        <div>今日新增：
-                                            <el-text v-if="balanceDiff" type="success">{{ balanceDiff }}元<el-icon v-if="balanceDiff != 0"><Top /></el-icon></el-text>
-                                            <el-text v-else type="danger">{{ balanceDiff }}元<el-icon><Bottom /></el-icon></el-text>
-                                        </div>
-                                    </div>
-                                    <template #reference>
-                                        <el-icon class="ml-[6px] mt-[3px]" style="font-size: 18px;"><QuestionFilled /></el-icon>
-                                    </template>
-                                </el-popover>
                             </span>
                         </el-col>
                         <el-col :span="12" class="text-right">
@@ -188,7 +167,7 @@ const lineChart = ref(null);
 const setLastWeekRange = () => {
     const end = new Date()
     const start = new Date()
-    start.setDate(start.getDate() - 7)
+    start.setDate(start.getDate() - 30)
     dateRange.value = [dayjs(start).format('YYYY-MM-DD HH:mm:ss'), dayjs(end).format('YYYY-MM-DD HH:mm:ss')]
     dateRange1.value = [dayjs(start).format('YYYY-MM-DD HH:mm:ss'), dayjs(end).format('YYYY-MM-DD HH:mm:ss')]
     dateRange2.value = [dayjs(start).format('YYYY-MM-DD HH:mm:ss'), dayjs(end).format('YYYY-MM-DD HH:mm:ss')]
