@@ -271,7 +271,6 @@ export default {
 .home-container {
   .box-card {
     min-height: 41vh;
-    padding: 12px 0;
   }
   :deep(.el-card) {
     font-size: 12px;
