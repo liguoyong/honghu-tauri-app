@@ -141,7 +141,7 @@ import * as echarts from 'echarts';
 import { markRaw } from "vue"
 import dayjs from 'dayjs';
 import Big from 'big.js';
-import { postBalanceAnalysis, getBalanceUpdate } from '@/apis/balance'
+import { postBalanceAnalysis, getBalanceCreate, getBalanceUpdate } from '@/apis/balance'
 import { importAnalysis, postAnalysisList } from '@/apis/bills'
 // import pieChart from '../components/pieChart.vue'
 import pieChart from '@/components/Chart/PieChart/index.vue'
@@ -454,6 +454,7 @@ const getBalanceAnalysisChart = () => {
                 // 使用bigjs计算 item - hbExpenditure.value[index]
                 return new Big(item).minus(new Big(hbExpenditure.value[index] || 0)).toNumber()
             })
+            console.log(data, dayjs().format('YYYY-MM-DD'))
             const todayData = data.find(item => dayjs(item.recordTime).format('YYYY-MM-DD') === dayjs().format('YYYY-MM-DD'))            
             if(todayData) {
                 todayBalance.value = todayData?.total_amount || 0
@@ -461,6 +462,7 @@ const getBalanceAnalysisChart = () => {
             }
             yesterdayBalance.value = data.find(item => dayjs(item.recordTime).format('YYYY-MM-DD') === dayjs().subtract(1, 'day').format('YYYY-MM-DD'))?.total_amount || 0
             initLineChart2();
+            console.log(todayData, todayBalance.value, yesterdayBalance.value, 'dxddddddddd')
         } else {
 
         }
@@ -533,20 +535,38 @@ const handleUpdateBalance = () => {
         ElMessage.error('输入金额不能为空')
         return
     }
-    getBalanceUpdate({
-        id,
-        total_amount,
-        hb_expenditure,
-        hb_balance
-    }).then(res => {
-        if (res.code === 200) {
-            todayBalance.value = total_amount
-            visiblePopover.value = false
-            ElMessage.success('更新成功')
-        } else {
-            ElMessage.error('更新失败')
-        }
-    })
+    if(id) {
+        getBalanceUpdate({
+            id,
+            total_amount,
+            hb_expenditure,
+            hb_balance
+        }).then(res => {
+            if (res.code === 200) {
+                todayBalance.value = total_amount
+                visiblePopover.value = false
+                ElMessage.success('更新成功')
+            } else {
+                ElMessage.error('更新失败')
+            }
+        })
+    } else {
+        getBalanceCreate({
+            total_amount,
+            hb_expenditure,
+            hb_balance
+        }).then(async res => {
+            if (res.code === 200) {
+                visiblePopover.value = false
+                ElMessage.success('新增成功')
+                setLastWeekRange()
+                await getBalanceAnalysisChart()
+            } else {
+                ElMessage.error('新增失败')
+            }
+        })
+    }
+    
 }
 onMounted(() => {
     initLineChart();
