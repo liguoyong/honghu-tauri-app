@@ -184,6 +184,7 @@ const incomeLine = ref([])
 const timeList = ref([])
 const balanceTime = ref([])
 const balanceData = ref([])
+const availableBalanceData = ref([])
 const hbExpenditure = ref([])
 const todayBalance = ref(0)
 const todayBalanceData = ref({})
@@ -383,7 +384,7 @@ const lineChartOptions2 = computed(() => ({
         containLabel: true
     },
     legend: {
-        data: ['余额', '花呗支出'],
+        data: ['余额', '花呗支出', '可用余额'],
         show: true
     },
     toolbox: {
@@ -412,6 +413,12 @@ const lineChartOptions2 = computed(() => ({
             type: 'line',
             smooth: true,
             data: hbExpenditure.value
+        },
+        {
+            name: '可用余额',
+            type: 'line',
+            smooth: true,
+            data: availableBalanceData.value
         },
     ],
     dataZoom: [
@@ -442,6 +449,11 @@ const getBalanceAnalysisChart = () => {
             balanceTime.value = data.map(item => dayjs(item.recordTime).format('YYYY-MM-DD HH:mm:ss'))
             balanceData.value = data.map(item => Number(item.total_amount || 0))
             hbExpenditure.value = data.map(item => Number(item.hb_expenditure || 0))
+            // availableBalanceData = 余额 - 花呗支出
+            availableBalanceData.value = balanceData.value.map((item, index) => {
+                // 使用bigjs计算 item - hbExpenditure.value[index]
+                return new Big(item).minus(new Big(hbExpenditure.value[index] || 0)).toNumber()
+            })
             const todayData = data.find(item => dayjs(item.recordTime).format('YYYY-MM-DD') === dayjs().format('YYYY-MM-DD'))            
             if(todayData) {
                 todayBalance.value = todayData?.total_amount || 0
