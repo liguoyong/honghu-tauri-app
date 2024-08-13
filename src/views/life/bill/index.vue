@@ -72,7 +72,7 @@
                             </el-link>
                         </template>
                     </el-table-column> -->
-                    <el-table-column prop="amount" label="金额" width="80">
+                    <el-table-column prop="amount" label="金额" sortable width="80">
                         <template #default="scope">
                             <el-link type="primary" :underline="false" @click.stop="handelClickViewDetailDrawer(scope.row)">
                                 {{ scope.row.amount }}

@@ -48,14 +48,14 @@ class PureHttp {
     private static axiosInstance: AxiosInstance = Axios.create(defaultConfig);
 
     /** 重连原始请求 */
-    // private static retryOriginalRequest(config: any) {
-    //     return new Promise(resolve => {
-    //         PureHttp.requests.push((token:string) => {
-    //             config.headers["Authorization"] = formatToken(token);
-    //             resolve(config);
-    //         });
-    //     });
-    // }
+    private static retryOriginalRequest(config: any) {
+        return new Promise(resolve => {
+            PureHttp.requests.push((token:string) => {
+                config.headers["Authorization"] = formatToken(token);
+                resolve(config);
+            });
+        });
+    }
 
     /** 请求拦截 */
     private httpInterceptorsRequest(): void {
@@ -97,7 +97,7 @@ class PureHttp {
                                 //             PureHttp.isRefreshing = false;
                                 //         });
                                 // }
-                                // resolve(PureHttp.retryOriginalRequest(config));
+                                resolve(config);
                             } else {
                                 config.headers ? config.headers["Authorization"] = formatToken(
                                     data.accessToken

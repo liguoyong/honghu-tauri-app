@@ -1,7 +1,7 @@
 {
   "name": "honghu-tauri-app",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -40,6 +40,7 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "@rollup/plugin-inject": "^5.0.5",
     "@tauri-apps/cli": "^1.4.0",
     "@vitejs/plugin-vue": "^4.2.3",
     "fast-glob": "^3.3.1",

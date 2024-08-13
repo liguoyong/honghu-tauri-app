@@ -47,9 +47,14 @@ export const useUserStore = defineStore('userInfo', {
             this.phone = data.phone
         },
         async GET_USER_INFO() {
-            const userInfo = await getUserInfo({})
-            console.log(userInfo, 'userInfo');
-            this.SET_USER_INFO(userInfo.data)
+            try {
+                const userInfo = await getUserInfo({})
+                console.log(userInfo, 'userInfo');
+                this.SET_USER_INFO(userInfo.data)
+            } catch (error) {
+                console.log(error, 'error');
+            }
+            
         }
     },
 })

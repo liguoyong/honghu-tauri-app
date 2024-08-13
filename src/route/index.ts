@@ -225,19 +225,28 @@ router.beforeEach(async (to, from, next) => {
   if (whriteList.includes(to.path)) {
     next();
   } else if (!userToken && to.path === "/") {
+    console.log(111);
     // 未登录
     next();
   } else if (userToken && to.path === "/") {
-    await userStore.GET_USER_INFO();
-    localStorage.getItem("menuRoute")
+    console.log(222);
+    try {
+      await userStore.GET_USER_INFO();
+      localStorage.getItem("menuRoute")
       ? next(localStorage.getItem("menuRoute")!)
       : next("/home");
+    } catch (error) {
+      next("/")
+    }
+    
   } else if (!userToken) {
+    console.log(3333);
     next({ path: "/" });
   } else {
     if (!userStore.userId) {
       await userStore.GET_USER_INFO();
     }
+    console.log(444);
     next();
   }
 });

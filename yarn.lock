@@ -189,7 +189,16 @@
   "resolved" "https://registry.npmjs.org/@sxzz/popperjs-es/-/popperjs-es-2.11.7.tgz"
   "version" "2.11.7"
 
-"@rollup/pluginutils@^5.0.3":
+"@rollup/plugin-inject@^5.0.5":
+  "integrity" "sha512-2+DEJbNBoPROPkgTDNe8/1YXWcqxbN5DTjASVIOx8HS+pITXushyNiBV56RB08zuptzz8gT3YfkqriTBVycepg=="
+  "resolved" "https://registry.npmmirror.com/@rollup/plugin-inject/-/plugin-inject-5.0.5.tgz"
+  "version" "5.0.5"
+  dependencies:
+    "@rollup/pluginutils" "^5.0.1"
+    "estree-walker" "^2.0.2"
+    "magic-string" "^0.30.3"
+
+"@rollup/pluginutils@^5.0.1", "@rollup/pluginutils@^5.0.3":
   "integrity" "sha512-0KJnIoRI8A+a1dqOYLxH8vBf8bphDmty5QvIm2hqm7oFCFYKCAZWWd2hXgMibaPsNDhI0AtpYfQZJG47pt/k4g=="
   "resolved" "https://registry.npmjs.org/@rollup/pluginutils/-/pluginutils-5.0.4.tgz"
   "version" "5.0.4"
@@ -3022,7 +3031,7 @@
   "resolved" "https://registry.npmjs.org/reusify/-/reusify-1.0.4.tgz"
   "version" "1.0.4"
 
-"rollup@^1.20.0||^2.0.0||^3.0.0", "rollup@^3.27.1":
+"rollup@^1.20.0||^2.0.0||^3.0.0", "rollup@^1.20.0||^2.0.0||^3.0.0||^4.0.0", "rollup@^3.27.1":
   "integrity" "sha512-d7zhvo1OUY2SXSM6pfNjgD5+d0Nz87CUp4mt8l/GgVP3oBsPwzNvSzyu1me6BSG9JIgWNTVcafIXBIyM8yQ3yw=="
   "resolved" "https://registry.npmjs.org/rollup/-/rollup-3.28.0.tgz"
   "version" "3.28.0"
