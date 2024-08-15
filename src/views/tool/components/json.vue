@@ -114,8 +114,8 @@ export default {
 
         },
         exportData(data) {
-            // 将对象转换为JSON字符串
-            const jsonStr = JSON.stringify(data);
+            // 将对象转换为JSON字符串，第三个参数设置缩进为空格数量
+            const jsonStr = JSON.stringify(data, null, 2);
 
             // 创建一个Blob对象，用于保存JSON字符串
             const blob = new Blob([jsonStr], { type: 'application/json' });
@@ -139,13 +139,18 @@ export default {
 </script>
 <style lang="scss" scoped>
 .json-contianer {
-    height: calc(100vh - 100px);
+    height: calc(100vh - 80px);
     overflow: hidden;
 
-    .el-row,
-    .el-col,
+    .el-row {
+        height: calc(100% - 36px);
+        .el-col {
+            height: 100%;
+        }
+    }
+    
     .el-textarea {
-        height: 100%;
+        height: calc(100% + 12px);
     }
 
     .el-textarea :deep(.el-textarea__inner) {

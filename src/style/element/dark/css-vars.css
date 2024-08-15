@@ -3,4 +3,13 @@ html.dark {
     --el-color-primary: #1890ff;
     --el-color-primary-light-3: #794da5;
     --el-color-primary-dark-2: #794da5;
+    --el-menu-bg-color: #0d1117;
+    --el-menu-text-color: #fff;
+    --el-menu-hover-bg-color: #999999;
+}
+html.dark .common-layout .main-box, html.dark .layout-wrapper {
+    background-color: #151a21;
+}
+html.dark .el-table{
+    --el-table-header-bg-color: #000000;
 }

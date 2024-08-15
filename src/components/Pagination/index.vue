@@ -1,5 +1,5 @@
 <template>
-    <el-pagination :page-sizes="pageSizes" :page-size="pageSize" :layout="layout" :small="small" :total="total"
+    <el-pagination :page-sizes="pageSizes" :page-size="pageSize" :layout="layout" :size="size" :total="total"
         :current-page="currentPage" v-bind="$attrs" />
 </template>
 
@@ -32,7 +32,7 @@ export default {
             type: String,
             default: '->,total, sizes, prev, pager, next, jumper'
         },
-        small: {
+        size: {
             type: String,
             default: 'small'
         }

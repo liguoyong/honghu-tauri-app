@@ -36,13 +36,18 @@ $--drawer: (
 $--card: (
   "padding": 12px
 );
+$--table: (
+  "header-bg-color": #f6f7fb
+  // "header-text-color": #fff
+);
+
 // You should use them in scss, because we calculate it by sass.
 // comment next lines to use default color
 @forward "element-plus/theme-chalk/src/common/var.scss" with ( // do not use same name, it will override.
   $colors: $--colors,
   $menu: $--menu,
   $pagination: $--pagination,
-  $table: ("header-bg-color": #f6f7fb), // $menu: $--menu,
+  $table: $--table, // $menu: $--menu,
   $dialog: $--dialog,
   $calendar: $--calendar,
   $drawer: $--drawer,

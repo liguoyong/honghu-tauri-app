@@ -21,9 +21,9 @@
                 <el-col :span="12">
                     <el-form-item>
                         <div class="block">
-                            <el-date-picker v-model="dateRange" size="small" type="datetimerange"
-                                range-separator="至" start-placeholder="开始时间" end-placeholder="结束时间" :shortcuts="shortcuts"
-                                :size="size" value-format="YYYY-MM-DD HH:mm:ss" :default-time="defaultTime2" />
+                            <el-date-picker v-model="dateRange" size="small" type="datetimerange" range-separator="至"
+                                start-placeholder="开始时间" end-placeholder="结束时间" :shortcuts="shortcuts" :size="size"
+                                value-format="YYYY-MM-DD HH:mm:ss" :default-time="defaultTime2" />
                         </div>
                     </el-form-item>
                 </el-col>
@@ -62,8 +62,8 @@
         <el-row>
             <el-col :span="24">
                 <el-table ref="multipleTableRef" size="small" :data="tableData" stripe style="width: 100%"
-                    @row-dblclick="handelClickViewDetail" :tooltip-options="tooltipOptions"
-                    :show-summary="true" :summary-method="getSummaries">
+                    @row-dblclick="handelClickViewDetail" :tooltip-options="tooltipOptions" :show-summary="true"
+                    :summary-method="getSummaries">
                     <el-table-column type="index" label="序号" width="44" align="center" />
                     <!-- <el-table-column prop="transactionNumber" label="订单编号" show-overflow-tooltip>
                         <template #default="scope">
@@ -79,15 +79,31 @@
                             </el-link>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="consume" label="收/支" width="80" />
-                    <el-table-column prop="payWay" label="收/付款方式"  show-overflow-tooltip />
+                    <el-table-column prop="consume" label="收/支" width="80">
+                        <template #default="scope">
+                            <div v-if="scope.row.isEdit" class="flex items-center">
+                                <el-select v-model="scope.row.consumeBase" size="small" placeholder="请选择收/支" @change="handelChangeConsume(scope.row)">
+                                    <el-option v-for="item in consumeOptions" :key="item.value" :label="item.label"
+                                        :value="item.value" />
+                                </el-select>
+                                <el-icon @click="handelConfirmConsume(scope.row)"><Check /></el-icon>
+                            </div>
+                            <span v-else>
+                                {{ scope.row.consume }}
+                                <el-icon @click="scope.row.isEdit = true">
+                                    <EditPen />
+                                </el-icon>
+                            </span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="payWay" label="收/付款方式" show-overflow-tooltip />
                     <el-table-column prop="payTime" label="交易时间" width="160" show-overflow-tooltip />
                     <el-table-column prop="payType" label="交易分类" width="80" />
                     <el-table-column prop="payUser" label="交易对方" show-overflow-tooltip />
                     <el-table-column prop="payAccount" label="对方账号" show-overflow-tooltip />
                     <el-table-column prop="goods" label="商品说明" show-overflow-tooltip />
-                    
-                    <el-table-column prop="status" label="当前状态" width="80"/>
+
+                    <el-table-column prop="status" label="当前状态" width="80" />
                     <!-- <el-table-column fixed="right" label="操作" width="120">
                             <template #default="scope">
                                 <el-button link type="primary" size="small" @click="handleClickEdit(scope.row.id)">编辑</el-button>
@@ -131,7 +147,7 @@ import editPayDialog from '../components/editPayDialog.vue'
 import editPayDetailDrawer from '../components/editPayDetailDrawer.vue'
 import * as XLSX from 'xlsx'
 import { tooltipOptions } from '@/utils/common'
-import { getBillsList } from '@/apis/bills.ts'
+import { getBillsList, postUpdateConsume } from '@/apis/bills.ts'
 import { objectPick } from '@vueuse/shared'
 const tableData = ref([])
 const noteFormRef = ref<FormInstance>()
@@ -212,7 +228,7 @@ const getSummaries = (param) => {
     const { columns, data } = param
     let sums = []
     columns.forEach((column, index) => {
-        if(index === 0) {
+        if (index === 0) {
             sums[index] = '合计'
         } else if (index === 1) {
             const values = data.map((item) => Number(item[column.property]))
@@ -231,10 +247,24 @@ const getSummaries = (param) => {
 }
 
 const defaultTime2: [Date, Date] = [
-  new Date(2000, 1, 1, 0, 0, 0),
-  new Date(2000, 2, 1, 23, 59, 59),
+    new Date(2000, 1, 1, 0, 0, 0),
+    new Date(2000, 2, 1, 23, 59, 59),
 ] // '12:00:00', '08:00:00'
-
+const handelChangeConsume = (row) => {
+    console.log(row)
+}
+const handelConfirmConsume = (row) => {
+    console.log(row)
+    const { id, consume, consumeBase } = row
+    postUpdateConsume({id, consume: consumeBase  }).then(res => {
+        if(res.code === 200) {
+            ElMessage.success('修改成功')
+            getList()
+        } else {
+            ElMessage.error('修改失败')
+        }
+    })
+}
 const handelClickViewDetail = async () => {
 
 }
@@ -253,7 +283,11 @@ const getList = async () => {
     const response = await getBillsList({ ...pageParams, ...ruleForm, startTime, endTime })
     if (response.code == 200) {
         const { list = [], total } = response.data
-        tableData.value = list
+        tableData.value = list.map(item => {
+            item.isEdit = false
+            item.consumeBase = item.consume
+            return item
+        })
         const types = list.map((it: { payType: any }) => it.payType)
         const consume = list.map((it: { consume: any }) => it.consume)
         console.log(Array.from(new Set(types)), Array.from(new Set(consume)));
@@ -491,5 +525,4 @@ const shortcuts = [
     &+.upload-demo {
         margin-left: 12px
     }
-}
-</style>
+}</style>

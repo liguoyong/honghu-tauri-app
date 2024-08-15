@@ -9,13 +9,15 @@
 import { uploadFile } from '@/apis/upload'
 import { QuillEditor, Quill } from '@vueup/vue-quill'
 import { ImageDrop } from 'quill-image-drop-module'
-import ImageResize from 'quill-image-resize-module'
+// import ImageResize from 'quill-image-resize-module'
 import ImageUploader from 'quill-image-uploader';
 import 'quill-image-uploader/dist/quill.imageUploader.min.css';
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 Quill.register("modules/imageUploader", ImageUploader);
 Quill.register('modules/imageDrop', ImageDrop);
-Quill.register('modules/imageResize', ImageResize);
+// Quill.register('modules/imageResize', ImageResize);
+// 引入图片缩放插件
+import 'quill-image-resize-module/image-resize.min.js'
 
 export default {
     name: 'ComQuillEditor',

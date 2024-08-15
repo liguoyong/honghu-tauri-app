@@ -20,3 +20,8 @@ export const importAnalysis = async <R = ResponseType>(data?: object) => {
 export const postAnalysisList = async <R = ResponseType>(data?: object) => {
   return await http.request<R>("post", "/api/bills/analysis-list", { data });
 };
+
+// 查询数据列表
+export const postUpdateConsume = async <R = ResponseType>(data?: object) => {
+  return await http.request<R>("post", "/api/bills/update/consume", { data });
+};

@@ -41,7 +41,7 @@ export default defineConfig(async () => ({
     strictPort: true,
     proxy: {
       '/api': {
-        target: 'http://1.12.238.54:7001',
+        target: 'http://127.0.0.1:7001',
         changeOrigin: true,
       },
     },

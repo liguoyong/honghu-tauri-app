@@ -1,9 +1,13 @@
 <template>
   <div class="el-menu-slider-container" :style="{ width: isCollapse ? '64px' : '160px' }">
     <el-scrollbar>
-      <el-menu size="small" v-model="activeMenu" :default-active="activeMenu" background-color="#fff" text-color="#031321"
-        active-text-color="#1890ff" mode="vertical" router :collapse="isCollapse" @open="handleOpen" @close="handleClose"
-        :class="{ 'collapse': isCollapse, 'expand': !isCollapse }" :style="{ width: isCollapse ? '64px' : '160px' }">
+      <el-menu size="small" v-model="activeMenu" :default-active="activeMenu"
+        mode="vertical" router 
+        :collapse="isCollapse" 
+        @open="handleOpen" 
+        @close="handleClose"
+        :class="{ 'collapse': isCollapse, 'expand': !isCollapse }" 
+        :style="{ width: isCollapse ? '64px' : '160px', height: `calc(100vh - 56px)` }">
         <sidebar-item v-for="item in routerData" :item="item" :key="item.path"></sidebar-item>
       </el-menu>
     </el-scrollbar>
@@ -74,7 +78,6 @@ onMounted(async () => {
 
 <style lang="scss">
 .el-menu-slider-container {
-  // height: calc(100vh - 64px);
   overflow: hidden;
   width: 160px;
   background: #fff;
@@ -90,10 +93,6 @@ onMounted(async () => {
 
   .el-icon:not(.el-sub-menu__icon-arrow) {
     color: var(--el-color-primary);
-  }
-
-  .el-menu-item:hover {
-    background-color: #eaf3ff;
   }
 }
 </style>
