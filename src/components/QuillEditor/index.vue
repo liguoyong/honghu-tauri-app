@@ -6,7 +6,7 @@
 </template>
 <script lang="ts">
 // import { toRaw } from 'vue'
-import { uploadFile } from '@/apis/upload'
+import { uploadFile, uploadFileToObs } from '@/apis/upload'
 import { QuillEditor, Quill } from '@vueup/vue-quill'
 import { ImageDrop } from 'quill-image-drop-module'
 // import ImageResize from 'quill-image-resize-module'
@@ -57,10 +57,12 @@ export default {
                     imageUploader: {
                         upload: async (file: any) => {
                             try {
+                                console.log(file,'filefile')
                                 return new Promise((resolve, reject) => {
                                     const formData = new FormData();
                                     formData.append("file", file);
-                                    uploadFile(formData, {
+                                    console.log(formData)
+                                    uploadFileToObs(formData, {
                                         headers: {
                                             "Content-Type": "multipart/form-data",
                                         },

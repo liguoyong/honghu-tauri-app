@@ -2,7 +2,7 @@
     <el-form class="information-container" label-position="right" size="small" label-width="100px"
         :model="formLabelAlign">
         <el-form-item label="用户头像">
-            <el-upload class="avatar-uploader" action="/api/upload" :show-file-list="false"
+            <el-upload class="avatar-uploader" action="/api/uploadFile" :show-file-list="false"
                 :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
                 <img v-if="userForm.avatar" :src="userForm.avatar" class="avatar" />
                 <el-icon v-else class="avatar-uploader-icon">
@@ -59,11 +59,18 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = (
     uploadFile
 ) => {
     console.log(response, 'response')
-    userForm.avatar = URL.createObjectURL(uploadFile.raw!)
+    const { data = {}, code = '' } = response
+    if(code === 200) {
+        const { url } = data
+        userForm.avatar = url || URL.createObjectURL(uploadFile.raw!)
+    } else {
+        userForm.avatar = URL.createObjectURL(uploadFile.raw!)
+    }
+    
 }
 
 const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
-    if (rawFile.type !== 'image/jpeg') {
+    if (rawFile.type !== 'image/jpeg' && rawFile.type !== 'image/png' && rawFile.type !== 'image/jpeg') {
         ElMessage.error('Avatar picture must be JPG format!')
         return false
     } else if (rawFile.size / 1024 / 1024 > 2) {
