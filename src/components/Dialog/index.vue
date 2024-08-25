@@ -9,7 +9,10 @@
     v-bind="$attrs"
     @close="$emit('close')"
   >
-    <slot></slot>
+  <!-- <el-scrollbar max-height="60vh">
+    
+  </el-scrollbar> -->
+  <slot></slot>
     <template v-if="showFooter" #footer>
       <span class="dialog-footer">
         <el-button @click="show = false">取消</el-button>

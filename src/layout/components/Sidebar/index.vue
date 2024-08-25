@@ -84,6 +84,13 @@ onMounted(async () => {
 
   .el-menu {
     border-right: none;
+    .svg-icon {
+      vertical-align: middle;
+      width: var(--el-menu-icon-width);
+      text-align: center;
+      height: 18px;
+      margin-right: 5px;
+    }
   }
 
   &:not(.el-menu--collapse) {

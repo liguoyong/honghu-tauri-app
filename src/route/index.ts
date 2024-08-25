@@ -78,7 +78,19 @@ const routes = [
           icon: 'TrendCharts'
         },
       },
-      
+      {
+        path: "gold",
+        name: "goldPage",
+        component: () =>
+          import(
+            /* webpackChunkName: "goldPage" */ "@/views/life/gold/index.vue"
+          ),
+        meta: {
+          title: "金价分析",
+          activeMenu: '/life/gold',
+          svg: 'gold'
+        },
+      },
     ],
   },
   {

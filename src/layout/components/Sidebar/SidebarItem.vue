@@ -3,6 +3,7 @@
     <el-icon v-if="item.meta.icon">
       <component :is="item.meta.icon" />
     </el-icon>
+    <svg-icon v-else-if="item.meta.svg" :name="item.meta.svg" />
     <span>{{ item.meta.title }}</span>
   </el-menu-item>
 
@@ -11,6 +12,7 @@
       <el-icon v-if="item.meta.icon">
         <component :is="item.meta.icon" />
       </el-icon>
+      <svg-icon v-else-if="item.meta.svg" :name="item.meta.svg" />
       <span>{{ item.meta.title }}</span>
     </template>
     <template v-for="child in item.children" :key="child.path">
