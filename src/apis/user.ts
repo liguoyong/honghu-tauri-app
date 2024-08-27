@@ -40,6 +40,11 @@ export const getLogin = async (data?: object) => {
   return await http.request<CommonResult>("post", "/api/user/login", { data });
 };
 
+/** 注册 */
+export const registerUser = async (data?: object) => {
+  return await http.request<CommonResult>("post", "/api/user/register", { data });
+};
+
 /** 刷新token */
 export const refreshTokenApi = (data?: object) => {
   return http.request<RefreshTokenResult>("post", "/refreshToken", { data });

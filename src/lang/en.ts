@@ -31,6 +31,7 @@ export default {
     loginTip: 'The login result is random. Just fill in the captcha',
     editpassword: 'Edit Password',
     loginSuccess: 'Login success!',
+    registerSuccess: 'Register success! Please login.',
     logout: 'Logout',
     errMsg: {
         inputRequired: 'Please Input {cont}',

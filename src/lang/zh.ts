@@ -31,6 +31,7 @@ export default {
     loginTip: '当前登录结果随机。验证码随便填',
     editpassword: '修改密码',
     loginSuccess: '登录成功！',
+    registerSuccess: '注册成功！请登录。',
     logout: '退出登录',
     errMsg: {
         inputRequired: '请输入{cont}',

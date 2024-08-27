@@ -32,7 +32,7 @@
         <TitleBar></TitleBar>
       </div>
     </div>
-    <div v-if="loginModel === '注册'" class="container a-container" id="a-container" data-tauri-drag-region>
+    <div v-if="loginModel === 'Register'" class="container a-container" id="a-container" data-tauri-drag-region>
       <form class="login-form" id="a-form" method="" action="" data-tauri-drag-region>
         <img class="login-logo" src="@/assets/image/logo.png" alt="" srcset="" />
         <h2 class="form_title login-title">{{ $t('welcomeToHongHu') }}</h2>
@@ -62,7 +62,7 @@
           @keydown.enter="handleLogin" @input="cantSpace" />
         <div class="login-info">
           <a href="javascript:void(0);" @click.prevent="forgetPassword">{{ $t('forgetPassword') }}</a>
-          <a href="javascript:void(0);" @click="switchModel('注册')">{{ $t('Registeranewaccount') }}</a>
+          <a href="javascript:void(0);" @click="switchModel('Register')">{{ $t('Registeranewaccount') }}</a>
         </div>
         <el-button :loading="loadingBtn" type="primary" round size="large" @click.prevent="handleLogin" class="login-btn">
           <span v-if="locale === 'zh'">登&nbsp;&nbsp;&nbsp;&nbsp;录</span>
@@ -80,7 +80,7 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import useTheme from '@/hooks/theme'
 import { useUserStore } from '@/stores/user'
-import { getLogin } from '@/apis/user'
+import { getLogin, registerUser } from '@/apis/user'
 import commonApi from '@/apis/common'
 import { rsaDecode, rsaEncode } from "@/utils/encode"
 import TitleBar from '@/components/titleBar.vue'
@@ -167,10 +167,23 @@ const handleLogin = async () => {
 // 注册行为
 const registUser = async () => {
   loadingBtn.value = true
-  ElMessage({
-    message: '第一次，可能需要耐心等待一会...',
-    type: 'success',
-  })
+  if (loginForm.userName && loginForm.passWord && loginModel.value === "Register") {
+    await registerUser({ username: loginForm.userName, password: loginForm.passWord }).then(async res => {
+      if (res.code === 200) {
+        ElMessage.success(t('registerSuccess'))
+        loginModel.value = 'Login'
+      } else {
+        ElMessage.error(res.msg || '注册失败！')
+      }
+      loadingBtn.value = false
+    }).catch((err: any) => {
+      console.log(err, 'err')
+      loadingBtn.value = false
+    })
+  } else {
+    ElMessage.error('注册失败！')
+    loadingBtn.value = false
+  }
   // 先验证用户名是否重复
   // const loginRes = await loginApi.loginUserName(loginForm.userName)
   // // console.log('UserNameExistRes------', loginRes)
