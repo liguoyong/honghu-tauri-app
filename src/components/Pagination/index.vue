@@ -1,5 +1,5 @@
 <template>
-    <el-pagination :page-sizes="pageSizes" :page-size="pageSize" :layout="layout" :size="size" :total="total"
+    <el-pagination page-sizes="pageSizes" :page-size="pageSize" :pager-count="pagerCount" :layout="layout" :size="size" :total="total"
         :current-page="currentPage" v-bind="$attrs" />
 </template>
 
@@ -23,6 +23,10 @@ export default {
             default: () => {
                 return [5, 10, 20, 50, 100, 1000]
             }
+        },
+        pagerCount: {
+            type: Number,
+            default: 4
         },
         total: {
             type: Number,
