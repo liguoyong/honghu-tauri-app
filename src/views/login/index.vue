@@ -329,4 +329,10 @@ html.dark .login-container {
     }
   }
 }
+/* 当屏幕宽度小于或等于 600px 时应用的样式 */
+@media screen and (max-width: 600px) {
+  .login-container .container .login-form {
+    width: 100%;
+  }
+}
 </style>
