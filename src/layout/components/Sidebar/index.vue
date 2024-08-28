@@ -1,5 +1,5 @@
 <template>
-  <div class="el-menu-slider-container" :style="{ width: isCollapse ? '64px' : '160px' }">
+  <div class="el-menu-slider-container" :style="{ width: isCollapse ? '46px' : '160px' }">
     <el-scrollbar>
       <el-menu size="small" v-model="activeMenu" :default-active="activeMenu"
         mode="vertical" router 
@@ -7,7 +7,7 @@
         @open="handleOpen" 
         @close="handleClose"
         :class="{ 'collapse': isCollapse, 'expand': !isCollapse }" 
-        :style="{ width: isCollapse ? '64px' : '160px', height: `calc(100vh - 56px)` }">
+        :style="{ width: isCollapse ? '46px' : '160px', height: `calc(100vh - 56px)` }">
         <sidebar-item v-for="item in routerData" :item="item" :key="item.path"></sidebar-item>
       </el-menu>
     </el-scrollbar>
@@ -81,6 +81,7 @@ onMounted(async () => {
   overflow: hidden;
   width: 160px;
   background: #fff;
+  transition: width 0.5s ease;
 
   .el-menu {
     border-right: none;

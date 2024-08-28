@@ -40,6 +40,9 @@ $--table: (
   "header-bg-color": #f6f7fb
   // "header-text-color": #fff
 );
+$--date-editor: (
+  "datetimerange-width": 320px
+);
 
 // You should use them in scss, because we calculate it by sass.
 // comment next lines to use default color
@@ -52,6 +55,7 @@ $--table: (
   $calendar: $--calendar,
   $drawer: $--drawer,
   $card: $--card,
+  $date-editor: $--date-editor,
   $input: $--input // $button-padding-horizontal: ("default": 50px)
 );
 

@@ -5,6 +5,8 @@
         <img v-if="userStore.theme === 'light'" :src="logoLight" class="logo-img" data-tauri-drag-region />
         <img v-else :src="logoDark" class="logo-img" data-tauri-drag-region />
         <span data-tauri-drag-region>{{ $t('logoTitle') }}</span>
+        <svg-icon name="hamburger" class="el-icon hamburger-icon ml-[64px]" :class="{ 'isCollapse': isCollapse }"
+              @click="handleChangeCollapse(isCollapse)"></svg-icon>
       </div>
     </div>
     <div class="header-tool">
@@ -63,6 +65,8 @@ import logoLight from '@/assets/image/logo.png'
 import logoDark from '@/assets/image/logo.png'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
+import { useAppStore } from "@/stores/app"
+import { storeToRefs } from "pinia";
 import useTheme from '@/hooks/theme'
 import { useI18n } from 'vue-i18n'
 import { timestampToTime } from "@/utils/index"
@@ -77,9 +81,10 @@ onMounted(async () => {
   // console.log("appVersion", version);
   // appVersion.value = "当前版本: V" + version
 })
-
 const { locale } = useI18n()
 const userStore = useUserStore()
+const appStore = useAppStore();
+const { isCollapse } = storeToRefs(appStore);
 
 // 进度条颜色
 const colors = [
@@ -101,6 +106,10 @@ const loginOut = () => {
 const changeLang = (lang: string) => {
   locale.value = lang
   localStorage.setItem('lang', lang)
+}
+const handleChangeCollapse = function (collapse: boolean) {
+  console.log(collapse, 'collapse');
+  appStore.isCollapse = !collapse
 }
 </script>
 
@@ -210,6 +219,20 @@ const changeLang = (lang: string) => {
           color: white;
           background-color: rgb(235, 32, 19);
         }
+      }
+    }
+  }
+}
+
+/* 当屏幕宽度小于或等于 600px 时应用的样式 */
+@media screen and (max-width: 600px) {
+  .header {
+    .header-tool {
+      .user-info {
+        margin-right: 25px;
+      }
+      .titlebar {
+        display: none;
       }
     }
   }

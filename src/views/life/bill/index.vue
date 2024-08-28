@@ -1,8 +1,29 @@
 <template>
     <div class="lifePay-container layout-wrapper">
         <el-form size="small" :inline="true" :model="ruleForm" ref="noteFormRef" @submit.prevent class="filter-container">
-            <el-row>
-                <el-col :span="4">
+            <el-form-item label="" prop="payType">
+                <el-select v-model="ruleForm.payType" clearable placeholder="请选择交易分类">
+                    <el-option v-for="item in payTypeOptions" :key="item.value" :label="item.label" :value="item.value" />
+                </el-select>
+            </el-form-item>
+            <el-form-item label="" prop="consume">
+                <el-select v-model="ruleForm.consume" clearable placeholder="请选择收/支">
+                    <el-option v-for="item in consumeOptions" :key="item.value" :label="item.label" :value="item.value" />
+                </el-select>
+            </el-form-item>
+            <el-form-item>
+                <div class="block">
+                    <el-date-picker v-model="dateRange" size="small" type="datetimerange" range-separator="至"
+                        start-placeholder="开始时间" end-placeholder="结束时间" :shortcuts="shortcuts" :size="size"
+                        value-format="YYYY-MM-DD HH:mm:ss" :default-time="defaultTime2" />
+                </div>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="onSearch">查询</el-button>
+                <el-button @click="resetForm(noteFormRef)">重置</el-button>
+            </el-form-item>
+            <!-- <el-row>
+                <el-col :span="4" :xs="24" :sm="24" :md="4" :lg="4" :xl="4">
                     <el-form-item label="" prop="payType">
                         <el-select v-model="ruleForm.payType" clearable placeholder="请选择交易分类">
                             <el-option v-for="item in payTypeOptions" :key="item.value" :label="item.label"
@@ -10,7 +31,7 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
-                <el-col :span="4">
+                <el-col :span="4" :xs="24" :sm="24" :md="4" :lg="4" :xl="4">
                     <el-form-item label="" prop="consume">
                         <el-select v-model="ruleForm.consume" clearable placeholder="请选择收/支">
                             <el-option v-for="item in consumeOptions" :key="item.value" :label="item.label"
@@ -18,7 +39,7 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
-                <el-col :span="12">
+                <el-col :span="12" :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
                     <el-form-item>
                         <div class="block">
                             <el-date-picker v-model="dateRange" size="small" type="datetimerange" range-separator="至"
@@ -27,15 +48,13 @@
                         </div>
                     </el-form-item>
                 </el-col>
-                <el-col :span="4"><el-form-item>
+                <el-col :span="4" :xs="24" :sm="24" :md="4" :lg="4" :xl="4">
+                    <el-form-item>
                         <el-button type="primary" @click="onSearch">查询</el-button>
                         <el-button @click="resetForm(noteFormRef)">重置</el-button>
                     </el-form-item>
                 </el-col>
-            </el-row>
-
-
-
+            </el-row> -->
         </el-form>
         <div class="btns-container">
             <!-- <el-upload class="upload-demo" action="" :on-change="handleChange" :before-upload="beforeUpload">
@@ -82,11 +101,14 @@
                     <el-table-column prop="consume" label="收/支" width="80">
                         <template #default="scope">
                             <div v-if="scope.row.isEdit" class="flex items-center">
-                                <el-select v-model="scope.row.consumeBase" size="small" placeholder="请选择收/支" @change="handelChangeConsume(scope.row)">
+                                <el-select v-model="scope.row.consumeBase" size="small" placeholder="请选择收/支"
+                                    @change="handelChangeConsume(scope.row)">
                                     <el-option v-for="item in consumeOptions" :key="item.value" :label="item.label"
                                         :value="item.value" />
                                 </el-select>
-                                <el-icon @click="handelConfirmConsume(scope.row)"><Check /></el-icon>
+                                <el-icon @click="handelConfirmConsume(scope.row)">
+                                    <Check />
+                                </el-icon>
                             </div>
                             <span v-else>
                                 {{ scope.row.consume }}
@@ -256,8 +278,8 @@ const handelChangeConsume = (row) => {
 const handelConfirmConsume = (row) => {
     console.log(row)
     const { id, consume, consumeBase } = row
-    postUpdateConsume({id, consume: consumeBase  }).then(res => {
-        if(res.code === 200) {
+    postUpdateConsume({ id, consume: consumeBase }).then(res => {
+        if (res.code === 200) {
             ElMessage.success('修改成功')
             getList()
         } else {
@@ -525,4 +547,5 @@ const shortcuts = [
     &+.upload-demo {
         margin-left: 12px
     }
-}</style>
+}
+</style>

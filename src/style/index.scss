@@ -53,10 +53,12 @@ body {
         margin-bottom: 12px;
     }
 }
+
 .common-pagination {
     margin-top: 12px;
     text-align: right;
 }
+
 // 关闭按钮
 .titlebar-button {
     margin-left: 15px !important;
@@ -94,19 +96,34 @@ body {
     padding-top: 0;
     padding-bottom: 10px !important;
 }
+
 .el-drawer {
     .el-drawer__header {
         margin-bottom: 12px;
+
         .el-drawer__close-btn {
             padding: 0 12px;
         }
     }
 }
+
 .el-form.el-form--inline {
- .el-select {
-    width: 166px;
- }
+    .el-select {
+        width: 166px;
+    }
 }
+
+.el-menu--vertical {
+    .svg-icon {
+        vertical-align: middle;
+        width: var(--el-menu-icon-width);
+        text-align: center;
+        height: 18px;
+        margin-right: 5px;
+        margin-top: -4px;
+    }
+}
+
 // 文件列表中的文件高度
 $file-height: 80px;
 // 文件图标宽高
