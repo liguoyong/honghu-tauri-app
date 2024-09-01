@@ -37,12 +37,14 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ref, reactive, computed, onMounted } from 'vue';
+import { ref, reactive, computed, onMounted, watch } from 'vue';
 import { getGoldList, postGoldAnalysis } from '@/apis/gold'
 import { markRaw } from "vue"
 import * as echarts from 'echarts';
 import { ElMessage } from 'element-plus'
 import dayjs from 'dayjs';
+import { useAppStore } from '@/stores/app'
+const appStore = useAppStore()
 const form = reactive({ date: [] })
 const formRef = ref(null)
 const lineChart = ref(null)
@@ -228,7 +230,7 @@ const lineChartOptions = computed(() => {
             type: 'category',
             boundaryGap: false,
             data: data.map(item => item.recordTime),
-            interval: 50 // 或者设置每5个标签显示一个
+            interval: 60 // 或者设置每5个标签显示一个
         },
         yAxis: {
             type: 'value'
@@ -320,9 +322,20 @@ function getBalanceAnalysisChart() {
     getList()
 }
 const initLineChart = () => {
+    if (lineChart.value) {
+        // 销毁已有的图表实例
+        lineChart.value.dispose();
+    }
     lineChart.value = markRaw(echarts.init(document.getElementById('GoldLineChart')));
     lineChart.value.setOption(lineChartOptions.value);
 };
+watch(() => appStore.isCollapse, (val) => {
+    console.log(val, '1231231');
+    setTimeout(() => {
+        initLineChart();
+        lineChart.value.resize();
+    }, 400);
+})
 onMounted(() => {
     window.addEventListener('resize', () => {
         lineChart.value.resize();
