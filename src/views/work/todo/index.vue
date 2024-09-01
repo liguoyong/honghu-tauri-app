@@ -86,7 +86,6 @@ const updateDialog = reactive({
     type: 'update',
     form: { content: '' }
 })
-const small = ref(false)
 const planFormRef = ref<FormInstance>()
 const drawer = reactive({
     show: false,

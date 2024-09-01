@@ -1,10 +1,10 @@
 <template>
-  <el-table :data="data" border stripe style="width: 100%" v-bind="$attrs">
+  <el-table :data="data" stripe style="width: 100%" v-bind="$attrs">
     <template v-for="item in columns">
       <el-table-column v-if="item.type === 'op'" :min-width="120" fixed="right" v-bind="item">
         <template #="{ row }">
           <slot name="op" v-bind="row" />
-          <el-button v-for="button in opList" :key="button.type" :type="button.buttonType" link
+          <el-button v-for="button in opList" :key="button.type" size="small" :type="button.buttonType" link
             @click="handleOp(button.type, row)">
             {{ button.label }}
           </el-button>
