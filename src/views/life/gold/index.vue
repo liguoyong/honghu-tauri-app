@@ -193,13 +193,12 @@ const lineChartOptions = computed(() => {
         return keyList[key]
     })
     const data = chartTableData.value
-    console.log(chartTableData.value,'chartTableData');
-    
+    console.log(chartTableData.value, 'chartTableData');
+
     const seriesData = Object.keys(keyList).map(key => {
         return {
             name: keyList[key],
             type: 'line',
-            stack: 'Total',
             smooth: true,
             data: data.map(item => item[key])
         }
@@ -229,8 +228,7 @@ const lineChartOptions = computed(() => {
         xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: data.map(item => item.recordTime),
-            interval: 60 // 或者设置每5个标签显示一个
+            data: data.map(item => item.recordTime)
         },
         yAxis: {
             type: 'value'
@@ -275,12 +273,21 @@ function getGoldAnalysis() {
     const [startTime = '', endTime = ''] = form.date || []
     postGoldAnalysis({ startTime, endTime }).then(res => {
         if (res.code == 200) {
-            console.log(res,'asdas');
-            
+            console.log(res, 'asdas');
+
             const { data = [] } = res
-            chartTableData.value = data.map(item => {
+            const filterData = data.filter(item => {
+                return item.shuibeiGold
+            })
+            chartTableData.value = filterData.map(item => {
+
                 return {
-                    ...item,
+                    gold18k: item.gold18k || 0,
+                    goldBarPrice: item.goldBarPrice || 0,
+                    goldTd: item.goldTd || 0,
+                    platinum99: item.platinum99 || 0,
+                    shuibeiGold: item.shuibeiGold || 0,
+                    silverTd: item.silverTd || 0,
                     recordTime: dayjs(item.recordTime).format('YYYY-MM-DD HH:mm:ss'),
                     updateTime: dayjs(item.updateTime).format('YYYY-MM-DD HH:mm:ss'),
                     createTime: dayjs(item.createTime).format('YYYY-MM-DD HH:mm:ss')
