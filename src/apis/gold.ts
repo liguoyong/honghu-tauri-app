@@ -22,3 +22,8 @@ export const deleteGoldAnalysis = async <R = ResponseType>(id: string) => {
 export const postGoldAnalysis = async <R = ResponseType>(data?: object) => {
   return await http.request<R>("post", "/api/gold/analysis", { data });
 };
+
+/** 金价同步 */
+export const postGoldSync = async <R = ResponseType>(data?: object) => {
+  return await http.request<R>("post", "/api/gold/sync", { data });
+};

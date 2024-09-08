@@ -7,6 +7,7 @@
                         <el-col :span="12">
                             <span class="font-semibold flex">
                                 金价统计
+                                <el-button class="ml-[8px]" type="primary" size="small" @click="handleGoldSync" :loading="syncLoading">同步金价</el-button>
                             </span>
                         </el-col>
                         <el-col :span="12" class="text-right">
@@ -38,7 +39,7 @@
 </template>
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted, watch } from 'vue';
-import { getGoldList, postGoldAnalysis } from '@/apis/gold'
+import { getGoldList, postGoldAnalysis, postGoldSync } from '@/apis/gold'
 import { markRaw } from "vue"
 import * as echarts from 'echarts';
 import { ElMessage } from 'element-plus'
@@ -48,6 +49,7 @@ const appStore = useAppStore()
 const form = reactive({ date: [] })
 const formRef = ref(null)
 const lineChart = ref(null)
+const syncLoading = ref(false)
 const defaultTime: [Date, Date] = [
     new Date(2000, 0, 1, 0, 0, 0, 0),
     new Date(2000, 0, 1, 23, 59, 59, 999),
@@ -323,6 +325,22 @@ function handleReset() {
     form.date = []
     pageParams.page = 1
     getList()
+}
+const handleGoldSync = function() {
+    syncLoading.value = true
+    postGoldSync().then(res => {
+        if (res.code == 200) {
+            setTimeout(() => {
+                syncLoading.value = false
+                ElMessage.success('同步成功')
+                getList()
+                getGoldAnalysis()
+            }, 3000)
+        } else {
+            syncLoading.value = false
+            ElMessage.error(res.msg)
+        }
+    })
 }
 function getBalanceAnalysisChart() {
     getGoldAnalysis()
