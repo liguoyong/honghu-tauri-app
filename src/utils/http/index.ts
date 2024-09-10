@@ -78,32 +78,36 @@ class PureHttp {
                     : new Promise(resolve => {
                         const data = getToken();
                         if (data) {
-                            const {expires = 0} = data
-                            const now = new Date().getTime();
-                            const expired = parseInt(expires + '') - now <= 0;
-                            if (expired) {
-                                // if (!PureHttp.isRefreshing) {
-                                //     PureHttp.isRefreshing = true;
-                                //     // token过期刷新
-                                //     useUserStoreHook()
-                                //         .handRefreshToken({ refreshToken: data.refreshToken })
-                                //         .then(res => {
-                                //             const token = res.data.accessToken;
-                                //             config.headers["Authorization"] = formatToken(token);
-                                //             PureHttp.requests.forEach(cb => cb(token));
-                                //             PureHttp.requests = [];
-                                //         })
-                                //         .finally(() => {
-                                //             PureHttp.isRefreshing = false;
-                                //         });
-                                // }
-                                resolve(config);
-                            } else {
-                                config.headers ? config.headers["Authorization"] = formatToken(
-                                    data.accessToken
-                                ):'';
-                                resolve(config);
-                            }
+                            // const {expires = 0} = data
+                            // const now = new Date().getTime();
+                            // const expired = parseInt(expires + '') - now <= 0;
+                            // if (expired) {
+                            //     // if (!PureHttp.isRefreshing) {
+                            //     //     PureHttp.isRefreshing = true;
+                            //     //     // token过期刷新
+                            //     //     useUserStoreHook()
+                            //     //         .handRefreshToken({ refreshToken: data.refreshToken })
+                            //     //         .then(res => {
+                            //     //             const token = res.data.accessToken;
+                            //     //             config.headers["Authorization"] = formatToken(token);
+                            //     //             PureHttp.requests.forEach(cb => cb(token));
+                            //     //             PureHttp.requests = [];
+                            //     //         })
+                            //     //         .finally(() => {
+                            //     //             PureHttp.isRefreshing = false;
+                            //     //         });
+                            //     // }
+                            //     resolve(config);
+                            // } else {
+                            //     config.headers ? config.headers["Authorization"] = formatToken(
+                            //         data.accessToken
+                            //     ):'';
+                            //     resolve(config);
+                            // }
+                            config.headers ? config.headers["Authorization"] = formatToken(
+                                data.accessToken
+                            ):'';
+                            resolve(config);
                         } else {
                             resolve(config);
                         }

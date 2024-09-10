@@ -8,6 +8,7 @@
                             <span class="font-semibold flex">
                                 金价统计
                                 <el-button class="ml-[8px]" type="primary" size="small" @click="handleGoldSync" :loading="syncLoading">同步金价</el-button>
+                                <el-button class="ml-[8px]" type="primary" size="small" @click="dialog.show = true" :loading="syncLoading">查看水贝金价</el-button>
                             </span>
                         </el-col>
                         <el-col :span="12" class="text-right">
@@ -28,6 +29,10 @@
                 :page-size="pageParams.size" :total="pageParams.total" @size-change="handleSizeChange"
                 @current-change="handleCurrentChange" />
         </el-card>
+        <!-- https://www.guijinshu.com/plugin.php?id=study_dz_goldapi -->
+        <com-dialog class="gold-dialog-fullscreen" v-model="dialog.show" fullscreen :show-footer="false">
+            <iframe src="https://www.guijinshu.com/plugin.php?id=study_dz_goldapi" frameborder="0" width="100%"></iframe>
+        </com-dialog>
         <!-- <com-form ref="formRef" size="small" :inline="true" v-model="form" :options="formOptions" @submit="handleSearch">
             <el-form-item>
                 <el-button type="primary" size="small" @click="handleSearch">查询</el-button>
@@ -54,6 +59,10 @@ const defaultTime: [Date, Date] = [
     new Date(2000, 0, 1, 0, 0, 0, 0),
     new Date(2000, 0, 1, 23, 59, 59, 999),
 ]
+const dialog = reactive({
+    show: false,
+    type: 'view',
+})
 const shortcuts = reactive([
     {
         text: '近一周',
@@ -367,3 +376,13 @@ onMounted(() => {
     });
 });
 </script>
+<style lang="scss" scoped>
+:deep(.gold-dialog-fullscreen) {
+    .el-dialog__body {
+        max-height: unset;
+        iframe {
+            height: calc(100vh - 88px);
+        }
+    }
+}
+</style>

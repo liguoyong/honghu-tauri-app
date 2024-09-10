@@ -1,18 +1,10 @@
 <template>
-  <el-dialog
-    v-model="show"
-    class="commonDialog"
-    :close-on-click-modal="closeOnClickModal"
-    :title="title"
-    draggable
-    align-center
-    v-bind="$attrs"
-    @close="$emit('close')"
-  >
-  <!-- <el-scrollbar max-height="60vh">
+  <el-dialog v-model="show" class="commonDialog" :close-on-click-modal="closeOnClickModal" :title="title" draggable
+    align-center v-bind="$attrs" @close="$emit('close')">
+    <!-- <el-scrollbar max-height="60vh">
     
   </el-scrollbar> -->
-  <slot></slot>
+    <slot></slot>
     <template v-if="showFooter" #footer>
       <span class="dialog-footer">
         <el-button @click="show = false">取消</el-button>
