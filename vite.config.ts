@@ -1,28 +1,28 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import { fileURLToPath, URL } from 'node:url';
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
-import UnoCSS from 'unocss/vite'
-import path from 'path';
-import inject from '@rollup/plugin-inject';
-
+import { fileURLToPath, URL } from "node:url";
+import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
+import UnoCSS from "unocss/vite";
+import path from "path";
+import inject from "@rollup/plugin-inject";
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
-  plugins: [vue(),
-  UnoCSS(),
-  //引入SVG图标素材文件
-  createSvgIconsPlugin({
-    iconDirs: [path.resolve(__dirname, 'src/icons/svg')]
-  }),
-  inject({
-    'window.Quill': ['@vueup/vue-quill', 'Quill'],
-    Quill: ['@vueup/vue-quill', 'Quill'],
-  }),
+  plugins: [
+    vue(),
+    UnoCSS(),
+    //引入SVG图标素材文件
+    createSvgIconsPlugin({
+      iconDirs: [path.resolve(__dirname, "src/icons/svg")],
+    }),
+    inject({
+      "window.Quill": ["@vueup/vue-quill", "Quill"],
+      Quill: ["@vueup/vue-quill", "Quill"],
+    })
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+    },
   },
   css: {
     preprocessorOptions: {
@@ -37,12 +37,12 @@ export default defineConfig(async () => ({
   clearScreen: false,
   // tauri expects a fixed port, fail if that port is not available
   server: {
-    host: '0.0.0.0',
+    host: "0.0.0.0",
     port: 1420,
     strictPort: true,
     proxy: {
-      '/api': {
-        target: 'http://127.0.0.1:7001',
+      "/api": {
+        target: "http://127.0.0.1:7001",
         changeOrigin: true,
       },
     },
@@ -51,6 +51,16 @@ export default defineConfig(async () => ({
   // https://tauri.studio/v1/api/config#buildconfig.beforedevcommand
   envPrefix: ["VITE_", "TAURI_"],
   build: {
+    rollupOptions: {
+      input: {
+        index: "./index.html",
+        home: "./pages/home.html",
+      },
+      output: {
+        // 自定义输出目录结构（默认为 dist）
+        dir: 'dist'
+      }
+    },
     // Tauri supports es2021
     target: "esnext",
     // don't minify for debug builds
