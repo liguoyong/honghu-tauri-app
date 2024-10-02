@@ -192,6 +192,19 @@ const routes = [
           activeMenu: '/operational/tool'
         },
       },
+      {
+        path: "tool/flow",
+        name: "toolFlow",
+        hidden: true,
+        component: () =>
+          import(
+            /* webpackChunkName: "toolFlow" */ "../views/Tool/flow/index.vue"
+          ),
+        meta: {
+          title: "flow",
+          activeMenu: '/operational/tool'
+        },
+      },
     ],
   },
   {

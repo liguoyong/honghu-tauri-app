@@ -45,10 +45,10 @@ const configList = reactive([
             target: '_self',
         }, {
             icon: 'https://img2.baidu.com/it/u=3058861405,730789891&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
-            url: '/xmind',
+            url: '/operational/tool/flow',
             title: '思维导图',
             description: '思维导图，简单的思维导图页面',
-            target: '_blank',
+            target: '_self',
         }, {
             icon: 'https://caniuse.com/img/favicon-128.png',
             url: 'https://caniuse.com/',
