@@ -9,8 +9,8 @@
                         </el-col>
                         <el-col :span="12" class="text-right">
                             <el-date-picker v-model="dateRange" size="small" type="datetimerange" style="width: 320px;"
-                                range-separator="至" start-placeholder="开始时间" end-placeholder="结束时间" :shortcuts="shortcuts"
-                                value-format="YYYY-MM-DD HH:mm:ss" :default-time="defaultTime2"
+                                range-separator="至" start-placeholder="开始时间" end-placeholder="结束时间"
+                                :shortcuts="shortcuts" value-format="YYYY-MM-DD HH:mm:ss" :default-time="defaultTime2"
                                 @change="getAnalysisSum" />
                         </el-col>
                     </el-row>
@@ -52,7 +52,8 @@
                             <div>
                                 今日余额：{{ todayBalance }}元
                                 <el-popover :visible="visiblePopover" title="更新余额" placement="bottom-end" :width="260">
-                                    <el-form ref="formRef" size="small" :model="formData" label-position="left" label-width="auto">
+                                    <el-form ref="formRef" size="small" :model="formData" label-position="left"
+                                        label-width="auto">
                                         <el-form-item label="今日余额">
                                             <el-input v-model.trim="formData.total_amount" size="small" />
                                         </el-form-item>
@@ -64,21 +65,28 @@
                                         </el-form-item>
                                     </el-form>
                                     <div style="text-align: right; margin: 0">
-                                    <el-button size="small" plain @click="visiblePopover = false">取消</el-button>
-                                    <el-button size="small" type="primary" @click="handleUpdateBalance">
-                                        提交
-                                    </el-button>
+                                        <el-button size="small" plain @click="visiblePopover = false">取消</el-button>
+                                        <el-button size="small" type="primary" @click="handleUpdateBalance">
+                                            提交
+                                        </el-button>
                                     </div>
                                     <template #reference>
-                                        <el-link type="primary" :underline="false" @click="visiblePopover = true"><el-icon><Edit /></el-icon></el-link>
+                                        <el-link type="primary" :underline="false"
+                                            @click="visiblePopover = true"><el-icon>
+                                                <Edit />
+                                            </el-icon></el-link>
                                     </template>
                                 </el-popover>
-                                
+
                             </div>
                             <div>昨日余额：{{ yesterdayBalance }}元</div>
                             <div class="today-add">今日新增：
-                                <el-text v-if="balanceDiff" type="success">{{ balanceDiff }}元<el-icon><Top /></el-icon></el-text>
-                                <el-text v-else type="danger" >{{ balanceDiff }}元<el-icon><Bottom /></el-icon></el-text>
+                                <el-text v-if="balanceDiff" type="success">{{ balanceDiff }}元<el-icon>
+                                        <Top />
+                                    </el-icon></el-text>
+                                <el-text v-else type="danger">{{ balanceDiff }}元<el-icon>
+                                        <Bottom />
+                                    </el-icon></el-text>
                             </div>
                         </div>
                     </el-col>
@@ -94,8 +102,8 @@
                         </el-col>
                         <el-col :span="12" class="text-right">
                             <el-date-picker v-model="dateRange1" size="small" type="datetimerange" style="width: 320px;"
-                                range-separator="至" start-placeholder="开始时间" end-placeholder="结束时间" :shortcuts="shortcuts"
-                                value-format="YYYY-MM-DD HH:mm:ss" :default-time="defaultTime2"
+                                range-separator="至" start-placeholder="开始时间" end-placeholder="结束时间"
+                                :shortcuts="shortcuts" value-format="YYYY-MM-DD HH:mm:ss" :default-time="defaultTime2"
                                 @change="getAnalysisList" />
                         </el-col>
                     </el-row>
@@ -103,7 +111,7 @@
             </template>
             <div class="h-[220px] font-size-[12px] color-white">
                 <div class="h-[220px] w-full" id="lineChart" ref="lineChart">
-                <!-- <div class="h-[220px] w-full">
+                    <!-- <div class="h-[220px] w-full">
                     <LineChart chartId="lineChart" :options="lineChartOptions" />
                 </div> -->
                 </div>
@@ -120,15 +128,15 @@
                         </el-col>
                         <el-col :span="12" class="text-right">
                             <el-date-picker v-model="dateRange2" size="small" type="datetimerange" style="width: 320px;"
-                                range-separator="至" start-placeholder="开始时间" end-placeholder="结束时间" :shortcuts="shortcuts"
-                                value-format="YYYY-MM-DD HH:mm:ss" :default-time="defaultTime2"
+                                range-separator="至" start-placeholder="开始时间" end-placeholder="结束时间"
+                                :shortcuts="shortcuts" value-format="YYYY-MM-DD HH:mm:ss" :default-time="defaultTime2"
                                 @change="getBalanceAnalysisChart" />
                         </el-col>
                     </el-row>
                 </div>
             </template>
             <div class="h-[220px] font-size-[12px] color-white">
-                <div class="h-[220px] w-full" id="lineChart2" ref="lineChart2" >
+                <div class="h-[220px] w-full" id="lineChart2" ref="lineChart2">
                     <!-- <LineChart :chartId="customLineChartId" :options="lineChartOptions2" /> -->
                 </div>
             </div>
@@ -146,7 +154,7 @@ import { importAnalysis, postAnalysisList } from '@/apis/bills'
 // import pieChart from '../components/pieChart.vue'
 import pieChart from '@/components/Chart/PieChart/index.vue'
 import LineChart from '@/components/Chart/PieChart/index.vue'
-import { ElMessage } from 'element-plus' 
+import { ElMessage } from 'element-plus'
 const dateRange: any = ref('')
 const dateRange1: any = ref('')
 const dateRange2: any = ref('')
@@ -155,7 +163,7 @@ const formRef = ref(null)
 const formData = reactive({
     total_amount: '',
     id: '',
-    hb_expenditure:'',
+    hb_expenditure: '',
     hb_balance: ''
 })
 const defaultTime2: [Date, Date] = [
@@ -260,38 +268,34 @@ const lineChartOptions = computed(() => ({
         {
             name: '支出',
             type: 'line',
-            stack: 'Total',
             smooth: true,
             data: expensesLine.value
         },
         {
             name: '收入',
             type: 'line',
-            stack: 'Total',
             smooth: true,
             data: incomeLine.value
         },
         {
             name: '不计收支',
             type: 'line',
-            stack: 'Total',
             smooth: true,
             data: ignoreLine.value
         }
     ],
     dataZoom: [
-        // 内置 dataZoom 组件，适用于折线图、柱状图等
+        {
+            show: true,
+            realtime: true,
+            start: 0,
+            end: 100
+        },
         {
             type: 'inside',
+            realtime: true,
             start: 0,
-            end: 100,
-            zoomLock: true
-        },
-        // 工具栏 dataZoom 组件，适用于折线图、柱状图等
-        {
-            type: 'slider',
-            show: true,
-            xAxisIndex: [0]
+            end: 100
         }
     ]
 }))
@@ -389,7 +393,7 @@ const lineChartOptions2 = computed(() => ({
     },
     toolbox: {
         feature: {
-        saveAsImage: {}
+            saveAsImage: {}
         }
     },
     xAxis: {
@@ -455,8 +459,8 @@ const getBalanceAnalysisChart = () => {
                 return new Big(item).minus(new Big(hbExpenditure.value[index] || 0)).toNumber()
             })
             console.log(data, dayjs().format('YYYY-MM-DD'))
-            const todayData = data.find(item => dayjs(item.recordTime).format('YYYY-MM-DD') === dayjs().format('YYYY-MM-DD'))            
-            if(todayData) {
+            const todayData = data.find(item => dayjs(item.recordTime).format('YYYY-MM-DD') === dayjs().format('YYYY-MM-DD'))
+            if (todayData) {
                 todayBalance.value = todayData?.total_amount || 0
                 Object.assign(formData, todayData || {})
             }
@@ -531,11 +535,11 @@ const initLineChart2 = () => {
 };
 const handleUpdateBalance = () => {
     const { id = '', total_amount = '', hb_expenditure = '', hb_balance = '' } = formData
-    if(!total_amount || !hb_expenditure || !hb_balance) {
+    if (!total_amount || !hb_expenditure || !hb_balance) {
         ElMessage.error('输入金额不能为空')
         return
     }
-    if(id) {
+    if (id) {
         getBalanceUpdate({
             id,
             total_amount,
@@ -566,7 +570,7 @@ const handleUpdateBalance = () => {
             }
         })
     }
-    
+
 }
 onMounted(() => {
     initLineChart();
@@ -585,7 +589,7 @@ console.log(chartOptions, 'chartOptionschartOptionschartOptions');
         font-size: 12px;
     }
 }
+
 // .el-link {
 //     font-size: 12px;
-// }
-</style>
+// }</style>

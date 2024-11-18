@@ -7,14 +7,16 @@
                         <el-col :span="12">
                             <span class="font-semibold flex">
                                 金价统计
-                                <el-button class="ml-[8px]" type="primary" size="small" @click="handleGoldSync" :loading="syncLoading">同步金价</el-button>
-                                <el-button class="ml-[8px]" type="primary" size="small" @click="dialog.show = true" :loading="syncLoading">查看水贝金价</el-button>
+                                <el-button class="ml-[8px]" type="primary" size="small" @click="handleGoldSync"
+                                    :loading="syncLoading">同步金价</el-button>
+                                <el-button class="ml-[8px]" type="primary" size="small" @click="dialog.show = true"
+                                    :loading="syncLoading">查看水贝金价</el-button>
                             </span>
                         </el-col>
                         <el-col :span="12" class="text-right">
                             <el-date-picker v-model="form.date" size="small" type="datetimerange" style="width: 320px;"
-                                range-separator="至" start-placeholder="开始时间" end-placeholder="结束时间" :shortcuts="shortcuts"
-                                value-format="YYYY-MM-DD HH:mm:ss" :default-time="defaultTime"
+                                range-separator="至" start-placeholder="开始时间" end-placeholder="结束时间"
+                                :shortcuts="shortcuts" value-format="YYYY-MM-DD HH:mm:ss" :default-time="defaultTime"
                                 @change="getBalanceAnalysisChart" />
                         </el-col>
                     </el-row>
@@ -31,7 +33,8 @@
         </el-card>
         <!-- https://www.guijinshu.com/plugin.php?id=study_dz_goldapi -->
         <com-dialog class="gold-dialog-fullscreen" v-model="dialog.show" fullscreen :show-footer="false">
-            <iframe src="https://www.guijinshu.com/plugin.php?id=study_dz_goldapi" frameborder="0" width="100%"></iframe>
+            <iframe src="https://www.guijinshu.com/plugin.php?id=study_dz_goldapi" frameborder="0"
+                width="100%"></iframe>
         </com-dialog>
         <!-- <com-form ref="formRef" size="small" :inline="true" v-model="form" :options="formOptions" @submit="handleSearch">
             <el-form-item>
@@ -246,18 +249,17 @@ const lineChartOptions = computed(() => {
         },
         series: seriesData,
         dataZoom: [
-            // 内置 dataZoom 组件，适用于折线图、柱状图等
+            {
+                show: true,
+                realtime: true,
+                start: 0,
+                end: 100
+            },
             {
                 type: 'inside',
+                realtime: true,
                 start: 0,
-                end: 100,
-                zoomLock: true
-            },
-            // 工具栏 dataZoom 组件，适用于折线图、柱状图等
-            {
-                type: 'slider',
-                show: true,
-                xAxisIndex: [0]
+                end: 100
             }
         ]
     }
@@ -335,7 +337,7 @@ function handleReset() {
     pageParams.page = 1
     getList()
 }
-const handleGoldSync = function() {
+const handleGoldSync = function () {
     syncLoading.value = true
     postGoldSync().then(res => {
         if (res.code == 200) {
@@ -380,6 +382,7 @@ onMounted(() => {
 :deep(.gold-dialog-fullscreen) {
     .el-dialog__body {
         max-height: unset;
+
         iframe {
             height: calc(100vh - 88px);
         }
