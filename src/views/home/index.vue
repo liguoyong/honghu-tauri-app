@@ -6,13 +6,13 @@
           <template #header>
             <div class="card-header flex justify-between items-center">
               <span class="font-semibold">待办事项</span>
-              <el-icon>
-                <Operation />
-              </el-icon>
+              <el-radio-group v-model="taskStatus" size="small" @change="getTaskList">
+                <el-radio-button v-for="item in STATUS_OPTIONS" :key="item.value" :label="item.label" :value="item.value" />
+              </el-radio-group>
             </div>
           </template>
           <div class="text item h-[204px]">
-            <div ref="todoList" class="todoList">
+            <div ref="todoList" class="todoList" v-if="items.length">
               <div class="list-item-div" v-for="item in items" :key="item.id">
                 <el-row>
                   <el-col :span="8">
@@ -21,9 +21,15 @@
                   <el-col :span="15" style="text-align: right;">
                     {{ $dayjs(item.startTime).format('YYYY-MM-DD') }} 到 {{ $dayjs(item.endTime).format('YYYY-MM-DD') }}
                   </el-col>
+                  <el-col :span="1" style="text-align: right;">
+                   <div class="flex items-center h-full cursor-pointer c-coolgray pl-[6px]">
+                    <el-icon><Checked /></el-icon>
+                   </div>
+                  </el-col>
                 </el-row>
               </div>
             </div>
+            <el-empty v-else :image-size="80"></el-empty>
           </div>
           <template #footer>
             <div>
@@ -182,9 +188,11 @@ import { getTodoAll } from '@/apis/todo'
 import { postAnalysisList } from '@/apis/bills'
 import dayjs from 'dayjs';
 import Big from 'big.js';
+import { STATUS_OPTIONS } from '@/views/work/todo/constants.ts'
 export default {
   setup() {
     const value = ref(new Date());
+    const taskStatus = ref(STATUS_OPTIONS[0].value)
     const items = ref([]);
     const analysisList = ref([])
     const todayAnalysisList = ref([])
@@ -196,13 +204,7 @@ export default {
     const yesterdayIncomeSum = ref(0)
     const yesterdayNoCalculateSum = ref(0)
     let sortable;
-    getTodoAll().then(res => {
-      if (res.code === 200) {
-        items.value = res.data
-      } else {
-        ElMessage.error(res.msg)
-      }
-    })
+    
     const dateRange1: any = ref('')
     const setLastWeekRange = () => {
       const end = new Date()
@@ -211,7 +213,18 @@ export default {
       dateRange1.value = [dayjs(start).format('YYYY-MM-DD 00:00:00'), dayjs(end).format('YYYY-MM-DD 23:59:59')]
     }
     setLastWeekRange()
-    
+    const getTaskList = () => {
+      getTodoAll({
+        status: taskStatus.value
+      }).then(res => {
+        if (res.code === 200) {
+          items.value = res.data
+        } else {
+          ElMessage.error(res.msg)
+        }
+      })
+    }
+    getTaskList()
     const getAnalysisList = () => {
       const [startTime = '', endTime = ''] = dateRange1.value
       postAnalysisList({
@@ -252,6 +265,7 @@ export default {
     });
     return {
       dateRange1,
+      taskStatus,
       analysisList,
       todayAnalysisList,
       yesterdayAnalysisList,
@@ -262,7 +276,9 @@ export default {
       todayNoCalculateSum,
       yesterdayExpensesSum,
       yesterdayIncomeSum,
-      yesterdayNoCalculateSum
+      yesterdayNoCalculateSum,
+      STATUS_OPTIONS,
+      getTaskList
     }
   }
 }

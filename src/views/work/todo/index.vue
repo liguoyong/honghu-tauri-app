@@ -4,6 +4,15 @@
             <el-form-item label="标题" prop="title">
                 <el-input v-model="ruleForm.title" placeholder="请输入标题" clearable />
             </el-form-item>
+            <el-form-item label="状态">
+            <el-select
+                v-model="ruleForm.status"
+                placeholder="请选择状态"
+                clearable
+            >
+                <el-option v-for="item in STATUS_OPTIONS" :key="item.value" :label="item.label" :value="item.value" />
+            </el-select>
+            </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="onSearch">查询</el-button>
                 <el-button @click="resetForm(planFormRef)">重置</el-button>
@@ -69,8 +78,10 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import editTodoDialog from './components/editTodoDialog.vue'
 import TodoDrawer from './components/TodoDrawer.vue'
 const ruleForm = reactive({
-    title: ''
+    title: '',
+    status: ''
 })
+import { STATUS_OPTIONS } from './constants'
 interface RuleForm {
     title: string,
     desc: string,
@@ -110,6 +121,7 @@ const transformTimeDate = (date: string) => {
 }
 const resetForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return
+    ruleForm.status = ''
     formEl.resetFields()
     getList()
 }
