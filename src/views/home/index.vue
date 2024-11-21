@@ -22,9 +22,9 @@
                     {{ $dayjs(item.startTime).format('YYYY-MM-DD') }} 到 {{ $dayjs(item.endTime).format('YYYY-MM-DD') }}
                   </el-col>
                   <el-col :span="1" style="text-align: right;">
-                   <div class="flex items-center h-full cursor-pointer c-coolgray pl-[6px]">
+                   <el-text :type="getTaskType(item.status)" class="flex items-center h-full cursor-pointer c-coolgray pl-[6px]">
                     <el-icon><Checked /></el-icon>
-                   </div>
+                   </el-text>
                   </el-col>
                 </el-row>
               </div>
@@ -255,6 +255,15 @@ export default {
       })
     }
     getAnalysisList()
+    const getTaskType = (status: number) => {
+      if(status === 1) {
+        return 'primary'
+      } else if(status === 2) {
+        return 'success'
+      } else {
+        return ''
+      }
+    }
     onMounted(async () => {
       sortable = Sortable.create(document.querySelector('.todoList'), {
         onEnd: (evt) => {
@@ -278,7 +287,8 @@ export default {
       yesterdayIncomeSum,
       yesterdayNoCalculateSum,
       STATUS_OPTIONS,
-      getTaskList
+      getTaskList,
+      getTaskType
     }
   }
 }
