@@ -2,7 +2,7 @@
     <div class="doc-view-container">
         <el-container>
             <el-aside v-show="showAside && treeData.length" width="300px">
-                <el-card>
+                <el-card class="min-h-[400px]">
                     <el-tree ref="treeRef" class="treeRef" :data="treeData" :props="defaultProps" node-key="id"
                         :default-expanded-keys="expandedKeys" :default-checked-keys="checkedKeys"
                         :default-expand-all="true" :highlight-current="true" @node-click="handleNodeClick" />
