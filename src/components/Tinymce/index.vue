@@ -189,6 +189,10 @@ function destroyTinymce() {
 
   :deep(.tox-promotion) {
     visibility: hidden !important;
+    display: none !important;
+  }
+  :deep(.tox .tox-editor-header) {
+    display: block;
   }
 }
 
