@@ -12,8 +12,12 @@
         </el-container>
     </div>
 </template>
+
 <script>
 import { getDocDetail } from '@/apis/doc'
+import Viewer from 'viewerjs'
+import 'viewerjs/dist/viewer.css'
+
 export default {
     name: 'DocView',
     data() {
@@ -29,12 +33,13 @@ export default {
             defaultProps: {
                 children: 'children',
                 label: 'text'
-            }
+            },
+            viewer: null
         }
     },
     async created() {
         const hideAside = this.$route.query.hideAside // 如果地址栏参数是1则隐藏
-        this.hideAside = hideAside !== '1'
+        this.showAside = hideAside !== '1'
         this.docId = this.$route.query.identifier
         const docId = this.docId
         const result = await getDocDetail({
@@ -42,8 +47,8 @@ export default {
         })
         if (result.code === 200) {
             const { content = '', status = true } = result.data
-            //   this.content = content
             this.parseHtmlAndGenerateTree(content)
+            this.initViewer()
         } else {
             this.$message({
                 message: result.message,
@@ -52,9 +57,7 @@ export default {
         }
     },
     mounted() {
-        // const mainElement = document.getElementById('mainRef')
-        // // 添加滚动事件监听器
-        // mainElement.addEventListener('scroll', this.onMainScroll)
+        
     },
     methods: {
         handleNodeClick(data) {
@@ -105,6 +108,17 @@ export default {
             // 更新 content 字符串以包含新生成的 ID
             this.content = doc.body.innerHTML
             this.treeData = tree
+        },
+        initViewer() {
+            this.$nextTick(() => {
+                console.log(this.$refs.mainRef.$el, 'this.$refs.mainRef')
+                const images = this.$refs.mainRef.$el.querySelectorAll('img')
+                if (images.length > 0) {
+                    this.viewer = new Viewer(this.$refs.mainRef.$el, {
+                        url: 'src'
+                    })
+                }
+            })
         },
         onMainScroll(el) {
             const mainRect = document.getElementById('mainRef').getBoundingClientRect()

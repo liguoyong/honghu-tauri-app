@@ -156,7 +156,7 @@ const handelClickViewDetail = async (row: { 'id': string, [key: string]: string 
     const { code = 0, data = {} } = await getDocDetail({ id: row.id })
     if (code === 200) {
         drawer.show = true
-        drawer.title = '查看待办事项详情'
+        drawer.title = '查看文档详情'
         drawer.data = data
     }
 }
@@ -169,7 +169,7 @@ const handelCreateDoc = () => {
 const handleClickDelete = async (id: number) => {
 
     ElMessageBox.confirm(
-        '确认删除该待办事项?',
+        '确认删除该文档?',
         '温馨提示',
         {
             confirmButtonText: '确认',

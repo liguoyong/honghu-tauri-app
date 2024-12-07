@@ -11,7 +11,7 @@
                 <template #content>
                     <el-form-item class="content-item" label="文档内容" prop="content">
                         <div class="quill-container">
-                            <Tinymce1 v-model="formData.content"/>
+                            <Tinymce1 v-model="formData.content" height="600px"/>
                         </div>
                     </el-form-item>
                 </template>
@@ -60,7 +60,10 @@ const submitLoading = ref(false)
 const formOptions = computed<FormOption[]>(() => [
     { label: '文档名称', prop: 'title', required: true },
     { label: '文档标识', prop: 'identifier', required: true },
-    { label: '文档描述', prop: 'desc', required: true },
+    { label: '文档描述', prop: 'desc', required: true, props: {
+        type: 'textarea',
+        rows: 3
+    } },
     {
         label: '文档状态', component: 'el-select', prop: 'status', required: true, props: {
             // 0:未开始、1:进行中、2:已完成、3:已取消
