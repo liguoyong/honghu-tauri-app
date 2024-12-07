@@ -37,7 +37,7 @@
           </template>
         </el-dropdown>
       </div>
-      <div class="user-info">
+      <div class="user-info" :class="[isWebOpen ? 'mr-[20px]': 'mr-[5px]']">
         <el-dropdown trigger="click">
           <img :src="userStore.avatar" alt="" class="user-img" />
           <template #dropdown>
@@ -53,7 +53,7 @@
           </template>
         </el-dropdown>
       </div>
-      <div class="titlebar">
+      <div v-if="!isWebOpen" class="titlebar">
         <TitleBar></TitleBar>
       </div>
     </div>
@@ -76,6 +76,7 @@ import TitleBar from '@/components/titleBar.vue'
 import { onMounted, ref } from 'vue'
 
 let appVersion = ref("版本:")
+const isWebOpen = ref(!window.__TAURI__)
 onMounted(async () => {
   // const version = await getVersion()
   // console.log("appVersion", version);
@@ -180,8 +181,6 @@ const handleChangeCollapse = function (collapse: boolean) {
     }
 
     .user-info {
-      margin-right: 5px;
-
       .user-img {
         width: 30px;
         height: 30px;

@@ -345,6 +345,11 @@
   dependencies:
     "@tauri-apps/api" "2.0.0-beta.15"
 
+"@tinymce/tinymce-vue@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.npmjs.org/@tinymce/tinymce-vue/-/tinymce-vue-6.1.0.tgz"
+  integrity sha512-7JdaKMOaohuFWpjKwRmaZJbT/eNVUUYHG93R7+lUf7SUN+hSqd2spbuqZcki+tG9kaSAGd2ZmvJIsmzWDNAzpw==
+
 "@trysound/sax@0.2.0":
   version "0.2.0"
   resolved "https://registry.npmjs.org/@trysound/sax/-/sax-0.2.0.tgz"
@@ -4615,6 +4620,11 @@ tiny-emitter@^2.0.0:
   version "2.1.0"
   resolved "https://registry.npmmirror.com/tiny-emitter/-/tiny-emitter-2.1.0.tgz"
   integrity sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==
+
+"tinymce@^7.0.0 || ^6.0.0 || ^5.5.1", tinymce@^7.5.1:
+  version "7.5.1"
+  resolved "https://registry.npmjs.org/tinymce/-/tinymce-7.5.1.tgz"
+  integrity sha512-GRXJUB0BEIOUHUEC+q9IjsgWGIAQ4Tn5t5hfpB/YR7No3oPgKHG03v1d3nbov9aqdyVW7Be+UD4I3ZerQG30VQ==
 
 to-object-path@^0.3.0:
   version "0.3.0"

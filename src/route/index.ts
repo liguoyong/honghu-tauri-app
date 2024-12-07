@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { getToken } from "@/utils/auth";
 import { useUserStore } from "@/stores/user";
+import docRoute from "./modules/doc";
 // const userStore = useUserStore()
 const routes = [
   {
@@ -125,9 +126,48 @@ const routes = [
           requiresAuth: false,
           show: true,
           title: "笔记管理",
+          activeMenu: '/work/index',
           icon: "EditPen"
         },
         component: () => import("@/views/note/index.vue"),
+      },
+      {
+        path: "doc",
+        name: "docIndex",
+        meta: {
+          requiresAuth: false,
+          show: true,
+          title: "文档管理",
+          activeMenu: '/work/doc',
+          icon: "Document"
+        },
+        component: () => import("@/views/doc/index.vue"),
+      },
+      {
+        path: "doc/create",
+        name: "docCreate",
+        hidden: true,
+        meta: {
+          requiresAuth: false,
+          show: true,
+          title: "新增文档",
+          activeMenu: '/work/doc',
+          icon: "Document"
+        },
+        component: () => import("@/views/doc/create.vue"),
+      },
+      {
+        path: "doc/edit",
+        name: "docEdit",
+        hidden: true,
+        meta: {
+          requiresAuth: false,
+          show: true,
+          title: "编辑文档",
+          activeMenu: '/work/doc',
+          icon: "Document"
+        },
+        component: () => import("@/views/doc/create.vue"),
       }
     ],
   },
@@ -233,6 +273,7 @@ const routes = [
       },
     ],
   },
+  docRoute
 ];
 
 const router = createRouter({

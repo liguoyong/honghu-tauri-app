@@ -496,3 +496,13 @@ export const getTypeByValue = (value, arr, typeValue) => {
   });
   return type;
 };
+
+/**
+ * @description:获取html文本
+ * @param {*} html
+ * @return {*}
+ */
+export function filterHtmlText(html = '') {
+  var reg = /<[^>]+>/g
+  return html.replace(reg, '').replace(/\s+/g, ' ').trim() // 去除多余的空格
+}

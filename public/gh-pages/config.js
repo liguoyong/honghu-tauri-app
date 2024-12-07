@@ -1,0 +1,1 @@
+window.common={API_QUERY_URL:"http://localhost:7000/api/lcPages/create",API_SAVE_URL:"http://localhost:7000/api/lcPages/update",TOKEN_KEY:"authorization"};
