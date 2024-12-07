@@ -281,7 +281,7 @@ const router = createRouter({
   routes,
 });
 
-const whriteList = ["/todo"];
+const whriteList = ["/todo", '/doc/detail'];
 
 // 配置前置后置路由导航守卫
 router.beforeEach(async (to, from, next) => {
