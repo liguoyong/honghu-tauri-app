@@ -187,7 +187,9 @@ export default {
 .doc-view-container {
     background-color: #ffffff;
     overflow-y: auto;
-
+    .el-tree {
+        font-weight: bold;
+    }
     .el-aside {
         background: #fff;
         max-height: 100vh;
