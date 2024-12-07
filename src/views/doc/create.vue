@@ -1,8 +1,12 @@
 <template>
     <el-card class="layout-wrapper">
         <template #header>
-            <div class="card-header">
+            <div class="card-header flex justify-between">
                 <span>{{ isEdit ? '编辑文档' : '新增文档' }}</span>
+                <div>
+                    <el-button size="small" @click="handleBack">取消</el-button>
+                    <el-button :loading="submitLoading" size="small" type="primary" @click="handleSubmit">确定</el-button>
+                </div>
             </div>
         </template>
         <div>
@@ -17,12 +21,6 @@
                 </template>
             </com-form>
         </div>
-        <template #footer>
-            <div class="footer-btn text-center">
-                <el-button size="small" @click="handleBack">取消</el-button>
-                <el-button :loading="submitLoading" size="small" type="primary" @click="handleSubmit">确定</el-button>
-            </div>
-        </template>
     </el-card>
 </template>
 <script lang="ts" setup>
