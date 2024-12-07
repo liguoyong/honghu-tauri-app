@@ -44,7 +44,7 @@
                     {{ row.type }}
                 </template>
             </el-table-column>
-            <el-table-column prop="type" label="文档内容">
+            <el-table-column prop="type" label="文档内容" show-overflow-tooltip>
                 <template #default="{ row }">
                     {{ filterHtmlText(row.content) }}
                 </template>
