@@ -186,13 +186,13 @@ function destroyTinymce() {
   position: relative;
   line-height: normal;
 
-  // :deep(.tox-promotion) {
-  //   visibility: hidden !important;
-  //   display: none !important;
-  // }
-  // :deep(.tox .tox-editor-header) {
-  //   display: block;
-  // }
+  :deep(.tox-promotion) {
+    visibility: hidden !important;
+    display: none !important;
+  }
+  :deep(.tox .tox-editor-header) {
+    display: block;
+  }
 }
 
 .tinymce-container {

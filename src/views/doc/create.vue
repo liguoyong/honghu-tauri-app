@@ -171,7 +171,7 @@ function handleSubmit() {
             submitLoading.value = false
             if (res.code === 200) {
                 ElMessage.success(!isEdit.value ? '新增成功' : '更新成功')
-                handleBack()
+                !isEdit.value && handleBack()
             } else {
                 ElMessage.error(res.msg)
             }

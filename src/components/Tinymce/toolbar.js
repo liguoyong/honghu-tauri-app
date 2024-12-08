@@ -37,11 +37,15 @@ const toolbar = [
   },
   {
     name: 'tools',
-    items: ['removeformat', 'subscript', 'superscript', 'code', 'codesample', 'charmap', 'preview', 'emoticons', 'forecolor', 'backcolor', 'fullscreen', 'addTitle']
+    items: ['removeformat', 'subscript', 'superscript', 'code', 'codesample', 'charmap', 'preview', 'emoticons', 'forecolor', 'backcolor', 'fullscreen']
   },
   {
     name: 'hr',
     items: ['hr']
+  },
+  {
+    name: 'addTitle',
+    items: ['addTitle']
   }
 ];
 export default toolbar;
