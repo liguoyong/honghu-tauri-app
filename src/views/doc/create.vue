@@ -15,7 +15,7 @@
                 <template #content>
                     <el-form-item class="content-item" label="文档内容" prop="content">
                         <div class="quill-container">
-                            <Tinymce1 v-model="formData.content" height="600px"/>
+                            <Tinymce v-model="formData.content" height="600px"/>
                         </div>
                     </el-form-item>
                 </template>
@@ -30,7 +30,7 @@ import { ElMessage } from 'element-plus'
 import { FormOption } from '@/components/form/index'
 import { updateDoc, createDoc, getDocDetail } from '@/apis/doc'
 import { useRouter, useRoute } from 'vue-router'
-import Tinymce1 from '@/components/Tinymce/index.vue'
+import Tinymce from '@/components/Tinymce/index.vue'
 
 interface RuleForm {
     title: string,

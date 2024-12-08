@@ -37,7 +37,7 @@ const toolbar = [
   },
   {
     name: 'tools',
-    items: ['removeformat', 'subscript', 'superscript', 'code', 'codesample', 'charmap', 'preview', 'emoticons', 'forecolor', 'backcolor', 'fullscreen']
+    items: ['removeformat', 'subscript', 'superscript', 'code', 'codesample', 'charmap', 'preview', 'emoticons', 'forecolor', 'backcolor', 'fullscreen', 'addTitle']
   },
   {
     name: 'hr',

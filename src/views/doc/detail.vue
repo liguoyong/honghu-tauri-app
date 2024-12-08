@@ -1,8 +1,21 @@
 <template>
     <div class="doc-view-container">
-        <el-container>
+        <el-container class="pos-relative">
+            <div class="doc-view-aside-icon" @click="showAside = !showAside">
+                <el-icon v-if="!showAside">
+                    <CaretRight />
+                </el-icon>
+                <el-icon v-else>
+                    <CaretLeft />
+                </el-icon>
+            </div>
             <el-aside v-show="showAside && treeData.length" width="300px">
-                <el-card class="min-h-[400px]">
+                <el-card class="min-h-[400px] ">
+                    <template #header>
+                        <div class="card-header">
+                            <span class="font-600">目录</span>
+                        </div>
+                    </template>
                     <el-tree ref="treeRef" class="treeRef" :data="treeData" :props="defaultProps" node-key="id"
                         :default-expanded-keys="expandedKeys" :default-checked-keys="checkedKeys"
                         :default-expand-all="true" :highlight-current="true" @node-click="handleNodeClick" />
@@ -38,8 +51,8 @@ export default {
         }
     },
     async created() {
-        const hideAside = this.$route.query.hideAside // 如果地址栏参数是1则隐藏
-        this.showAside = hideAside !== '1'
+        const hideAside = this.$route.query.hideAside // 如果地址栏参数是1则隐藏，或者屏幕宽度小于700则隐藏
+        this.showAside = hideAside !== '1' && window.screen.width > 700
         this.docId = this.$route.query.identifier
         const docId = this.docId
         const result = await getDocDetail({
@@ -57,7 +70,7 @@ export default {
         }
     },
     mounted() {
-        
+
     },
     methods: {
         handleNodeClick(data) {
@@ -157,11 +170,18 @@ export default {
 </script>
 <style lang="scss" scoped>
 .doc-view-aside-icon {
-    position: fixed;
-    left: 20px;
+    position: absolute;
+    left: 4px;
     top: 50%;
     transform: translateY(-50%);
     z-index: 10;
+    .el-icon {
+        border: 1px solid #4a97ff;
+        background: #4a97ff;
+        border-radius: 2px;
+        color: #fff;
+        cursor: pointer;
+    }
 }
 
 #mainRef {
@@ -187,9 +207,11 @@ export default {
 .doc-view-container {
     background-color: #ffffff;
     overflow-y: auto;
+
     .el-tree {
         font-weight: bold;
     }
+
     .el-aside {
         background: #fff;
         max-height: 100vh;
@@ -207,6 +229,14 @@ export default {
         line-height: 20px;
         font-size: 16px;
         word-break: break-all;
+    }
+}
+// 媒体查询适配720以下的页面
+@media (max-width: 720px) {
+    .doc-view-container {
+        .el-aside {
+            position: fixed;
+        }
     }
 }
 </style>

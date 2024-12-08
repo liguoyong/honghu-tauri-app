@@ -6,14 +6,13 @@
 
 <script setup>
 import { ref, reactive, computed, watch, onMounted, onActivated, onDeactivated, onBeforeUnmount, nextTick } from 'vue'
-import editorImage from './components/editorImage.vue'
 import plugins from './plugins'
 import toolbar from './toolbar'
 import load from './dynamicLoadScript'
 import { uploadFileToObs } from '@/apis/upload'
 
 const tinymceCDN = window.location.origin + '/tinymce/tinymce.min.js'
-
+// const customPluginPath = window.location.origin + '/tinymce/plugins/title/customTitlePlugin.js' // 确保路径正确
 const props = defineProps({
   id: {
     type: String,
@@ -97,7 +96,7 @@ onBeforeUnmount(() => {
 
 function init() {
   // dynamic load tinymce from cdn
-  load(tinymceCDN, (err) => {
+  load([tinymceCDN], (err) => {
     if (err) {
       // 这里假设有一个全局的 message 组件，实际项目中可能需要替换为具体的实现
       // this.$message.error(err.message)
@@ -120,7 +119,7 @@ function initTinymce() {
     toolbar: props.toolbar.length > 0 ? props.toolbar : toolbar,
     toolbar_mode: 'wrap',
     menubar: props.menubar,
-    plugins: plugins,
+    plugins: [...plugins, 'customTitle'],
     end_container_on_empty_block: true,
     powerpaste_word_import: 'clean',
     code_dialog_height: 450,
@@ -187,13 +186,13 @@ function destroyTinymce() {
   position: relative;
   line-height: normal;
 
-  :deep(.tox-promotion) {
-    visibility: hidden !important;
-    display: none !important;
-  }
-  :deep(.tox .tox-editor-header) {
-    display: block;
-  }
+  // :deep(.tox-promotion) {
+  //   visibility: hidden !important;
+  //   display: none !important;
+  // }
+  // :deep(.tox .tox-editor-header) {
+  //   display: block;
+  // }
 }
 
 .tinymce-container {

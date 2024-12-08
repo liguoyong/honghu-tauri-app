@@ -6,9 +6,8 @@
 
 // export default plugins
 const plugins = [
-    'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'print', 'preview',
-    'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen', 'insertdatetime',
-    'media', 'table', 'paste', 'code', 'codesample', 'emoticons'
-  ];
-  
-  export default plugins;
+  'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'print', 'preview',
+  'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen', 'insertdatetime',
+  'media', 'table', 'paste', 'code', 'codesample', 'emoticons','customTitle'
+]
+export default plugins;
