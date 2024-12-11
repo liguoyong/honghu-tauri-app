@@ -22,7 +22,7 @@ import VConsole from 'vconsole';
 // import '@/icons' // icon
 import globalComponent from "@/components/index";
 // import Windows from "./hooks/windows/index.js";
-new VConsole();
+// new VConsole();
 const app = createApp(App);
 app
   .use(createPinia())
