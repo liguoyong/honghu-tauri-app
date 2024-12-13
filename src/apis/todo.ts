@@ -21,7 +21,6 @@ export const getDeleteTodo = async <R = ResponseType>(data?: object) => {
     return await http.request<R>("post", "/api/todo/delete", { data });
 };
 
-
 // 获取待办事项列表
 export const getTodoList = async <R = ResponseType>(data?: object) => {
     return await http.request<R>("post", "/api/todo/list", { data });

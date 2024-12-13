@@ -59,3 +59,13 @@ export const getUserInfo = async (data?: object) => {
 export const updateUserInfo = async (data?: object) => {
   return await http.request<UserResult>("post", "/api/user/update", { data });
 };
+
+// 获取用户列表
+export const getUserList = async <R = ResponseType>(data?: object) => {
+  return await http.request<R>("post", "/api/user/list", { data });
+}
+
+// 获取所有用户
+export const getUserAll = async <R = ResponseType>(data?: object) => {
+  return await http.request<R>("post", "/api/user/all", { data });
+}

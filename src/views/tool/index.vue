@@ -132,8 +132,8 @@ const configList = reactive([
             description: '基于渐进式理念研发的 Node.js 框架',
             target: '_blank',
         }, {
-            icon: 'https://element-plus.gitee.io/safari-pinned-tab.svg',
-            url: 'https://element-plus.gitee.io/zh-CN/',
+            icon: 'https://element-plus.youqua.cn/images/element-plus-logo.svg',
+            url: 'https://element-plus.youqua.cn/zh-CN/',
             title: 'Element-plus',
             description: '基于 Vue 3，面向设计师和开发者的组件库',
             target: '_blank',

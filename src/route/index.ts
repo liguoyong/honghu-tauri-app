@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import { getToken } from "@/utils/auth";
 import { useUserStore } from "@/stores/user";
 import docRoute from "./modules/doc";
+import systemRoute from "./modules/system";
 // const userStore = useUserStore()
 const routes = [
   {
@@ -247,32 +248,33 @@ const routes = [
       },
     ],
   },
-  {
-    path: "/user",
-    name: "user",
-    redirect: "/user/index",
-    hidden: true,
-    component: () => import("@/layout/index.vue"),
-    meta: {
-      requiresAuth: false,
-      show: true,
-      title: "用户资料",
-      icon: "user",
-    },
-    children: [
-      {
-        path: "index",
-        name: "userInformation",
-        meta: {
-          requiresAuth: false,
-          show: true,
-          title: "用户资料",
-          icon: "user",
-        },
-        component: () => import("@/views/user/information/index.vue"),
-      },
-    ],
-  },
+  systemRoute,
+  // {
+  //   path: "/user",
+  //   name: "user",
+  //   redirect: "/user/index",
+  //   hidden: true,
+  //   component: () => import("@/layout/index.vue"),
+  //   meta: {
+  //     requiresAuth: false,
+  //     show: true,
+  //     title: "用户资料",
+  //     icon: "user",
+  //   },
+  //   children: [
+  //     {
+  //       path: "index",
+  //       name: "userInformation",
+  //       meta: {
+  //         requiresAuth: false,
+  //         show: true,
+  //         title: "用户资料",
+  //         icon: "user",
+  //       },
+  //       component: () => import("@/views/user/information/index.vue"),
+  //     },
+  //   ],
+  // },
   docRoute
 ];
 
