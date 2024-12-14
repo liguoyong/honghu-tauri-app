@@ -19,6 +19,18 @@ const systemRoute = {
           title: "用户管理",
           icon: "User"
         },
+      },
+      {
+        path: "menu",
+        name: "menu",
+        component: () =>
+          import(
+            /* webpackChunkName: "menu" */ "@/views/system/menu/index.vue"
+          ),
+        meta: {
+          title: "用户管理",
+          icon: "Menu"
+        },
       }
     ],
   }

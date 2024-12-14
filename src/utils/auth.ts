@@ -34,7 +34,7 @@ export function getToken(): DataInfo<number> {
 export function setToken(data: DataInfo<Date>) {
   const { accessToken, refreshToken, expires = 0 } = data;
   const cookieString = JSON.stringify({ accessToken, expires });
-
+  localStorage.setItem('userToken', accessToken);
   expires > 0
     ? Cookies.set(TokenKey, cookieString, {
       expires: (expires - new Date().getTime()) / 86400

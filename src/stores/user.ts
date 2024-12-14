@@ -29,12 +29,10 @@ export const useUserStore = defineStore('userInfo', {
         setUserInfo(setInfo: any) {
             this.userName = setInfo.userName
             this.passWord = setInfo.passWord
-            this.userToken = setInfo.token
             this.serverKey = setInfo.serverKey
             this.userId = setInfo.userId
             localStorage.setItem('userName', this.userName)
             localStorage.setItem('passWord', this.passWord)
-            localStorage.setItem('userToken', this.userToken)
             localStorage.setItem('serverKey', this.serverKey)
             localStorage.setItem('userId', this.userId)
             console.log('setUserInfo------', setInfo)

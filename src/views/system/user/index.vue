@@ -19,12 +19,17 @@
         <el-table :data="tableData" size="small" stripe style="width: 100%" @row-dblclick="handelClickViewDetail">
             <el-table-column prop="id" label="id" />
             <el-table-column prop="username" label="用户名" />
+            <el-table-column prop="password" label="密码" />
             <el-table-column prop="phone" label="手机号" />
-            <el-table-column prop="regtime" label="注册时间" />
+            <el-table-column prop="regtime" label="注册时间">
+                <template #default="scope">
+                    {{ transformTimeDate(scope.row.regtime) }}
+                </template>
+            </el-table-column>
             <el-table-column fixed="right" label="操作" width="120">
                 <template #default="scope">
-                    <el-button link type="primary" size="small" @click="">编辑</el-button>
-                    <!-- <el-button link type="danger" size="small" @click="handleClickDelete(scope.row.id)">删除</el-button> -->
+                    <el-button link type="primary" size="small" @click="handleEdit(scope.row)">编辑</el-button>
+                    <el-button link type="danger" size="small" @click="handleClickDelete(scope.row.id)">删除</el-button>
                 </template>
             </el-table-column>
             <template #empty>
@@ -43,10 +48,11 @@
 import { ref } from 'vue'
 import { reactive } from 'vue'
 
-import { getUserList } from '@/apis/user'
+import { getUserList, deleteUser } from '@/apis/user'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import editUserDialog from '../components/editUserDialog.vue'
+import dayjs from 'dayjs';
 const ruleForm = reactive({
     username: '',
     status: ''
@@ -85,8 +91,8 @@ const getList = async () => {
     }
 }
 getList()
-const transformTimeDate = (date: string) => {
-    return date
+const transformTimeDate = (date: string = '') => {
+    return date ? dayjs(date).format('YYYY-MM-DD HH:mm:ss') : ''
 }
 const resetForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return
@@ -127,10 +133,16 @@ const handelCreateTodo = () => {
     updateDialog.form = { content: '' }
     updateDialog.show = true
 }
+// 编辑
+const handleEdit = (row: any) => {
+    updateDialog.type = 'edit'
+    updateDialog.form = row
+    updateDialog.show = true
+}
 const handleClickDelete = async (id: number) => {
 
     ElMessageBox.confirm(
-        '确认删除该待办事项?',
+        '确认删除该用户吗?',
         '温馨提示',
         {
             confirmButtonText: '确认',
@@ -139,7 +151,7 @@ const handleClickDelete = async (id: number) => {
         }
     )
         .then(async () => {
-            await getDeleteUser({ id })
+            await deleteUser({ id })
             getList()
             ElMessage({
                 type: 'success',

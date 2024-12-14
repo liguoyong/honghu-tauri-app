@@ -19,7 +19,7 @@
 
 <script setup lang='ts'>
 import { PropType, computed, ref } from 'vue'
-import { FormOption } from '.'
+import { FormOption } from './types.ts'
 const props = defineProps({
   modelValue: {
     type: Object,

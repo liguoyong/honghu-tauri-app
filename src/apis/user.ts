@@ -69,3 +69,8 @@ export const getUserList = async <R = ResponseType>(data?: object) => {
 export const getUserAll = async <R = ResponseType>(data?: object) => {
   return await http.request<R>("post", "/api/user/all", { data });
 }
+
+// 删除用户
+export const deleteUser = async <R = ResponseType>(data?: object) => {
+  return await http.request<R>("post", "/api/user/delete", { data });
+}

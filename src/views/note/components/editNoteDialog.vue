@@ -15,7 +15,7 @@
 import { reactive, ref, toRaw, watch, computed, onMounted } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
-import { FormOption } from '@/components/form/index.ts'
+import { FormOption } from '@/components/form/types'
 import { updateNote, createNote } from '@/apis/note.ts'
 interface RuleForm {
     title: string,

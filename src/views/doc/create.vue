@@ -27,7 +27,7 @@
 import { reactive, ref, toRaw, watch, computed, onMounted } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
-import { FormOption } from '@/components/form/index'
+import { FormOption } from '@/components/form/types'
 import { updateDoc, createDoc, getDocDetail } from '@/apis/doc'
 import { useRouter, useRoute } from 'vue-router'
 import Tinymce from '@/components/Tinymce/index.vue'
@@ -48,8 +48,8 @@ const formData = reactive({
     title: '',
     identifier: '',
     desc: '',
-    status: '',
-    type: [],
+    status: 1,
+    type: ['娱乐'],
     content: ''
 })
 const formRef = ref()
@@ -75,7 +75,7 @@ const formOptions = computed<FormOption[]>(() => [
         }
     },
     {
-        label: '文档类型', component: 'el-select', prop: 'type', required: true, props: {
+        label: '文档类型', component: 'el-select', prop: 'type', required: false, props: {
             multiple: true,
             filterable: true,
             'allow-create': true,

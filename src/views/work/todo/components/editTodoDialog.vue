@@ -26,7 +26,7 @@
 import { reactive, ref, toRaw, watch, computed, onMounted } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
-import { FormOption } from '@/components/form/index'
+import { FormOption } from '@/components/form/types'
 import { QuillEditor } from '@vueup/vue-quill'
 import { updateTodo, createTodo } from '@/apis/todo'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
