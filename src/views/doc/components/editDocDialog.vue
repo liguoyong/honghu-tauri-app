@@ -27,7 +27,6 @@ interface RuleForm {
     title: string,
     date: string,
     desc: string,
-    priority: string | number,
     status: string | number,
     type: string,
     content: string

@@ -173,21 +173,6 @@ const handelCloseEditDialog = (key: number | undefined) => {
         getList()
     }
 }
-const filterPriority = (priority: number) => {
-    switch (priority) {
-        case 1:
-            return '高'
-            break;
-        case 2:
-            return '中'
-            break;
-        case 3:
-            return '低'
-        default:
-            return ''
-            break;
-    }
-}
 
 const filterStatus = (status: number) => {
     switch (status) {

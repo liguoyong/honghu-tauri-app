@@ -55,6 +55,12 @@ const configList = reactive([
             title: 'Can I use',
             description: 'Caniuse用于查看浏览器对各种新特性的兼容情况',
             target: '_blank',
+        }, {
+            icon: 'https://docs.gtimg.com/desktop/favicon2.ico',
+            url: 'https://docs.qq.com/desktop',
+            title: '腾讯文档',
+            description: '腾讯文档',
+            target: '_blank',
         }]
         // https://p2.itc.cn/images01/20210707/61e2e18662c447148f244dc969d12dc0.png
     },

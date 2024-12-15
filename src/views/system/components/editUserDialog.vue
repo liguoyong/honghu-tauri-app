@@ -51,20 +51,6 @@ const formOptions = computed<FormOption[]>(() => [
     },
     { label: '手机号', prop: 'phone', props: { placeholder: "请填写手机号" }, required: true },
     {
-        label: '角色', component: 'el-select', prop: 'priority', required: true, props: {
-            options: [{
-                label: '高',
-                value: 1
-            }, {
-                label: '中',
-                value: 2
-            }, {
-                label: '低',
-                value: 3
-            }]
-        }
-    },
-    {
         label: '状态', component: 'el-select', prop: 'status', required: true, props: {
             // 0:未开始、1:进行中、2:已完成、3:已取消
             options: [{
