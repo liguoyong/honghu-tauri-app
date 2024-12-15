@@ -275,7 +275,7 @@ const routes = [
   //     },
   //   ],
   // },
-  docRoute
+  ...docRoute
 ];
 
 const router = createRouter({
