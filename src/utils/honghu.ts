@@ -202,6 +202,37 @@ export function handleTree(data: any = [], id: any, parentId: any, children: any
 }
 
 /**
+ * 将数据转换为树形结构
+ * @param data 数据源
+ */
+export function convertToTree(data: { id: string | number; parentId: string | number }[]) {
+  const map: { [key: string]: { id: string | number; parentId: string | number; children: any[] } } = {};
+  const tree: { id: string | number; parentId: string | number; children: any[] }[] = [];
+
+  // 将所有节点放入 map 中，方便查找
+  data.forEach(item => {
+    // map[item.id] = { ...item, children: [], hasChildren: false };
+    map[item.id] = { ...item, children: [] };
+  });
+
+  // 构建树形结构
+  data.forEach(item => {
+    item.id = Number(item.id);
+    if (item.parentId === '0') {
+      tree.push(map[item.id]);
+    } else {
+      if (map[item.parentId]) {
+        map[item.parentId].children.push(map[item.id]);
+        // map[item.parentId].hasChildren = true;
+      }
+    }
+  });
+
+  return tree;
+}
+
+
+/**
 * 参数处理
 * @param {*} params  参数
 */
