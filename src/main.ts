@@ -17,6 +17,7 @@ import i18n from "./lang/index";
 import "virtual:svg-icons-register";
 import "virtual:uno.css";
 import dayjs from 'dayjs';
+import { resetForm } from '@/utils/honghu.ts'
 import VConsole from 'vconsole';
 
 // import '@/icons' // icon
@@ -36,6 +37,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
 app.config.globalProperties.$dayjs = dayjs;
+app.config.globalProperties.resetForm = resetForm
 app.mount("#app");
 const screenWidth = window.screen.width;
 const x = screenWidth - 100 - 520;

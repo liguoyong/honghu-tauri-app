@@ -28,7 +28,7 @@ const systemRoute = {
             /* webpackChunkName: "menu" */ "@/views/system/menu/index.vue"
           ),
         meta: {
-          title: "用户管理",
+          title: "菜单管理",
           icon: "Menu"
         },
       }
