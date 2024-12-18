@@ -26,13 +26,13 @@
              >新增</el-button>
           </el-col>
           <el-col :span="1.5">
-             <!-- <el-button 
+             <el-button 
                 type="info"
                 size="small"
                 plain
                 icon="Sort"
                 @click="toggleExpandAll"
-             >展开/折叠</el-button> -->
+             >展开/折叠</el-button>
           </el-col>
        </el-row>
        <el-table
@@ -254,7 +254,7 @@
  </template>
  
  <script setup>
- import { computed, getCurrentInstance } from "vue";
+ import { computed, getCurrentInstance, nextTick } from "vue";
  import { addMenu, delMenu, getMenu, listMenu, updateMenu } from "@/apis/menu.ts";
  import { handleTree, convertToTree, parseTime } from "@/utils/honghu.ts";
  import { ElMessage } from "element-plus";
@@ -367,8 +367,8 @@ import { ref, reactive, toRefs  } from 'vue'
  function handleAdd(row) {
    reset();
    getTreeSelect();
-   if (row != null && row.menuId) {
-     form.value.parentId = row.menuId;
+   if (row != null && row.id) {
+     form.value.parentId = row.id;
    } else {
      form.value.parentId = '0';
    }
@@ -401,7 +401,7 @@ import { ref, reactive, toRefs  } from 'vue'
  function submitForm() {
    proxy.$refs["menuRef"].validate(valid => {
      if (valid) {
-       if (form.value.menuId != undefined) {
+       if (form.value.id) {
          updateMenu(form.value).then(response => {
            ElMessage.success("修改成功");
            open.value = false;
